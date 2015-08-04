@@ -5,4 +5,15 @@ use Phalcon\Mvc\Controller;
 class ControllerBase extends Controller
 {
 
+    public function initialize(){
+        //check user is logged in otherwise redirect to /LoginController
+        if (!Sentry::check())
+        {
+            // User is not logged in, or is not activated
+            $this->view->disable();
+            $this->response->redirect('login');
+        }
+    }
+
+
 }

@@ -6,7 +6,7 @@ return new \Phalcon\Config(array(
         'host'        => 'localhost',
         'username'    => 'toa',
         'password'    => 'toa',
-        'dbname'      => 'test',
+        'dbname'      => 'toa',
         'charset'     => 'utf8',
     ),
     'application' => array(
@@ -17,6 +17,8 @@ return new \Phalcon\Config(array(
         'pluginsDir'     => __DIR__ . '/../../app/plugins/',
         'libraryDir'     => __DIR__ . '/../../app/library/',
         'cacheDir'       => __DIR__ . '/../../app/cache/',
-        'baseUri'        => '/toa/',
+        'vendor'         => __DIR__ . '/../../vendor/',
+        'baseUri'        => '/',
     )
 ));
+
