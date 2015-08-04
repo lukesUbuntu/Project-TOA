@@ -8,5 +8,8 @@
     </head>
     <body>
         {{ content() }}
+        <!--scripts !-->
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/login.js"></script>
     </body>
 </html>
