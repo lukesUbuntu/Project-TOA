@@ -5,7 +5,7 @@ return new \Phalcon\Config(array(
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
         'username'    => 'toa',
-        'password'    => 'toa',
+        'password'    => 'toa123',
         'dbname'      => 'toa',
         'charset'     => 'utf8',
     ),

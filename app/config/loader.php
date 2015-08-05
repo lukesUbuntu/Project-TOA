@@ -32,13 +32,13 @@ class_alias('Cartalyst\Sentry\Facades\Native\Sentry', 'Sentry');
 
 // Create a new Database connection
 $capsule = new Capsule;
-//@todo move this into $di / phalcon db connection
+
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'toa',
-    'username'  => 'toa',
-    'password'  => 'toa',
+    'host'      => $config->database->host,
+    'database'  => $config->database->dbname,
+    'username'  => $config->database->username,
+    'password'  => $config->database->password,
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
 ]);

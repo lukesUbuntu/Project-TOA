@@ -53,8 +53,13 @@ $di->set('view', function () use ($config) {
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
-$di->set('db', function () use ($config) {
-    return new DbAdapter($config->toArray());
+$di->set('db', function() use ($config){
+    return new DbAdapter(array(
+        'host'        => $config->database->host,
+        'username'    => $config->database->username,
+        'password'    => $config->database->password,
+        'dbname'      => $config->database->dbname,
+    ));
 });
 
 /**
@@ -73,3 +78,13 @@ $di->setShared('session', function () {
 
     return $session;
 });
+/**
+ * Setup flash messages for alerts
+ */
+$di->set('flash', function() {
+    return new \Phalcon\Flash\Session(array(
+        'error' => 'alert alert-error',
+        'success' => 'alert alert-success',
+        'notice' => 'alert alert-info',
+    ));
+}, true);
