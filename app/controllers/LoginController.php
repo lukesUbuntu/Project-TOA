@@ -3,11 +3,27 @@
 class LoginController extends \Phalcon\Mvc\Controller
 {
 
+    /**
+     * Controller constructor
+     * @return mixed
+     */
+    public function initialize(){
+        //load any assets for this controller
+        $this->assets->addJs('js/login.js');
+        $this->assets->addCss('css/login.css');
+        //check we not already logged in
+        if (Sentry::check())
+        {
+            return $this->response->redirect('index');
+        }
+    }
+
 
     public function indexAction()
     {
 
     }
+
 
     /**
      * Checks the users details and logins them into members

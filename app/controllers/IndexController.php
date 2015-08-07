@@ -14,7 +14,18 @@ class IndexController extends ControllerBase
 
     }
 
+    /**
+     * logs the user out
+     */
+    public function logoutAction()
+    {
 
+        if (Sentry::check()){
+            Sentry::logout();
+            return $this->response->redirect('index');
+        }
+
+    }
 
 }
 

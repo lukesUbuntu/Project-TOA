@@ -74,6 +74,8 @@ $di->set('modelsMetadata', function () {
  */
 $di->setShared('session', function () {
     $session = new SessionAdapter();
+
+    if ($session->session_id != "")
     $session->start();
 
     return $session;
