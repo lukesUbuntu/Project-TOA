@@ -17,6 +17,11 @@ class LoginController extends \Phalcon\Mvc\Controller
         //tab we are on
         $this->view->login_tab = "login_form";
 
+        //if we are not a post just render view
+        if ($this->request->isPost() == false) {
+            return $this->view->render('login', 'index');
+        }
+
         //preset our error if any
         $errors = array();
 
@@ -28,16 +33,13 @@ class LoginController extends \Phalcon\Mvc\Controller
         $password = $this->request->getPost("password",null,false);
         if ($password == false)$errors[] = "Missing password";
 
-        //check errors if any return back to login screen
-        if (count($errors) > 0){
+        //check any errors
+        $errors = $this->errorCheck($errors);
+        if ($errors) return $errors;
 
-            //set any errors
-            foreach ($errors as $error)
-            $this->flash->error($error);
 
-            //return user to login
-           return $this->response->redirect('login');
-        }
+        /** safe to authenticate user below this point **/
+
         //get sentry to authenticate
         try{
 
@@ -51,11 +53,14 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         }catch(\Exception $e){
             //get the error message
-            $this->flash->error($e->getMessage());
-
+            $errors[] = $e->getMessage();
             //return user to login
-            return $this->response->redirect('login');
         }
+        //re check any errors
+        $errors = $this->errorCheck($errors);
+        if ($errors) return $errors;
+
+        return $this->response->redirect('login');
     }
 
     /**
@@ -66,8 +71,10 @@ class LoginController extends \Phalcon\Mvc\Controller
         //tab we are on
         $this->view->login_tab = "register_form";
 
-
-
+        //if we are not a post just render view
+        if ($this->request->isPost() == false) {
+            return $this->view->render('login', 'index');
+        }
         //preset our error if any
         $errors = array();
 
@@ -84,17 +91,62 @@ class LoginController extends \Phalcon\Mvc\Controller
         if($confirm !=false && $confirm != $password)
             $errors[] = "Passwords don't match";
 
-        if (count($errors) > 0){
+        //check any errors
+        $errors = $this->errorCheck($errors);
+        if ($errors) return $errors;
 
+
+       /** safe to register user below this point **/
+
+        try
+        {
+            // Let's register a user.
+            $user = Sentry::register(array(
+                'email'    => $email,
+                'password' => $password,
+                'activated' => true,  //activate user
+            ));
+            // Send activation code to the user so he can activate the account
+        }
+        catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+        {
+            $errors[] = 'Login field is required.';
+        }
+        catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+        {
+            $errors[] = 'Password field is required.';
+        }
+        catch (Cartalyst\Sentry\Users\UserExistsException $e)
+        {
+            $errors[] = 'User with this login already exists.';
+        }
+
+        //check any errors
+        $errors = $this->errorCheck($errors);
+        if ($errors) return $errors;
+
+
+        // Authenticate the user and log them in
+        Sentry::login($user, false);
+        return $this->response->redirect('index');
+
+    }
+
+
+    /**
+     * @param array $errors
+     * @return bool | returns false if no errors else returns the re
+     */
+    private function errorCheck($errors = array()){
+        if (count($errors) > 0){
             //set any errors
             foreach ($errors as $error)
                 $this->flash->error($error);
 
-            //return user to login
-            //return $this->response->redirect('login');
+            //return user to login and render errors
             return $this->view->render('login', 'index');
         }
-        //register account into system
+        return false;
     }
 
 }

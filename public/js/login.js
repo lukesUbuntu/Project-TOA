@@ -10,10 +10,12 @@ $(function() {
      */
     $('#login-form-link').click(function(element){
         login_form();
+        $(".alert-error").remove()
         element.preventDefault();
     });
     $('#register-form-link').click(function(element){
         register_form();
+        $(".alert-error").remove()
         element.preventDefault();
     });
 
@@ -34,18 +36,14 @@ $(function() {
      * @param element
      */
     window.register_form = function(element){
-        console.log("clicked")
         $("#register-form").delay(100).fadeIn(100);
         $("#login-form").fadeOut(100);
         $('#login-form-link').removeClass('active');
         $('#register-form-link').addClass('active');
 
-        //prevent submit from button click
-        if (typeof element != "undefined")
-        element.preventDefault();
     }
 
-    
+
     //swap between tab views and call function of tab delegated
     if (typeof login_tab == "string" && login_tab.length > 4){
         $("#"+login_tab).addClass("active").css('display','block');
