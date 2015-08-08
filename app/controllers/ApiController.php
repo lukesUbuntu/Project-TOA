@@ -1,21 +1,29 @@
 <?php
-
-class ApiController extends \Phalcon\Mvc\Controller
+use Phalcon\Mvc\Controller;
+class ApiController extends Controller
 {
     //holder for our api libary
-    private $api = null;
+    private $_api = null;
 
     //constructor
-    public function initialize(){
+    public function onConstruct(){
         //disable view
         $this->view->disable();
 
-        //setup our api lib
-        $this->api = new \Api\Response\Api();
+
     }
+
     public function indexAction()
     {
-        $this->api->response("Incorrect API call");
+        $this->Api()->response("Incorrect API call");
+    }
+
+    protected function Api()
+    {
+        if($this->_api == null)
+            $this->_api = new \Api\Response\Api();
+
+        return $this->_api;
     }
 
 }

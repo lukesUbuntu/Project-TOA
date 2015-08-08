@@ -6,6 +6,14 @@ class IndexController extends ControllerBase
 {
 
     /**
+     * @description __construct
+     */
+    public function onConstruct()
+    {
+        $this->loginCheck();
+    }
+
+    /**
      * Display Login View
      */
     public function indexAction()
@@ -14,18 +22,7 @@ class IndexController extends ControllerBase
 
     }
 
-    /**
-     * logs the user out
-     */
-    public function logoutAction()
-    {
 
-        if (Sentry::check()){
-            Sentry::logout();
-            return $this->response->redirect('index');
-        }
-
-    }
 
 }
 
