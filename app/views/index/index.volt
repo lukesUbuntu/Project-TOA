@@ -176,50 +176,24 @@
 
     </div><!-- /row -->
         <!-- GAME BLOCK -->
-        <div class="col-sm-3 col-lg-3">
-            <div class="dash-unit">
-                <dtitle>Tetris Game</dtitle>
-                <hr>
-                <div class="info-user">
-                    <span aria-hidden="true" class="li_display fs2"></span>
-                </div>
-                <br>
-                <div class="text">
-                    <button class="btn btn-success center-block">Play Now</button>
-                </div>
 
-            </div>
-        </div>
+    {% for game in Games %}
 
     <div class="col-sm-3 col-lg-3">
         <div class="dash-unit">
-            <dtitle>Tetris Game</dtitle>
+            <dtitle>{{ game.name }}</dtitle>
             <hr>
             <div class="info-user">
                 <span aria-hidden="true" class="li_display fs2"></span>
             </div>
             <br>
             <div class="text">
-                <button class="btn btn-success center-block">Play Now</button>
+                <button class="btn btn-success center-block"><a href="/games/{{ game.path() }}">Play Now</a></button>
             </div>
 
         </div>
     </div>
-    <div class="col-sm-3 col-lg-3">
-        <div class="dash-unit">
-            <dtitle>Tetris Game</dtitle>
-            <hr>
-            <div class="info-user">
-                <span aria-hidden="true" class="li_display fs2"></span>
-            </div>
-            <br>
-            <div class="text">
-                <button class="btn btn-success center-block">Play Now</button>
-            </div>
-
-        </div>
-    </div>
-    </div><!--/row -->
+    {% endfor  %}
 
 
 
@@ -237,7 +211,7 @@
     </div><!-- /container -->
 </div><!-- /footerwrap -->
 
-
+        <!--
         {{ javascript_include("js/vendor/lineandbars.js") }}
 
         {{ javascript_include("js/vendor/dash-charts.js") }}
@@ -255,3 +229,4 @@
         {{ javascript_include("js/vendor/noty/themes/default.js") }}
 
         {{ javascript_include("js/vendor/jquery.flexslider.js")}}
+        !-->

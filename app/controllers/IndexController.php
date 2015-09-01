@@ -1,6 +1,6 @@
 <?php
 
-
+use  \Phalcon\Mvc\Model;
 
 class IndexController extends ControllerBase
 {
@@ -10,7 +10,7 @@ class IndexController extends ControllerBase
      */
     public function onConstruct()
     {
-        $this->loginCheck();
+
     }
 
     /**
@@ -18,8 +18,10 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
-
-
+        $this->loginCheck();
+        //load our games into view
+        $games = \Game::find();
+        $this->view->setVar("Games",$games);
     }
 
 

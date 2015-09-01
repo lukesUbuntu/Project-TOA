@@ -8,10 +8,10 @@
         {{ stylesheet_link("css/vendor/flexslider.css") }}
 
 
-        {{ stylesheet_link("/css/styles.css") }}
+        {{ stylesheet_link("css/styles.css") }}
 
         {{ assets.outputCss() }}
-
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style type="text/css">
             body {
