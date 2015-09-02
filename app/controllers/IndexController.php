@@ -18,6 +18,9 @@ class IndexController extends ControllerBase
      */
     public function indexAction()
     {
+
+
+
         $this->loginCheck();
         //load our games into view
         $games = \Game::find();

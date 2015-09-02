@@ -3,21 +3,26 @@ $loader = new \Phalcon\Loader();
 
 /**
  * We're a registering a set of directories taken from the configuration file
- */
+*/
+// Register some classes
 $loader->registerNamespaces(
     array(
-        "Api\Response"    => $config->application->libraryDir,
-
+        "Games\Api"         =>    $config->application->libraryDir,
+        "Games\Plugin"      =>    $config->application->libraryDir,
     )
-);
+)->register();
+
+
+
 
 $loader->registerDirs(
     array(
         $config->application->controllersDir,
-        $config->application->modelsDir,
+        $config->application->modelsDir
 
     )
 )->register();
+
 
 //Sentry module is located from https://cartalyst.com/manual/sentry/2.1
 

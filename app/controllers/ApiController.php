@@ -1,6 +1,7 @@
 <?php
 use Phalcon\Mvc\Controller;
 
+
 class ApiController extends ControllerBase
 {
     //holder for our api libary
@@ -224,7 +225,7 @@ class ApiController extends ControllerBase
     protected function Api()
     {
         if($this->_api == null)
-            $this->_api = new \Api\Response\Api();
+            $this->_api = new Games\Api\Api();
 
         return $this->_api;
     }

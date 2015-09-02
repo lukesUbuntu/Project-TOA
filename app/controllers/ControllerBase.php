@@ -15,8 +15,12 @@ class ControllerBase extends Controller
      */
     public function loginCheck(){
 
+        $gamePlugin = new Games\Plugin\Plugin();
+        $gamePlugin->runAsCron();
         if (!Sentry::check())
         {
+            //Module
+
             // User is not logged in, or is not activated
             $this->view->disable();
             $this->response->redirect('login');

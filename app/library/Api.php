@@ -6,7 +6,7 @@
  * Time: 11:41 PM
  */
 
-namespace Api\Response;
+namespace Games\Api;
 
 
 class Api

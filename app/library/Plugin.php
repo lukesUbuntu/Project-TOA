@@ -1,40 +1,14 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Luke Hardiman
- * Date: 25/08/2015
- * Time: 6:17 PM
- * @description Plugin class to render all games into the Phalcon Framework
+ * User: 9901623
+ * Date: 2/09/2015
+ * Time: 12:02 PM
  */
 
-namespace Module;
-
-//@todo boostrap as micro application
-//@todo check if any changes from game where made
-/**
- * bootstrap phalcon
- */
-$config = include __DIR__ . "/../app/config/config.php";
-
-/**
- * Read auto-loader
- */
-include __DIR__ . "/../app/config/loader.php";
-
-/**
- * Read services
- */
-include __DIR__ . "/../app/config/services.php";
+namespace Games\Plugin;
 
 
-
-
-
-
-/***
- * Class Plugin
- * @package Game\Plugin
- */
 class Plugin
 {
     private $separator = null;
@@ -60,7 +34,7 @@ class Plugin
         $this->config_file = $configFile;
 
         //pass check get
-        $this->checkGames();
+        //$this->checkGames();
     }
 
     /**
@@ -97,7 +71,7 @@ class Plugin
     public function checkGames(){
         //check if we have already have game folders
         if (count($this->game_folders) > 0)
-                return $this->game_folders;
+            return $this->game_folders;
 
         //grab all game folders
         $dir = new \DirectoryIterator($this->current_folder);
@@ -130,8 +104,8 @@ class Plugin
         $new_game->add($gameData);
         $new_game->save();
     }
-    protected function runAsCron(){
-
+    public function runAsCron(){
+        $this->checkGames();
     }
 
     public function runGame($prefix){
@@ -150,5 +124,4 @@ class Plugin
         require $exist->path();
 
     }
-
 }
