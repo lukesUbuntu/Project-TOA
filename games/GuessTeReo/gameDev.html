@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/inGame.css" rel="stylesheet">
+    <script src="functions/menu.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <!-- jQuery (required) & jQuery UI + theme (optional) -->
+    <link href="docs/css/jquery-ui.min.css" rel="stylesheet">
+    <script src="docs/js/jquery.min.js"></script>
+    <script src="docs/js/jquery-ui.min.js"></script>
+    <script src="docs/js/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- keyboard widget css & script (required) -->
+    <link href="css/keyboard.css" rel="stylesheet">
+    <script src="js/jquery.keyboard.js"></script>
+
+    <!-- keyboard extensions (optional) -->
+    <script src="js/jquery.mousewheel.js"></script>
+    <script src="js/jquery.keyboard.extension-typing.js"></script>
+    <script src="js/jquery.keyboard.extension-autocomplete.js"></script>
+    <script src="js/jquery.keyboard.extension-caret.js"></script>
+
+    <!-- demo only -->
+    <link rel="stylesheet" href="docs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="docs/css/font-awesome.min.css">
+    <link href="docs/css/demo.css" rel="stylesheet">
+
+    <script src="docs/js/bootstrap.min.js"></script>
+    <script src="docs/js/demo.js"></script>
+    <script src="docs/js/jquery.tipsy.min.js"></script>
+    <script src="docs/js/prettify.js"></script> <!-- syntax highlighting -->
+
+</head>
+    <body>
+        <div data-role="page">
+            <div data-role="header">
+                <a href="index.php" class="button">Home</a>
+                <h1>Guess the Te Reo Word</h1>
+                <a href="scoreboard.php" class="button">Scoreboard</a>
+            </div>
+
+            <div class="img">
+                <a><img src="testImages/img4.jpg" alt="Game Image One" style="width:115px;
+                    height:80px;"></a>
+                <a><img src="testImages/img2.jpg" alt="Game Image Two" style="width:115px;
+                    height:80px;"></a>
+            </div>
+            <div class="img">
+                <a><img src="testImages/img3.jpg" alt="Game Image Three" style="width:115px;
+                    height:80px;"></a>
+                <a><img src="testImages/img4.jpg" alt="Game Image Four" style="width:115px;
+                    height:80px;"></a>
+            </div>
+
+            <div id="englishWord">
+                <p>The english word will be in here</p>
+            </div>
+
+            <div id="page-wrap">
+                <div class="block" id="autocomplete">
+                    <input id="text" type="text" placeholder=" Enter something...">
+                    <br>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

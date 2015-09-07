@@ -1,0 +1,155 @@
+/*
+@media all and (min-height: 300px)
+{
+	#WordToGuess{ font-size:65%;}
+	.KeyboardKey{ font-size: 35%;}
+}
+@media all and (min-height: 350px)
+{
+	#WordToGuess{ font-size:65%;}
+	
+}
+@media all and (min-height: 400px)
+{
+	#WordToGuess{ font-size:75%;}
+}
+@media all and (min-height: 450px)
+{
+	.KeyboardKey{ font-size: 50%;}
+}
+@media all and (min-height: 500px)
+{
+	#WordToGuess{ font-size:85%;}
+}
+@media all and (min-height: 550px)
+{
+}
+@media all and (min-height: 600px)
+{
+	#WordToGuess{ font-size:95%;}
+}
+@media all and (min-height: 650px)
+{
+}
+@media all and (min-height: 700px)
+{
+}
+@media all and (min-height: 750px)
+{
+}
+@media all and (min-height: 800px)
+{
+}
+@media all and (min-height: 850px)
+{
+}
+@media all and (min-height: 900px)
+{
+}
+*/
+
+body
+{
+	margin: 0;
+	height: 100%;
+}
+#game
+{
+	position: relative !important;
+}
+
+html
+{
+	height: 100%;
+	margin: 0;
+
+}
+
+#InfoBar
+{
+	vertical-align: middle;
+}
+
+#HeaderPauaBags
+{
+	float: left;
+}
+
+#PauaScores
+{
+	float: right;
+}
+
+#Hangi
+{
+	background-color: Orange;
+	height: calc(100% - 265.7813px);
+	text-align: center;
+}
+#HangiImage
+{
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#GameOptions
+{
+	background-color: darkred;
+	text-align: center;
+	overflow: hidden;
+	height: 5%;
+	width: 100%;
+	padding-left: 5%;
+
+}
+
+#GameOptions .btn
+{
+	height: 100%;
+	float: left;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#WordToGuess
+{
+	font-size:35px;
+	background-color: blue;
+	vertical-align: bottom;
+
+	font-weight: bold;
+	text-align: center;
+	width:100%;
+}
+
+#Keyboard
+{
+	min-height: 140px;
+
+	background-color: Pink;
+	overflow: hidden;
+	font-size: 20pt;
+	display: table;
+	width: 100%;
+	vertical-align: middle;
+}
+
+.keyboardRow 
+{
+	text-align: center;
+	overflow: hidden;
+	display: table-row;
+	width: 100%;
+	vertical-align: middle;
+}
+.KeyboardKey
+{ 
+	display:inline-block;
+	border:1px solid red;
+	width: 25px;
+	padding-left:1%;
+	padding-right: 1%;
+
+}

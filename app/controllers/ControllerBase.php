@@ -14,9 +14,10 @@ class ControllerBase extends Controller
      * @return void or redirects to login page
      */
     public function loginCheck(){
-
+        //adding cron job here to test
         $gamePlugin = new Games\Plugin\Plugin();
         $gamePlugin->runAsCron();
+
         if (!Sentry::check())
         {
             //Module

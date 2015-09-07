@@ -47,8 +47,29 @@ class Game extends \Phalcon\Mvc\Model
     public function initialize()
     {
 
-
+        $this->addBehavior(new Phalcon\Mvc\Model\Behavior\Timestampable(array(
+            'beforeValidationOnCreate' => array(
+                'field' => 'created_at',
+                'format' => 'Y-m-d H:i:s'
+            )
+        )));
         $this->hasMany('game_id', 'Users_has_game', 'game_game_id', array('alias' => 'Users_has_game'));
+    }
+
+    /**
+     * Before we create new record
+     */
+    public function beforeCreate()
+    {
+        $this->created_at = date("Y-m-d H:i:s");
+        $this->updated_at = date("Y-m-d H:i:s");
+    }
+    /**
+     * Before we update lets update update_at colum
+     */
+    public function beforeUpdate()
+    {
+        $this->updated_at = date("Y-m-d H:i:s");
     }
 
     /**
@@ -65,7 +86,9 @@ class Game extends \Phalcon\Mvc\Model
             'description' => 'description', 
             'start_file' => 'start_file', 
             'author' => 'author', 
-            'prefix' => 'prefix'
+            'prefix' => 'prefix',
+            'created_at' => 'created_at',
+            'updated_at' => 'updated_at'
         );
     }
 
@@ -73,6 +96,7 @@ class Game extends \Phalcon\Mvc\Model
      * Adds the gamedata to model
      * @param $gameData
      */
+
     public function add($gameData){
         $this->author = $gameData->author;
         $this->name = $gameData->name;

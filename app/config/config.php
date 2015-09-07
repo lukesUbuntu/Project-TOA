@@ -18,7 +18,7 @@ return new \Phalcon\Config(array(
         'libraryDir'     => __DIR__ . '/../../app/library/',
         'cacheDir'       => __DIR__ . '/../../app/cache/',
         'vendor'         => __DIR__ . '/../../vendor/',
-
+        'gameFolder'     => __DIR__ . '/../../games/',
         'baseUri'        => '/',
     )
 ));

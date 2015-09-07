@@ -8,6 +8,8 @@
 
 namespace Games\Plugin;
 
+use \Phalcon\Config;
+
 
 class Plugin
 {
@@ -24,11 +26,17 @@ class Plugin
      */
     public function __construct($configFile = "config.json"){
 
+        ini_set('display_errors',1);
+        ini_set('display_startup_errors',1);
+        error_reporting(-1);
+
+
+
         //define our OS separator for file paths
         $this->separator = DIRECTORY_SEPARATOR;
 
-        //current location we are in
-        $this->current_folder = getcwd();
+        //@todo setting the game folder this needs to come from config
+        $this->current_folder = getcwd()."/../games";
 
         //define our JSON config file we are reading
         $this->config_file = $configFile;
@@ -45,17 +53,26 @@ class Plugin
         $Games = new \Game;
         //if the file exists lets check the json is valid
         if (file_exists($this->getConfigFile($gameFolder))) {
+            //get the json file contents
             $game_data = file_get_contents($this->getConfigFile($gameFolder));
+
             if ($game_json = json_decode($game_data)){
                 //have a valid json lets add additional data
                 $game_json->prefix = trim($gameFolder);
+
                 //lets check if game is in db
-                $exist = $Games::findFirst(array(
+                $game = $Games::findFirst(array(
                     'prefix'=>$gameFolder,
                 ));
-                //if doesn't exist add game
-                if(!$exist){
-                    $this->addGame($game_json);
+
+                //game exist lets update record
+                if($game != false){
+                    $game->save($game_json);
+                    //echo "updating game";
+                }else{
+                    //push any changes
+                    $game->add($game_json);
+                    $game->save();
                 }
 
             }
@@ -64,11 +81,11 @@ class Plugin
     }
 
     /**
-     * checkGames
+     * checkNewGames
      * @description checks and updates any new games
      * @return null
      */
-    public function checkGames(){
+    public function checkNewGames(){
         //check if we have already have game folders
         if (count($this->game_folders) > 0)
             return $this->game_folders;
@@ -77,7 +94,10 @@ class Plugin
         $dir = new \DirectoryIterator($this->current_folder);
         foreach ($dir as $fileinfo) {
             if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+                //add game folder to our array
                 $this->game_folders[] = $fileinfo->getFilename();
+
+                //check game folder for config file
                 $this->checkConfig($fileinfo->getFilename());
             }
         }
@@ -105,7 +125,14 @@ class Plugin
         $new_game->save();
     }
     public function runAsCron(){
-        $this->checkGames();
+
+
+        //check games for additions
+        $this->checkNewGames();
+
+        //count all games in system see if we need to do a internal scan
+        $Games = new \Game;
+
     }
 
     public function runGame($prefix){

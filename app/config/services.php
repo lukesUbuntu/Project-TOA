@@ -72,7 +72,7 @@ $di->set('modelsMetadata', function () {
 /**
  * Start the session the first time some component request the session service
  */
-$di->setShared('session', function () {
+$di->setShared('session', function ($config) {
     $session = new SessionAdapter();
 
     if ($session->session_id != "")
@@ -90,3 +90,4 @@ $di->set('flash', function() {
         'notice' => 'alert alert-info',
     ));
 }, true);
+

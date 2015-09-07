@@ -3,6 +3,8 @@
 /cache/
 /config/development/
 app/cache/
+/games/*/.git
+/games/*/.idea
 
 # php storm
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
