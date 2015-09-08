@@ -13,10 +13,10 @@ var gameModule = {
         width: null,
     },
     renderHeight : function(pert){  //render a %
-        return this.screen.height * pert / 100
+        return (typeof pert != "undefined") ? this.screen.height * pert / 100 : this.screen.height;
     },
     renderWidth : function(pert){
-        return this.screen.width * pert / 100
+        return (typeof pert != "undefined") ? this.screen.width * pert / 100 : this.screen.width;
     }
 };
 
@@ -32,7 +32,7 @@ $(document).on('pageinit','#splash',function(){
     //lets passheight to our gamemodule
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
     gameModule.screen.width = $(window).width();
-    console.log("gameModule",gameModule)
+    console.log("gameModule",gameModule);
 
     $('body').on('click', '#play_game', function(ev) {
         $.mobile.changePage('start_game.html', {
@@ -51,14 +51,30 @@ $(document).on('pageinit','#splash',function(){
 $(document).on('pageinit','#start_game',function(){
     //for name sake
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
+
     //adjust height of our game screen block div
-    var game_grid = $("#game_grid");
-    //lets render our game_grid for images
+    var game_grid       =  $("#game_grid");
+    var image_blocks    =  $('#image_blocks');
+    var word_blocks     =  $('#word_blocks');
+
+    //lets render our game_grid
     game_grid.css({
-        'height': gameModule.renderHeight(60) + 'px',
-        'width': gameModule.renderWidth(60) + 'px',
+        'height': gameModule.renderHeight(80) + 'px',
+        'width': '100%',
         'border': '1px'
-    })
+    });
+    //lets redner our image block
+    image_blocks.css({
+        'width': gameModule.renderWidth(60) + 'px',
+        'height': gameModule.renderHeight(80) + 'px',
+        'border': '1px'
+    });
+    //lets render our image word block
+    word_blocks.css({
+        //'width': gameModule.renderWidth(60) + 'px',
+        'height': gameModule.renderHeight(80) + 'px',
+        'border': '1px'
+    });
 
 });
 /**

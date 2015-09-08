@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+        //if no gameModule loaded we have been loaded directly lets fix that
+        if (typeof gameModule == "undefined") window.location.href = "/games/tblocks";
+    </script>
 </head>
 <body>
         <div data-role="page" id="start_page" data-theme="d">
