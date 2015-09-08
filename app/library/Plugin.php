@@ -63,7 +63,7 @@ class Plugin
                 //lets check if game is in db
                 $game = \Game::findFirst("prefix = '$gameFolder'");
 
-                if($game->count() > 0){
+                if($game && $game->count() > 0){
                     //var_dump($game);exit;
                     $game->add($game_json);
                     $game->save();
