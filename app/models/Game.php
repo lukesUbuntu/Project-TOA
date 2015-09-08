@@ -46,13 +46,6 @@ class Game extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-
-        $this->addBehavior(new Phalcon\Mvc\Model\Behavior\Timestampable(array(
-            'beforeValidationOnCreate' => array(
-                'field' => 'created_at',
-                'format' => 'Y-m-d H:i:s'
-            )
-        )));
         $this->hasMany('game_id', 'Users_has_game', 'game_game_id', array('alias' => 'Users_has_game'));
     }
 

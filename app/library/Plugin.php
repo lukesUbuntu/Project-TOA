@@ -50,7 +50,7 @@ class Plugin
      * @return a json config if there is a config file
      */
     private function checkConfig($gameFolder){
-        $Games = new \Game;
+
         //if the file exists lets check the json is valid
         if (file_exists($this->getConfigFile($gameFolder))) {
             //get the json file contents
@@ -61,20 +61,21 @@ class Plugin
                 $game_json->prefix = trim($gameFolder);
 
                 //lets check if game is in db
-                $game = $Games::findFirst(array(
-                    'prefix'=>$gameFolder,
-                ));
+                $game = \Game::findFirst("prefix = '$gameFolder'");
 
-                //game exist lets update record
-                if($game != false){
-                    $game->save($game_json);
-                    //echo "updating game";
-                }else{
-                    //push any changes
+                if($game->count() > 0){
+                    //var_dump($game);exit;
                     $game->add($game_json);
                     $game->save();
-                }
 
+                }else{
+                    $NewGame = new \Game;
+                    //push any changes
+                    $NewGame->add($game_json);
+                    $NewGame->save();
+
+                }
+                unset($game);
             }
         }
 
