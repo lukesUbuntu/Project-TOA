@@ -7,22 +7,26 @@
 console.log("app.js loaded");
 //gameModule used between scripts app.js loaded first point
 var gameModule = {
+    debug : true,   //logout more console and skip some pages for testing
     screen : {
-        height: null,
+        height: null,   //current screen
         width: null,
     },
-    renderHeight : function(pert){
+    renderHeight : function(pert){  //render a %
         return this.screen.height * pert / 100
     },
     renderWidth : function(pert){
         return this.screen.width * pert / 100
     }
 };
+
 /**
  * On Splash Screen Load
  */
 $(document).on('pageinit','#splash',function(){
+
     //just splash screen while int.
+    if (!gameModule.debug)
     splashScreen();
 
     //lets passheight to our gamemodule
@@ -37,6 +41,9 @@ $(document).on('pageinit','#splash',function(){
         return false;
     });
 
+    //while in debug lets just go straight to page for live editing
+    if (gameModule.debug)
+        $.mobile.changePage("start_game.html", "fade");
 });
 /**
  * On start_game load
@@ -46,8 +53,10 @@ $(document).on('pageinit','#start_game',function(){
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
     //adjust height of our game screen block div
     var game_grid = $("#game_grid");
+    //lets render our game_grid for images
     game_grid.css({
         'height': gameModule.renderHeight(60) + 'px',
+        'width': gameModule.renderWidth(60) + 'px',
         'border': '1px'
     })
 
