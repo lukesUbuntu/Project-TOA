@@ -1,15 +1,26 @@
 /**
  * Created by Luke Hardiman on 27/08/2015.
  */
+
+"use strict";
+
 console.log("app.js loaded");
 //gameModule used between scripts app.js loaded first point
 var gameModule = {
     screen : {
         height: null,
         width: null,
+    },
+    renderHeight : function(pert){
+        return this.screen.height * pert / 100
+    },
+    renderWidth : function(pert){
+        return this.screen.width * pert / 100
     }
 };
-
+/**
+ * On Splash Screen Load
+ */
 $(document).on('pageinit','#splash',function(){
     //just splash screen while int.
     splashScreen();
@@ -26,12 +37,21 @@ $(document).on('pageinit','#splash',function(){
         return false;
     });
 
-
-
-
+});
+/**
+ * On start_game load
+ */
+$(document).on('pageinit','#start_game',function(){
+    //for name sake
+    if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
+    //adjust height of our game screen block div
+    var game_grid = $("#game_grid");
+    game_grid.css({
+        'height': gameModule.renderHeight(60) + 'px',
+        'border': '1px'
+    })
 
 });
-
 /**
  * Fake Loading Demo lol
  */
