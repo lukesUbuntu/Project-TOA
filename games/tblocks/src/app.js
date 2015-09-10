@@ -85,7 +85,8 @@ $(document).on('pageinit','#start_game',function(){
     image_block.css({
         'height':'100px',
         'width': gameModule.scaleWidth(80,game_grid) + 'px',
-        'border': '1px'
+        'border': '1px',
+        'position': 'absolute'
     });
 
     console.log("app.js finished game setup");
@@ -97,6 +98,23 @@ $(document).on('pageinit','#start_game',function(){
     //lets just display where our image is for testing
     image_block.show();
     image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
+
+    //drop image test
+    var windowHeight = game_grid.height();
+    var lineHeight = game_grid.height();
+    var desiredBottom = 50;
+
+    var newPosition = windowHeight - (lineHeight - desiredBottom);
+    //newPosition
+    console.log("newPosition",newPosition);
+    console.log("desiredBottom",desiredBottom)
+    //desiredBottom
+    image_block.animate({top:500},2000,function () {
+        image_block.css({
+            bottom: desiredBottom,
+            top: 'auto'
+        });
+    });
 
     //startup end
     /*
