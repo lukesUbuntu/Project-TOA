@@ -1,5 +1,9 @@
 /**
  * Created by Luke Hardiman on 27/08/2015.
+ * http://stackoverflow.com/questions/14561203/using-jquery-animate-a-div-from-top-to-bottom
+ * http://stackoverflow.com/questions/18404981/animating-div-to-bottom-of-page-and-then-on-another-click-animate-again-to-top
+ * http://stackoverflow.com/questions/4047025/jquery-animate-div-using-position
+ *
  */
 
 "use strict";
@@ -20,8 +24,99 @@ var gameModule = {
     },
     scaleWidth : function(pert,element){//render a % of element with
         return (typeof pert != "undefined") ? $(element).width() * pert / 100 :  $(element).width();
+    },
+    isElement : function($element){ //checks if we have a valid jquery Object & element exists
+        return (typeof $element != "undefined" && $element instanceof jQuery && $element.length);
+    }
+
+};
+
+/**
+ * Drops an div/image to bottom of game_grid but clones our image holder
+ */
+var dropImage = {
+    maxImages: 6,       //max images to drop down
+    currentImage : 0,   //current image index
+    position : {
+        top:null,
+        set:function(){//takes element and sets top
+            this.top = $("#game_grid").height()
+        },
+        get:function(){//gets the current drop point top
+            if (this.top == null) this.set() ;
+           return this.top;
+        },
+        dropped: function(){
+            this.top = this.top - 101;
+            this.count++;
+        }
+    },
+    count :0,
+    drop: function($image_block,$game_grid){//can define image_block or game_grid
+        //if we don't pass anything lets just grab the standard element locations
+        $image_block = (gameModule.isElement($image_block)) ? $image_block : $("#image_block");
+        $game_grid = (gameModule.isElement($game_grid)) ? $game_grid : $("#game_grid");
+        var $word_blocks = $("#word_blocks");
+
+        //clone our image block div
+        var image_block = $image_block.clone();
+        //change id_name
+        image_block.attr('id','block_'+this.count)
+        console.log("app.js dropImage running");
+
+
+        //setup our grid blocks append our hidden div elements
+        $game_grid.append(image_block);
+        //$game_grid.append($word_blocks);
+
+        //lets just display where our image is for testing
+        image_block.show();
+        image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
+
+
+        console.log("this.position.get()",this.position.get());
+
+
+        var desiredBottom = this.position.get() + 20;     //desired position offset 20
+        var speed   = 3 * 1000; //2 second move
+
+        //var newPosition = windowHeight - (lineHeight - desiredBottom);
+
+        //newPosition
+        console.log("$game_grid.height()",$game_grid.height());
+
+        console.log("desiredBottom",desiredBottom);
+        console.log("image_block.position()",image_block.position());
+        //desiredBottom
+        //.position().top/$(window).height()*100
+
+        ///$game_grid.height() - this.position.get()
+        image_block.animate({top:  this.position.get()
+
+        },speed,function () {
+            /*
+            image_block.css({
+                //'top': '260px',
+                'top': 'auto',
+                //'top' : dropImage.position.get(),
+                'bottom': 150
+            });
+            */
+            dropImage.position.dropped();
+            //dropImage.position.set(image_block);
+            console.log("image_block.position()",image_block.position())
+        });
+
     }
 };
+
+
+
+
+
+
+
+
 
 /**
  * On Splash Screen Load
@@ -88,48 +183,15 @@ $(document).on('pageinit','#start_game',function(){
         'border': '1px',
         'position': 'absolute'
     });
-
+    game_grid.append(word_blocks);
     console.log("app.js finished game setup");
 
-    //setup our grid blocks append our hidden div elements
-    game_grid.append(image_block);
-    game_grid.append(word_blocks);
 
-    //lets just display where our image is for testing
-    image_block.show();
-    image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
-
-    //drop image test
-    var windowHeight = $(window).height();
-    var lineHeight = game_grid.height();
-    var desiredBottom = 20;     //desired ending
-    var speed   = 2 * 1000; //2 second move
-
-    var newPosition = windowHeight - (lineHeight - desiredBottom);
-    //newPosition
-    console.log("newPosition",newPosition);
-    console.log("desiredBottom",desiredBottom)
-
-    //desiredBottom
-    image_block.animate({top:game_grid.height()},speed,function () {
-        image_block.css({
-            bottom: desiredBottom,
-            top: 'auto'
-        });
-    });
-
-    //startup end
-    /*
-     element.style {
-     display: block;
-     margin: 0 auto;
-     border: 1px;
-     height: 200px;
-     width: 200px;
-     }
-     */
-
+    //lets drop an image div down
+    dropImage.drop();
+//    dropImage.drop();
 });
+
 /**
  * Fake Loading Demo lol
  */
