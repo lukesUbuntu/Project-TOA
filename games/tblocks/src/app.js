@@ -10,13 +10,16 @@ var gameModule = {
     debug : true,   //logout more console and skip some pages for testing
     screen : {
         height: null,   //current screen
-        width: null,
+        width: null
     },
-    renderHeight : function(pert){  //render a %
+    renderHeight : function(pert){  //render a % of document height
         return (typeof pert != "undefined") ? this.screen.height * pert / 100 : this.screen.height;
     },
     renderWidth : function(pert){
         return (typeof pert != "undefined") ? this.screen.width * pert / 100 : this.screen.width;
+    },
+    scaleWidth : function(pert,element){//render a % of element with
+        return (typeof pert != "undefined") ? $(element).width() * pert / 100 :  $(element).width();
     }
 };
 
@@ -49,13 +52,15 @@ $(document).on('pageinit','#splash',function(){
  * On start_game load
  */
 $(document).on('pageinit','#start_game',function(){
-    //for name sake
+    //for name sake if we don't have our gameModule object throw us out.
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
 
     //adjust height of our game screen block div
     var game_grid       =  $("#game_grid");
-    var image_blocks    =  $('#image_blocks');
+    var image_blocks    =  $('#image_block_grid');
     var word_blocks     =  $('#word_blocks');
+    var image_block     =  $("#image_block");   //clone this element
+    //startup
 
     //lets render our game_grid
     game_grid.css({
@@ -75,6 +80,34 @@ $(document).on('pageinit','#start_game',function(){
         'height': gameModule.renderHeight(80) + 'px',
         'border': '1px'
     });
+
+    //setup our image_block image
+    image_block.css({
+        'height':'100px',
+        'width': gameModule.scaleWidth(80,game_grid) + 'px',
+        'border': '1px'
+    });
+
+    console.log("app.js finished game setup");
+
+    //setup our grid blocks append our hidden div elements
+    game_grid.append(image_block);
+    game_grid.append(word_blocks);
+
+    //lets just display where our image is for testing
+    image_block.show();
+    image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
+
+    //startup end
+    /*
+     element.style {
+     display: block;
+     margin: 0 auto;
+     border: 1px;
+     height: 200px;
+     width: 200px;
+     }
+     */
 
 });
 /**
