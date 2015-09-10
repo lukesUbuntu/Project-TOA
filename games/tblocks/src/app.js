@@ -37,7 +37,7 @@ $(document).on('pageinit','#splash',function(){
     gameModule.screen.width = $(window).width();
     console.log("gameModule",gameModule);
 
-    $('body').on('click', '#play_game', function(ev) {
+    $('body').on('click', '#play_game', function() {
         $.mobile.changePage('start_game.html', {
             transition : "slide"
         });
@@ -100,16 +100,18 @@ $(document).on('pageinit','#start_game',function(){
     image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
 
     //drop image test
-    var windowHeight = game_grid.height();
+    var windowHeight = $(window).height();
     var lineHeight = game_grid.height();
-    var desiredBottom = 50;
+    var desiredBottom = 20;     //desired ending
+    var speed   = 2 * 1000; //2 second move
 
     var newPosition = windowHeight - (lineHeight - desiredBottom);
     //newPosition
     console.log("newPosition",newPosition);
     console.log("desiredBottom",desiredBottom)
+
     //desiredBottom
-    image_block.animate({top:500},2000,function () {
+    image_block.animate({top:game_grid.height()},speed,function () {
         image_block.css({
             bottom: desiredBottom,
             top: 'auto'
@@ -139,7 +141,7 @@ function splashScreen(){
         $('#loading').text(x);
         x =  (x.length > 4) ? "." : x + ".";
 
-    },500)
+    },500);
     // the .on() method does require jQuery 1.7 + but this will allow you to have the contained code only run when the #splash page is initialized.
     setTimeout(function(){
         $.mobile.changePage("game.html", "fade");
