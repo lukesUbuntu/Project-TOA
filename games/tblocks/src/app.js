@@ -1,5 +1,6 @@
 /**
  * Created by Luke Hardiman on 27/08/2015.
+ * 
  */
 
 "use strict";
@@ -42,22 +43,23 @@ var dropImage = {
             if (this.top == null) this.set() ;
            return this.top;
         },
-        dropped: function(){
-            this.top = this.top - 101;
+        dropped: function(image){
+            //console.log("dropped",this)
+            this.top = this.top - $(image).height() - 1;//offset 1px so were not touching
             this.count++;
         }
     },
     count :0,
-    drop: function($image_block,$game_grid){//can define image_block or game_grid
+    drop: function(){
         //if we don't pass anything lets just grab the standard element locations
-        $image_block = (gameModule.isElement($image_block)) ? $image_block : $("#image_block");
-        $game_grid = (gameModule.isElement($game_grid)) ? $game_grid : $("#game_grid");
+        var $image_block = (gameModule.isElement($image_block)) ? $image_block : $("#image_block");
+        var $game_grid = (gameModule.isElement($game_grid)) ? $game_grid : $("#game_grid");
         var $word_blocks = $("#word_blocks");
 
         //clone our image block div
         var image_block = $image_block.clone();
         //change id_name
-        image_block.attr('id','block_'+this.count)
+        image_block.attr('id','block_'+dropImage.count)
         console.log("app.js dropImage running");
 
 
@@ -65,42 +67,40 @@ var dropImage = {
         $game_grid.append(image_block);
         //$game_grid.append($word_blocks);
 
+        var desiredDrop = dropImage.position.get() - 50     //desired position offset 50
+        var speed   = 1 * 1000; //2 second move
+
+
+        if (desiredDrop < image_block.height()){
+            //can not drop any more blocks
+            console.log("app.js can not drop any more blocks")
+            return false;
+        }
+
         //lets just display where our image is for testing
         image_block.show();
         image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
 
 
-        console.log("this.position.get()",this.position.get());
+        console.log("this.position.get()",dropImage.position.get());
 
 
-        var desiredBottom = this.position.get() + 20;     //desired position offset 20
-        var speed   = 3 * 1000; //2 second move
+
 
         //var newPosition = windowHeight - (lineHeight - desiredBottom);
 
         //newPosition
-        console.log("$game_grid.height()",$game_grid.height());
-
-        console.log("desiredBottom",desiredBottom);
+        //console.log("$game_grid.height()",$game_grid.height());
+        console.log("image.height",image_block.height())
+        console.log("desiredDrop",desiredDrop);
         console.log("image_block.position()",image_block.position());
-        //desiredBottom
-        //.position().top/$(window).height()*100
-
-        ///$game_grid.height() - this.position.get()
-        image_block.animate({top:  this.position.get()
+        //drop the image
+        image_block.animate({top:  desiredDrop
 
         },speed,function () {
-            /*
-            image_block.css({
-                //'top': '260px',
-                'top': 'auto',
-                //'top' : dropImage.position.get(),
-                'bottom': 150
-            });
-            */
-            dropImage.position.dropped();
-            //dropImage.position.set(image_block);
-            console.log("image_block.position()",image_block.position())
+            dropImage.position.dropped(this);
+            //we can now drop again
+            setTimeout(dropImage.drop,0);
         });
 
     }
