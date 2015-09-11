@@ -26,11 +26,16 @@
  *        For example:
  *          192.168.0.1 or SUBNET 192., 10.0.2., 86.84.124.
  */
-defined('PTOOLS_IP') || define('PTOOLS_IP', '192.168.');
+//defined('PTOOLS_IP') || define('PTOOLS_IP', '192.168.');
+
+//defined('PTOOLS_IP') || define('PTOOLS_IP', '192.168.');
+defined('PTOOLS_IP') || define('PTOOLS_IP', '127.0.0.1');
+
+
 
 // ---------------------------- DO NOT EDIT BELOW ------------------------------
 
 /**
  * @const PTOOLSPATH The path to the Phalcon Developers Tools.
  */
-defined('PTOOLSPATH') || define('PTOOLSPATH', '/home/yar/devtools/vendor/phalcon/devtools');
+defined('PTOOLSPATH') || define('PTOOLSPATH', '/var/www/cphalcon/devtools');

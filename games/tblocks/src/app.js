@@ -1,9 +1,5 @@
 /**
  * Created by Luke Hardiman on 27/08/2015.
- * http://stackoverflow.com/questions/14561203/using-jquery-animate-a-div-from-top-to-bottom
- * http://stackoverflow.com/questions/18404981/animating-div-to-bottom-of-page-and-then-on-another-click-animate-again-to-top
- * http://stackoverflow.com/questions/4047025/jquery-animate-div-using-position
- *
  */
 
 "use strict";

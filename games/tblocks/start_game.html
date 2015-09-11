@@ -7,7 +7,7 @@
 
     <script>
         //if no gameModule loaded we have been loaded directly lets fix that
-        if (typeof gameModule == "undefined") window.location.href = "/games/tblocks";
+        if (typeof gameModule == "undefined") window.location.href = "/Project-TOA/games/tblocks";
     </script>
 
 </head>
@@ -23,12 +23,22 @@
         </div>
         <div id="game_grid" class="ui-grid-b ui-corner-all ui-shadow" style="/*padding: 1em;*/">
             <!--@todo drop images from top of outter div !-->
-            <div id="image_blocks" class="ui-block-a"></div>
-            <div id="word_blocks" class="ui-block-b"></div>
+
+
         </div>
 
+    </div>
+    <!-----------hidden or cloned elements below here !---------->
+
+    <!--our image block to drop into game_grid !-->
+    <div id="image_block" class="ui-block-c" style="display:none">
+        <img id="image" src="" style="display: block; margin: 0 auto" />
+    </div><!--end image block !-->
+    <!--our word block start to store words!-->
+    <div id="word_blocks" class="ui-block-b">
+    </div><!--end word block !-->
 </div>
-</div>
+
 
 </body>
 </html>
