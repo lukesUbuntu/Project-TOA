@@ -140,6 +140,12 @@ $(document).on('pageinit','#splash',function(){
     if (gameModule.debug)
         $.mobile.changePage("start_game.html", "fade");
 });
+
+
+//Globals
+var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
+
+
 /**
  * On start_game load
  */
@@ -147,12 +153,14 @@ $(document).on('pageinit','#start_game',function(){
     //for name sake if we don't have our gameModule object throw us out.
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
 
+
     //adjust height of our game screen block div
-    var game_grid           =  $("#game_grid");
-    var image_block_grid    =  $('#image_block_grid');
-    var word_block_grid     = $('#word_block_grid');
-    var word_blocks         =  $('#word_blocks');
-    var image_block         =  $("#image_block");   //clone this element
+     game_grid           =  $("#game_grid");
+     image_block_grid    =  $('#image_block_grid');
+     word_block_grid     = $('#word_block_grid');
+     word_blocks         =  $('#word_blocks');
+     image_block         =  $("#image_block");   //clone this element
+
     //startup
 
     //lets render our game_grid
@@ -168,21 +176,20 @@ $(document).on('pageinit','#start_game',function(){
         'height': gameModule.renderHeight(80) + 'px',
         'border': '1px'
     });
-    
     //lets render our word block grid container
     word_block_grid.css({
         'width': gameModule.renderWidth(40) + 'px',
         'height': gameModule.renderHeight(80) + 'px',
-        'border': '1px'
+        //'border': '1px'
     });
-
 
 
     //lets render our image word block
     word_blocks.css({
-        //'width': gameModule.renderWidth(60) + 'px',
-        'height': gameModule.renderHeight(80) + 'px',
-        'border': '1px'
+        'width': '100px',
+        'height':'50px',
+        'border': '1px',
+        'margin':'10px 5px 15px 25px'
     });
 
     //setup our image_block image
@@ -192,7 +199,9 @@ $(document).on('pageinit','#start_game',function(){
         'border': '1px',
         'position': 'absolute'
     });
-    game_grid.append(word_blocks);
+
+    //append our word block to our word block grid
+    word_block_grid.append(word_blocks);
     console.log("app.js finished game setup");
 
 
