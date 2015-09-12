@@ -46,7 +46,7 @@ var dropImage = {
         dropped: function(image){
             //console.log("dropped",this)
             this.top = this.top - $(image).height() - 1;//offset 1px so were not touching
-            this.count++;
+            dropImage.count++;
         }
     },
     count :0,
