@@ -53,7 +53,8 @@ var dropImage = {
     drop: function(){
         //if we don't pass anything lets just grab the standard element locations
         var $image_block = (gameModule.isElement($image_block)) ? $image_block : $("#image_block");
-        var $game_grid = (gameModule.isElement($game_grid)) ? $game_grid : $("#game_grid");
+        var $image_grid =  $("#game_grid #image_grid");
+        //(gameModule.isElement($game_grid)) ? $game_grid :
         var $word_blocks = $("#word_blocks");
 
         //clone our image block div
@@ -64,7 +65,7 @@ var dropImage = {
 
 
         //setup our grid blocks append our hidden div elements
-        $game_grid.append(image_block);
+        $image_grid.append(image_block);
         //$game_grid.append($word_blocks);
 
         var desiredDrop = dropImage.position.get() - 50     //desired position offset 50
