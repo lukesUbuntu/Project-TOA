@@ -174,7 +174,8 @@ $(document).on('pageinit','#start_game',function(){
     image_block_grid.css({
         'width': gameModule.renderWidth(40) + 'px',
         'height': gameModule.renderHeight(80) + 'px',
-        'border': '1px'
+        'border': '1px',
+
     });
     //lets render our word block grid container
     word_block_grid.css({
@@ -192,6 +193,7 @@ $(document).on('pageinit','#start_game',function(){
         'margin':'10px 5px 15px 25px'
     });
 
+
     //setup our image_block image
     image_block.css({
         'height':'100px',
@@ -201,6 +203,33 @@ $(document).on('pageinit','#start_game',function(){
     });
 
     //append our word block to our word block grid
+    //clone a word block
+    var word_block = word_blocks.clone();
+    word_block.attr('id','test');
+    //for word_block puposes
+    word_block.css('background-color' , 'green');//jst so i can see where its rendering lol
+    word_block.show();
+    word_block.text("test")
+    //word_block.draggable();
+
+
+    word_block.draggable({
+        revert: true,
+        drag: function (e, ui) {
+            var elem = $(ui.helper),
+                id = elem.attr('id'),
+                data = elem.data('example');
+
+            $('h1').text(data + ' being dragged! #' + id);
+        },
+        revert: function (e, ui) {
+            $('h1').text('---');
+            return !e;
+        }
+    });
+
+    word_block_grid.append(word_block);
+
     word_block_grid.append(word_blocks);
     console.log("app.js finished game setup");
 
