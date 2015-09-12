@@ -53,7 +53,7 @@ var dropImage = {
     drop: function(){
         //if we don't pass anything lets just grab the standard element locations
         var $image_block = (gameModule.isElement($image_block)) ? $image_block : $("#image_block");
-        var $image_grid =  $("#game_grid #image_grid");
+        var $image_grid =  $("#game_grid #image_block_grid");
         //(gameModule.isElement($game_grid)) ? $game_grid :
         var $word_blocks = $("#word_blocks");
 
@@ -148,10 +148,11 @@ $(document).on('pageinit','#start_game',function(){
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
 
     //adjust height of our game screen block div
-    var game_grid       =  $("#game_grid");
-    var image_blocks    =  $('#image_block_grid');
-    var word_blocks     =  $('#word_blocks');
-    var image_block     =  $("#image_block");   //clone this element
+    var game_grid           =  $("#game_grid");
+    var image_block_grid    =  $('#image_block_grid');
+    var word_block_grid     = $('#word_block_grid');
+    var word_blocks         =  $('#word_blocks');
+    var image_block         =  $("#image_block");   //clone this element
     //startup
 
     //lets render our game_grid
@@ -160,12 +161,23 @@ $(document).on('pageinit','#start_game',function(){
         'width': '100%',
         'border': '1px'
     });
-    //lets redner our image block
-    image_blocks.css({
-        'width': gameModule.renderWidth(60) + 'px',
+
+    //lets redner our image block grid container
+    image_block_grid.css({
+        'width': gameModule.renderWidth(40) + 'px',
         'height': gameModule.renderHeight(80) + 'px',
         'border': '1px'
     });
+    
+    //lets render our word block grid container
+    word_block_grid.css({
+        'width': gameModule.renderWidth(40) + 'px',
+        'height': gameModule.renderHeight(80) + 'px',
+        'border': '1px'
+    });
+
+
+
     //lets render our image word block
     word_blocks.css({
         //'width': gameModule.renderWidth(60) + 'px',
