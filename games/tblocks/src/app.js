@@ -12,8 +12,8 @@ var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
 
 //Handles images matching with words just an array
 //This is just to build a game , below would actually come from a ajax call
-var words = ['Rock', 'Paper', 'Scissor'];
-var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png'];
+var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
+var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
 
 var game = [];
 
@@ -45,6 +45,7 @@ var gameModule = {
         width: null
     },
     _score : 0,
+    _speed : 3, //Speed 3 seconds
     score :function(){
         this._score+= 50;
         this.setScore()
@@ -64,6 +65,12 @@ var gameModule = {
     setScore : function(){
         //basic scorer for testing not actuall score
         $(".game_score").text(this._score);
+    },
+    speed:function(){
+        return 1000 * this._speed;
+    },
+    levelUp:function(){
+        this._speed-= 0.1;
     }
 
 };
@@ -119,7 +126,7 @@ var dropImage = {
 
         var desiredDrop = dropImage.position.get() - 50;     //desired position offset 50
         console.log("desiredDrop",desiredDrop)
-        var speed   = 3 * 1000; //2 second move
+        //var speed   = 3 * 1000; //2 second move
 
         //see if we need to re-shuffe our game stack
         if (dropImage.count >= game.length){
@@ -129,13 +136,19 @@ var dropImage = {
         }
 
 
-        if (desiredDrop < image_block.height()){
+        if (desiredDrop < image_block.height() - 50){
             //can not drop any more blocks
             $("#game_grid").hide();
             $("#game_over").show();
             console.log("app.js can not drop any more blocks");
             return false;
         }
+
+        if (dropImage.count % 3 == 0){
+            console.log("level up speed :",gameModule.speed())
+            gameModule.levelUp();
+        }
+
 
         //get this block we want to show
         var thisBlock = game[dropImage.count];
@@ -170,7 +183,7 @@ var dropImage = {
         //drop the image
         image_block.animate({top:  desiredDrop
 
-        },speed,function () {
+        },gameModule.speed(),function () {
             //disable droppable
             image_block.droppable('disable');
 
