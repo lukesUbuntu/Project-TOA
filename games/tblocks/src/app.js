@@ -5,6 +5,32 @@
 
 "use strict";
 
+//Handles images matching with words just an array
+//This is just to build a game , below would actually come from a ajax call
+var words = ['Rock', 'Paper', 'Scissor'];
+var images = ['images/rock.jog', 'images/paper.png', 'iamges/sissors.png'];
+
+var game = [];
+
+
+for (var i = 0; i < words.length; i++){
+
+    var match = {
+        image_block  : {
+            src : images[i]
+        },
+        word_block  :  {
+            text : words[i]
+        }
+    };
+    game.push(match);
+}
+
+console.log("game",game);
+
+
+
+
 console.log("app.js loaded");
 //gameModule used between scripts app.js loaded first point
 var gameModule = {
@@ -60,7 +86,16 @@ var dropImage = {
         //clone our image block div
         var image_block = $image_block.clone();
         //change id_name
-        image_block.attr('id','block_'+dropImage.count)
+        image_block.attr('id','block_'+dropImage.count);
+
+        var rndNo = Math.floor(Math.random() * game.length);
+        var thisBlock = game[rndNo];
+        //remove game
+        delete game[rndNo];
+        image_block.attr('match_id',thisBlock.id);
+        $('img',image_block).attr('src',thisBlock.image_block.src)
+        console.log("app.js dropImage rand",game)
+
         console.log("app.js dropImage running");
 
 
@@ -95,34 +130,13 @@ var dropImage = {
         },speed,function () {
             dropImage.position.dropped(this);
             //we can now drop again
-            setTimeout(dropImage.drop,0);
+            //setTimeout(dropImage.drop,0);
         });
 
     }
 };
 
-//Handles images matching with words just an array
-//This is just to build a game , below would actually come from a ajax call
-var words = ['Rock', 'Paper', 'Scissor'];
-var images = ['images/rock.jog', 'iamges/paper.jpg', 'images/sissors.jpg'];
 
-var game = [];
-
-
-for (var i = 0; i < words.length; i++){
-
-    var match = {
-        image_block  : {
-            src : images[i]
-        },
-        word_block  :  {
-            text : words[i]
-        }
-    };
-    game.push(match);
-}
-
-console.log("game",game);
 
 
 
@@ -219,7 +233,7 @@ $(document).on('pageinit','#start_game',function(){
 
     createWords();
     //lets drop an image div down
-    //dropImage.drop();
+    dropImage.drop();
 //    dropImage.drop();
 });
 function createWords(){
@@ -233,7 +247,7 @@ function createWords(){
         //create random id
         var random_id = guidGenerator();
         game[i].id = random_id;
-        console.log("gm",gm);
+        //console.log("gm",gm);
         word_block.attr('id',random_id);
 
         //for word_block puposes
@@ -284,3 +298,4 @@ function guidGenerator() {
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
+
