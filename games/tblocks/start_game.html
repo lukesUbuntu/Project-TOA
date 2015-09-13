@@ -7,7 +7,7 @@
 
     <script>
         //if no gameModule loaded we have been loaded directly lets fix that
-        if (typeof gameModule == "undefined") window.location.href = "/Project-TOA/games/tblocks";
+        if (typeof gameModule == "undefined") window.location.href = "index.html";
     </script>
 
 </head>
@@ -19,7 +19,7 @@
     <div data-role="content">
         <div class="ui-block-a">
             score :
-            <span id="score">0</span>
+            <span class="game_score">0</span>
         </div>
         <div class="ui-grid-a">
             <div class="ui-block-a"></div>
@@ -30,7 +30,11 @@
             <div id="image_block_grid" class="ui-block-a"></div>
             <div id="word_block_grid" class="ui-block-b"></div>
         </div>
-
+        <div id="game_over" class="ui-grid-b ui-corner-all ui-shadow" style="display:none;padding: 1em;">
+            <h1>Game Over!!
+                You Scored <span class="game_score">0</span></h1>
+            <button onclick="refreshPage()" id="play_again">Play Again!</button>
+        </div>
     </div>
     <!-----------hidden or cloned elements below here !---------->
 

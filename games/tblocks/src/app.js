@@ -5,6 +5,11 @@
 
 "use strict";
 
+//Globals
+var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
+
+
+
 //Handles images matching with words just an array
 //This is just to build a game , below would actually come from a ajax call
 var words = ['Rock', 'Paper', 'Scissor'];
@@ -39,6 +44,11 @@ var gameModule = {
         height: null,   //current screen
         width: null
     },
+    _score : 0,
+    score :function(){
+        this._score+= 50;
+        this.setScore()
+    },
     renderHeight : function(pert){  //render a % of document height
         return (typeof pert != "undefined") ? this.screen.height * pert / 100 : this.screen.height;
     },
@@ -51,8 +61,9 @@ var gameModule = {
     isElement : function($element){ //checks if we have a valid jquery Object & element exists
         return (typeof $element != "undefined" && $element instanceof jQuery && $element.length);
     },
-    score : function(){
-        $("#score").text(parseInt($("#score").text()) + 50);
+    setScore : function(){
+        //basic scorer for testing not actuall score
+        $(".game_score").text(this._score);
     }
 
 };
@@ -81,7 +92,7 @@ var dropImage = {
     remove: function(image){
         console.log("removing block")
         $(image).hide();
-        this.top = this.top + 200 - 1;//offset 1px so were not touching
+        dropImage.top = dropImage.top + 200 - 1;//offset 1px so were not touching
         gameModule.score();
     },
     count :0,
@@ -109,12 +120,22 @@ var dropImage = {
         var desiredDrop = dropImage.position.get() - 50;     //desired position offset 50
         var speed   = 3 * 1000; //2 second move
 
+        //see if we need to re-shuffe our game stack
+        if (dropImage.count >= game.length){
+            //reset count
+            dropImage.count = 0;
+            game = shuffle(game);
+        }
 
-        if (desiredDrop < image_block.height() || dropImage.count >= game.length){
+
+        if (desiredDrop < image_block.height()){
             //can not drop any more blocks
+            $("#game_grid").hide();
+            $("#game_over").show();
             console.log("app.js can not drop any more blocks");
             return false;
         }
+
         //get this block we want to show
         var thisBlock = game[dropImage.count];
 
@@ -192,8 +213,6 @@ $(document).on('pageinit','#splash',function(){
 });
 
 
-//Globals
-var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
 
 
 /**
@@ -260,11 +279,13 @@ $(document).on('pageinit','#start_game',function(){
     dropImage.drop();
 //    dropImage.drop();
 });
+
+/**
+ * Adds the words into the word grid from a game array
+ */
 function createWords(){
     //loops our game array and adds the words into space
     //append our word block to our word block grid
-
-
     $.each(game,function(i,gm){
         //clone a word block
         var word_block = word_blocks.clone();
@@ -291,10 +312,8 @@ function createWords(){
     console.log("game normal",game);
     game = shuffle(game);
     console.log("game randomized",game);
-
-
-    //word_block_grid.append(word_blocks);
 }
+
 /**
  * Fake Loading Demo lol
  */
@@ -346,3 +365,20 @@ function shuffle(array) {
     return array;
 }
 
+/**
+ * Reloads/Refreshes our page
+ */
+function refreshPage() {
+
+    return window.location.href = "index.html";
+    //will fix this
+    $.mobile.changePage(
+        window.location.href = "index.html",
+        {
+            allowSamePageTransition : true,
+            transition              : 'none',
+            showLoadMsg             : false,
+            reloadPage              : true
+        }
+    );
+}
