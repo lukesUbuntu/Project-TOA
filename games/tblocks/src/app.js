@@ -82,6 +82,12 @@ var dropImage = {
         image_block.show();
         image_block.css('background-color' , 'black');//jst so i can see where its rendering lol
 
+        image_block.droppable({
+            over: function(event, ui) {
+                console.log('You are over item with id ' + this.id);
+                return false;
+            }
+        });
 
         console.log("this.position.get()",dropImage.position.get());
 
@@ -214,18 +220,7 @@ $(document).on('pageinit','#start_game',function(){
 
 
     word_block.draggable({
-        revert: true,
-        drag: function (e, ui) {
-            var elem = $(ui.helper),
-                id = elem.attr('id'),
-                data = elem.data('example');
-
-            $('h1').text(data + ' being dragged! #' + id);
-        },
-        revert: function (e, ui) {
-            $('h1').text('---');
-            return !e;
-        }
+        revert: true
     });
 
     word_block_grid.append(word_block);
