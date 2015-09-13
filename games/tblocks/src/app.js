@@ -85,22 +85,10 @@ var dropImage = {
         image_block.droppable({
             over: function(event, ui) {
                 console.log('You are over item with id ' + this.id);
-                return false;
+                console.log('Dragged: ' + $(ui.draggable).attr("id"));
             }
         });
 
-        console.log("this.position.get()",dropImage.position.get());
-
-
-
-
-        //var newPosition = windowHeight - (lineHeight - desiredBottom);
-
-        //newPosition
-        //console.log("$game_grid.height()",$game_grid.height());
-        console.log("image.height",image_block.height())
-        console.log("desiredDrop",desiredDrop);
-        console.log("image_block.position()",image_block.position());
         //drop the image
         image_block.animate({top:  desiredDrop
 
@@ -113,9 +101,28 @@ var dropImage = {
     }
 };
 
+//Handles images matching with words just an array
+//This is just to build a game , below would actually come from a ajax call
+var words = ['Rock', 'Paper', 'Scissor'];
+var images = ['images/rock.jog', 'iamges/paper.jpg', 'images/sissors.jpg'];
+
+var game = [];
 
 
+for (var i = 0; i < words.length; i++){
 
+    var match = {
+        image_block  : {
+            src : images[i]
+        },
+        word_block  :  {
+            text : words[i]
+        }
+    };
+    game.push(match);
+}
+
+console.log("game",game);
 
 
 
@@ -133,7 +140,6 @@ $(document).on('pageinit','#splash',function(){
     //lets passheight to our gamemodule
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
     gameModule.screen.width = $(window).width();
-    console.log("gameModule",gameModule);
 
     $('body').on('click', '#play_game', function() {
         $.mobile.changePage('start_game.html', {
@@ -180,13 +186,13 @@ $(document).on('pageinit','#start_game',function(){
     image_block_grid.css({
         'width': gameModule.renderWidth(40) + 'px',
         'height': gameModule.renderHeight(80) + 'px',
-        'border': '1px',
+        'border': '1px'
 
     });
     //lets render our word block grid container
     word_block_grid.css({
         'width': gameModule.renderWidth(40) + 'px',
-        'height': gameModule.renderHeight(80) + 'px',
+        'height': gameModule.renderHeight(80) + 'px'
         //'border': '1px'
     });
 
@@ -208,32 +214,49 @@ $(document).on('pageinit','#start_game',function(){
         'position': 'absolute'
     });
 
-    //append our word block to our word block grid
-    //clone a word block
-    var word_block = word_blocks.clone();
-    word_block.attr('id','test');
-    //for word_block puposes
-    word_block.css('background-color' , 'green');//jst so i can see where its rendering lol
-    word_block.show();
-    word_block.text("test")
-    //word_block.draggable();
 
-
-    word_block.draggable({
-        revert: true
-    });
-
-    word_block_grid.append(word_block);
-
-    word_block_grid.append(word_blocks);
     console.log("app.js finished game setup");
 
-
+    createWords();
     //lets drop an image div down
-    dropImage.drop();
+    //dropImage.drop();
 //    dropImage.drop();
 });
+function createWords(){
+    //loops our game array and adds the words into space
+    //append our word block to our word block grid
 
+
+    $.each(game,function(i,gm){
+        //clone a word block
+        var word_block = word_blocks.clone();
+        //create random id
+        var random_id = guidGenerator();
+        game[i].id = random_id;
+        console.log("gm",gm);
+        word_block.attr('id',random_id);
+
+        //for word_block puposes
+        word_block.css('background-color' , 'green');//jst so i can see where its rendering lol
+        word_block.show();
+        word_block.text(gm.word_block.text)
+        //word_block.draggable();
+
+
+        word_block.draggable({
+            revert: true
+        });
+
+        word_block_grid.append(word_block);
+    });
+
+
+    console.log("game",game);
+
+
+
+    //word_block_grid.append(word_blocks);
+}
 /**
  * Fake Loading Demo lol
  */
@@ -250,4 +273,14 @@ function splashScreen(){
     setTimeout(function(){
         $.mobile.changePage("game.html", "fade");
     }, 4000);
+}
+
+/**
+ * Create a random GUID for matching id and drop image
+ */
+function guidGenerator() {
+    var S4 = function() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
