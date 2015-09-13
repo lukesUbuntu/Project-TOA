@@ -92,7 +92,7 @@ var dropImage = {
     remove: function(image){
         console.log("removing block")
         $(image).hide();
-        dropImage.top = dropImage.top + 200 - 1;//offset 1px so were not touching
+        this.position.top = this.position.top + $(image).height() - 1;//offset 1px so were not touching
         gameModule.score();
     },
     count :0,
@@ -118,6 +118,7 @@ var dropImage = {
         //$game_grid.append($word_blocks);
 
         var desiredDrop = dropImage.position.get() - 50;     //desired position offset 50
+        console.log("desiredDrop",desiredDrop)
         var speed   = 3 * 1000; //2 second move
 
         //see if we need to re-shuffe our game stack
