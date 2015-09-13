@@ -194,7 +194,7 @@ var dropImage = {
 $(document).on('pageinit','#splash',function(){
 
     //just splash screen while int.
-    if (!gameModule.debug)
+//    if (!gameModule.debug)
     splashScreen();
 
     //lets passheight to our gamemodule
@@ -208,9 +208,7 @@ $(document).on('pageinit','#splash',function(){
         return false;
     });
 
-    //while in debug lets just go straight to page for live editing
-    if (gameModule.debug)
-        $.mobile.changePage("start_game.html", "fade");
+
 });
 
 
@@ -329,8 +327,12 @@ function splashScreen(){
     },500);
     // the .on() method does require jQuery 1.7 + but this will allow you to have the contained code only run when the #splash page is initialized.
     setTimeout(function(){
+        //while in debug lets just go straight to page for live editing
+        if (gameModule.debug)
+            $.mobile.changePage("start_game.html", "fade");
+        else
         $.mobile.changePage("game.html", "fade");
-    }, 4000);
+    }, 3000);
 }
 
 /**
