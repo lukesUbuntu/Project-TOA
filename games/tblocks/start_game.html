@@ -17,6 +17,10 @@
         <h1>T Blocks</h1>
     </div>
     <div data-role="content">
+        <div class="ui-block-a">
+            score :
+            <span id="score">0</span>
+        </div>
         <div class="ui-grid-a">
             <div class="ui-block-a"></div>
             <div class="ui-block-b"></div>
@@ -32,10 +36,10 @@
 
     <!--our image block to drop into game_grid !-->
     <div id="image_block" class="ui-block-c" style="display:none">
-        <img id="image" src="" style="display: block; margin: 0 auto" />
+        <img id="image" src="" style="display: block; margin: 0 auto; max-width: 100%;max-height: 100%" />
     </div><!--end image block !-->
     <!--our word block start to store words!-->
-    <div id="word_blocks" class="ui-block-b ui-corner-all ui-shadow" style="display:none">
+    <div id="word_blocks" class="ui-block-b ui-corner-all ui-shadow" style="display:none;">
 
     </div><!--end word block !-->
 </div>

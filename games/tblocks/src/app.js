@@ -8,7 +8,7 @@
 //Handles images matching with words just an array
 //This is just to build a game , below would actually come from a ajax call
 var words = ['Rock', 'Paper', 'Scissor'];
-var images = ['images/rock.jog', 'images/paper.png', 'iamges/sissors.png'];
+var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png'];
 
 var game = [];
 
@@ -50,6 +50,9 @@ var gameModule = {
     },
     isElement : function($element){ //checks if we have a valid jquery Object & element exists
         return (typeof $element != "undefined" && $element instanceof jQuery && $element.length);
+    },
+    score : function(){
+        $("#score").text(parseInt($("#score").text()) + 50);
     }
 
 };
@@ -75,6 +78,12 @@ var dropImage = {
             dropImage.count++;
         }
     },
+    remove: function(image){
+        console.log("removing block")
+        $(image).hide();
+        this.top = this.top + 200 - 1;//offset 1px so were not touching
+        gameModule.score();
+    },
     count :0,
     drop: function(){
         //if we don't pass anything lets just grab the standard element locations
@@ -88,13 +97,7 @@ var dropImage = {
         //change id_name
         image_block.attr('id','block_'+dropImage.count);
 
-        var rndNo = Math.floor(Math.random() * game.length);
-        var thisBlock = game[rndNo];
-        //remove game
-        delete game[rndNo];
-        image_block.attr('match_id',thisBlock.id);
-        $('img',image_block).attr('src',thisBlock.image_block.src)
-        console.log("app.js dropImage rand",game)
+
 
         console.log("app.js dropImage running");
 
@@ -103,15 +106,27 @@ var dropImage = {
         $image_grid.append(image_block);
         //$game_grid.append($word_blocks);
 
-        var desiredDrop = dropImage.position.get() - 50     //desired position offset 50
-        var speed   = 1 * 1000; //2 second move
+        var desiredDrop = dropImage.position.get() - 50;     //desired position offset 50
+        var speed   = 3 * 1000; //2 second move
 
 
-        if (desiredDrop < image_block.height()){
+        if (desiredDrop < image_block.height() || dropImage.count >= game.length){
             //can not drop any more blocks
-            console.log("app.js can not drop any more blocks")
+            console.log("app.js can not drop any more blocks");
             return false;
         }
+        //get this block we want to show
+        var thisBlock = game[dropImage.count];
+
+        image_block.attr('match_id',thisBlock.id);
+
+        $('img',image_block)
+            .attr('src',thisBlock.image_block.src)
+            .css({
+                'width'  : image_block.width(),
+                'height' : image_block.height()
+            });
+        console.log("app.js dropImage rand",game);
 
         //lets just display where our image is for testing
         image_block.show();
@@ -120,7 +135,13 @@ var dropImage = {
         image_block.droppable({
             over: function(event, ui) {
                 console.log('You are over item with id ' + this.id);
+                console.log('match_id ' + $(this).attr('match_id'));
                 console.log('Dragged: ' + $(ui.draggable).attr("id"));
+
+                if ($(this).attr('match_id') == $(ui.draggable).attr("id")){
+                    dropImage.remove(this);
+                }
+
             }
         });
 
@@ -128,9 +149,12 @@ var dropImage = {
         image_block.animate({top:  desiredDrop
 
         },speed,function () {
+            //disable droppable
+            image_block.droppable('disable');
+
             dropImage.position.dropped(this);
             //we can now drop again
-            //setTimeout(dropImage.drop,0);
+            setTimeout(dropImage.drop,0);
         });
 
     }
@@ -264,9 +288,9 @@ function createWords(){
         word_block_grid.append(word_block);
     });
 
-
-    console.log("game",game);
-
+    console.log("game normal",game);
+    game = shuffle(game);
+    console.log("game randomized",game);
 
 
     //word_block_grid.append(word_blocks);
@@ -297,5 +321,28 @@ function guidGenerator() {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+/**
+ * Shuffles Array
+ * @param array
+ * @returns {*} Shuffled Array
+ */
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
 
