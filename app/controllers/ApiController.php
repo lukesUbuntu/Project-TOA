@@ -87,6 +87,8 @@ class ApiController extends ControllerBase
     }
     /**
      * @api {get} /usersGames Returns all users games
+     * @api {get} /usersGames?prefix=test   Returns games matching test
+     *
      * @apiName usersGamesAction
      *
      * @apiDescription returns a list of the current logged in users games
@@ -150,13 +152,48 @@ class ApiController extends ControllerBase
             if (!Sentry::check())
                 return $this->Api()->response("no user logged in",false);
 
+            //possible get users game by prefix if passed
+            $prefix = (isset($_GET['prefix'])) ? $_GET['prefix'] : false;
+
+
+
             // Get the current active/logged in users game
-            $users_games = \UsersHasGame::findFirst( array('users_id' => Sentry::getUser()->id));
+           // $users_games = \UsersHasGame::findfirst(array('users_id' => Sentry::getUser()->id));
+            $users_id = Sentry::getUser()->id;
 
+            $users_games = \UsersHasGame::find("users_id = '$users_id'");
+
+
+            //check if user has any games
             if(count($users_games) <= 0)
-                $this->Api()->response("no game data found for user",false);
+                return $this->Api()->response("no game data found for user",false);
 
-            return $this->Api()->response($users_games->apiCall(),true);
+            //loop users games
+            $games = array();
+            foreach($users_games as $game){
+
+                if (!$prefix)
+                $games[] = $game->apiCall();
+                else//condition
+                    if ($prefix == $game->Game->prefix){
+                        $games = $game->apiCall();
+                        break;
+                    }
+
+
+
+            }
+            //if searching via prefix recheck game
+            if (count($games > 0 ))
+                return $this->Api()->response($games,true);
+
+
+
+                return $this->Api()->response("no user games found",false);
+
+
+
+
         }
         catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
         {
@@ -165,7 +202,71 @@ class ApiController extends ControllerBase
         }
 
     }
+    /**
+     * Save game data
+     * score
+     */
+    public function saveGameDataAction()
+    {
+        try
+        {
+            $GET = $_GET;
+            //check if a user is logged in
+            if (!Sentry::check())
+                return $this->Api()->response("no user logged in",false);
 
+            // Get the current active/logged in users game
+            $users_games = \UsersHasGame::findFirst( array('users_id' => Sentry::getUser()->id));
+
+            if(count($users_games) <= 0)
+                return $this->Api()->response("no game data found for user",false);
+
+            //we have valid user
+            //get game_score
+            if (!isset($GET['game_score']))  //move to phalcon ifnull
+               return $this->Api()->response("Failed game_score",false);
+
+             //get game_prefix
+            if (!isset($GET['prefix']))  //move to phalcon ifnull
+                return $this->Api()->response("Failed prefix",false);
+
+            //end here with prefix and score
+            $prefix = $GET['prefix'];
+            $game_score = $GET['game_score'];
+            $game = \Game::findFirst("prefix = '$prefix'");
+
+            if($game && $game->count() > 0){    //we have game
+              //we have game object
+                $game_id = $game->game_id;
+                $theGame = \UsersHasGame::findFirst("game_game_id = '$game_id'");
+                if($theGame && $theGame->count() > 0){
+
+                    $theGame->game_score = $game_score;
+                    //var_dump($game);exit;
+                    $theGame->save();
+                    return $this->Api()->response("updated game");
+                }else{
+                    $NewGame = new \UsersHasGame;
+                    //push any changes
+                    $NewGame->game_game_id = $game->game_id;
+                    $NewGame->game_score = $game_score;
+                    $NewGame->users_id = Sentry::getUser()->id;
+                    $NewGame->save();
+                    return $this->Api()->response("updated game");
+                }
+
+
+            }else
+            return $this->Api()->response("haxor",false);
+
+        }
+        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+        {
+            // User wasn't found, should only happen if the user was deleted during api call
+            return $this->Api()->response("no user logged in",false);
+        }
+
+    }
     /**
      * @api {get} /listGames Returns all games
      * @apiName listGamesAction
