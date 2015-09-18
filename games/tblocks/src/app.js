@@ -5,6 +5,20 @@
 
 "use strict";
 
+
+
+//testing
+//get score
+
+
+
+
+
+
+
+
+
+
 //Globals
 var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
 
@@ -397,4 +411,32 @@ function refreshPage() {
             reloadPage              : true
         }
     );
+}
+
+/**
+ * get current score for game
+ */
+function getScore(){
+    $.getJSON('/api/usersGames?prefix=tblocks',function(response){
+        console.log("response",response)
+        if (response.success == true){
+            console.log("response.data",response.data);
+            return response.data.game_score;
+        }
+
+    })
+};
+
+/**
+ * Set current for game
+ * @param score
+ */
+function setScore(score){
+    //saveGameData?game_score=454545&prefix=tblocks
+    $.getJSON('/api/saveGameData?prefix=tblocks&game_score='+score,function(response){
+        console.log("response",response)
+        if (response.success == true){
+            console.log("response.data",response.data);
+        }
+    });
 }
