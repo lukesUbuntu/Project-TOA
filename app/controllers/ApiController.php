@@ -87,6 +87,8 @@ class ApiController extends ControllerBase
     }
     /**
      * @api {get} /usersGames Returns all users games
+     * @api {get} /usersGames?prefix=test   Returns games matching test
+     *
      * @apiName usersGamesAction
      *
      * @apiDescription returns a list of the current logged in users games
