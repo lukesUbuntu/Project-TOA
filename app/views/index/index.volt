@@ -40,7 +40,8 @@
                     <img src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/face80x80.jpg" alt="Marcel Newman" class="img-circle">
                 </div><!-- /thumbnail -->
                 <h1></h1>
-                <h3>Madrid, Spain</h3>
+
+                <h3> {{ User.gamerTag }}</h3>
                 <br>
                 <div class="info-user">
                     <span aria-hidden="true" class="li_user fs1"></span>
@@ -84,10 +85,18 @@
 
             <!-- SERVER UPTIME -->
             <div class="half-unit">
-                <dtitle>Paua Shells</dtitle>
+                <dtitle>Feathers</dtitle>
                 <hr>
                 <div class="cont">
-                    <p><bold>5,0000</bold> | paua.</p>
+                    <p>
+                        <bold>
+                            <!--
+                            feathers goes here from users object
+                            !-->
+                            {{ User.feathers_earned }}
+                        </bold>
+                        | feathers.
+                    </p>
                 </div>
             </div>
 

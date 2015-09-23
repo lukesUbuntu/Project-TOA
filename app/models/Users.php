@@ -81,6 +81,12 @@ class Users extends \Phalcon\Mvc\Model
      *
      * @var string
      */
+    public $gamerTag;
+
+    /**
+     *
+     * @var string
+     */
     public $created_at;
 
     /**
@@ -89,6 +95,12 @@ class Users extends \Phalcon\Mvc\Model
      */
     public $updated_at;
 
+    /**
+     *
+     * @var integer
+     */
+    public $feathers_earned;
+	
     /**
      * Validations and business logic
      */
@@ -113,7 +125,6 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-
         $this->hasMany('id', 'Users_has_game', 'users_id', array('alias' => 'Users_has_game'));
     }
 
@@ -138,9 +149,24 @@ class Users extends \Phalcon\Mvc\Model
             'reset_password_code' => 'reset_password_code', 
             'first_name' => 'first_name', 
             'last_name' => 'last_name', 
-            'created_at' => 'created_at', 
-            'updated_at' => 'updated_at'
+            'created_at' => 'created_at',
+            'updated_at' => 'updated_at',
+            'feathers_earned' => 'feathers_earned',
+            'gamertag' => 'gamerTag'
         );
+    }
+
+    //return the current feathers of this user
+    public function getFeathers()
+    {
+
+        return array('feathers' => $this->feathers_earned);
+    }
+
+    //add feathers to the user
+    public function addFeather()
+    {
+        $this->feathers_earned++;
     }
 
     /**
@@ -154,5 +180,6 @@ class Users extends \Phalcon\Mvc\Model
         unset($this->activation_code);
         return $this;
     }
+
 
 }
