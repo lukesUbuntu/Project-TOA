@@ -1,6 +1,6 @@
 {
-	"name" : "This is my test Game",
-	"description" : "The description",
+  "name": "TBlocks",
+  "description": "Tblocks match images and words",
 	"start_file" : "index.html",
 	"author" : "Luke"
 }
