@@ -24,6 +24,21 @@ $di->set('url', function () use ($config) {
 }, true);
 
 /**
+ * Returns a gamePrefix
+ * @description returns the root folder of where the game location is. This is our game prefix
+ */
+$di->set('gamePrefix', function () use ($config) {
+    $request = new Phalcon\Http\Request();
+    //simple regex the the config gameWebRoot folder and extract the first path after
+    if (preg_match('#' . $config->application->gameWebRoot . '/(.*)/#', $request->getHTTPReferer(), $prefixs))
+        return (count($prefixs) > 1) ? $prefixs[1] : false;
+
+    return false;
+
+}, true);
+
+
+/**
  * Setting up the view component
  */
 $di->set('view', function () use ($config) {

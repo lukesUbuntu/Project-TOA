@@ -7,13 +7,14 @@ class ApiController extends ControllerBase
     //holder for our api libary
     private $_api = null;
 
+    private $_request = null;
     /**
-     *
+     * Construct
      */
     public function onConstruct(){
         //disable view
         $this->view->disable();
-
+        //$this->_request = new Phalcon\Http\Request();
     }
     /**
      *
@@ -24,7 +25,7 @@ class ApiController extends ControllerBase
     }
 
     /**
-     *
+     * API
      */
     protected function Api()
     {
@@ -61,9 +62,9 @@ class ApiController extends ControllerBase
      *       "data": "no user logged in"
      *       }
      * @apiSuccessExample {json} Success-Response:
-    * {
-        * "success": true,
-            * "data": {
+     * {
+     * "success": true,
+     * "data": {
      * "id":           "2",
      * "email":        "test@test.com",
      * "permissions":  null,
@@ -90,7 +91,7 @@ class ApiController extends ControllerBase
             return $this->Api()->response($user->apiCall(), true);
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             // User wasn't found, should only happen if the user was deleted during api call
-            return $this->Api()->response("no user logged in",false);
+            return $this->Api()->response("no user logged in", false);
         }
     }
 
@@ -99,14 +100,13 @@ class ApiController extends ControllerBase
      */
     public function addFeatherAction()
     {
-        try
-        {
+        try {
             //check if a user is logged in
             if (!Sentry::check())
                 return $this->Api()->response("no user logged in", false);
 
             // Get the current active/logged in user
-            $user = Users::findFirst( Sentry::getUser()->id);
+            $user = Users::findFirst(Sentry::getUser()->id);
             $user->addFeather();
             $user->save();
 
@@ -119,7 +119,33 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @description gets the feathers for users
+     * @api {get} /getFeathers Returns the current users feather count
+     *
+     * @apiName getFeathers
+     *
+     * @apiDescription returns users current feathers owned
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/getFeathers
+     *
+     * @apiSuccess {Int}      game_game_id  Game ID of the game
+     * @apiSuccess {Int}      game_score    Users current score on this game
+     * @apiSuccess {Int}      users_id      User ID
+     * @apiSuccess {Object}   game_details   Refer to Game::Object or api /listGames
+     * @apiSuccess {Object}   user_details   Refer to User::Object or api /user
+     *
+     * @apiError no feathers count
+     *
+     * @apiErrorExample {json} Failed-Login:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "no user logged in"
+     *     }
+     * @apiErrorExample {json} Failed-Response:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "no game data found for user"
+     *     }
      */
     public function getFeathersAction()
     {
@@ -195,13 +221,12 @@ class ApiController extends ControllerBase
      * "created_at": "2015-08-07 22:15:06",
      * "updated_at": "2015-08-27 00:34:53"
      * }
-            * }
-    * }
+     * }
+     * }
      */
     public function usersGamesAction()
     {
-        try
-        {
+        try {
             //check if a user is logged in
             if (!Sentry::check())
                 return $this->Api()->response("no user logged in", false);
@@ -218,7 +243,7 @@ class ApiController extends ControllerBase
 
 
             //check if user has any games
-            if(count($users_games) <= 0)
+            if (count($users_games) <= 0)
                 return $this->Api()->response("no game data found for user", false);
 
             //loop users games
@@ -237,18 +262,13 @@ class ApiController extends ControllerBase
             }
             //if searching via prefix recheck game
             if (count($games > 0))
-                return $this->Api()->response($games,true);
+                return $this->Api()->response($games, true);
 
 
-
-                return $this->Api()->response("no user games found",false);
-
+            return $this->Api()->response("no user games found", false);
 
 
-
-        }
-        catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-        {
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             // User wasn't found, should only happen if the user was deleted during api call
             return $this->Api()->response("no user logged in", false);
         }
@@ -256,8 +276,7 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @api {get} /saveGameData saves game data
-     * @api {get} /saveGameData?game_score=10&   Returns games matching test
+     * @api {get} /saveGameData?game_score=10   saves game data score
      *
      * @apiName usersGamesAction
      *
@@ -266,11 +285,7 @@ class ApiController extends ControllerBase
      * @apiExample Example usage:
      * http://localhost/api/saveGameData
      *
-     * @apiSuccess {Int}      game_game_id  Game ID of the game
-     * @apiSuccess {Int}      game_score    Users current score on this game
-     * @apiSuccess {Int}      users_id      User ID
-     * @apiSuccess {Object}   game_details   Refer to Game::Object or api /listGames
-     * @apiSuccess {Object}   user_details   Refer to User::Object or api /user
+     * @apiSuccess {String}   data          updated game
      *
      * @apiError no games in system
      *
@@ -294,11 +309,9 @@ class ApiController extends ControllerBase
      */
     public function saveGameDataAction()
     {
-        //used for getting request
-        $request = new Phalcon\Http\Request();
+
         try {
 
-            $GET = $_GET;
             //check if a user is logged in
             if (!Sentry::check())
                 return $this->Api()->response("no user logged in", false);
@@ -306,24 +319,18 @@ class ApiController extends ControllerBase
             // Get the current active/logged in users game
             $users_games = \UsersHasGame::findFirst(array('users_id' => Sentry::getUser()->id));
 
+            //we have valid user
             if (count($users_games) <= 0)
                 return $this->Api()->response("no game data found for user", false);
 
-            //we have valid user
+
             //get game_score
-            $game_score = $request->getQuery("game_score", null, false);
+            $game_score = $this->Request()->getQuery("game_score", null, false);
+            if (!$game_score) return $this->Api()->response("Failed game_score", false);
 
-            if (!$game_score)  //move to phalcon ifnull
-                return $this->Api()->response("Failed game_score", false);
-
-            //get game_prefix
-
-            $prefix = $request->getQuery("prefix", null, false);
-            if (!$prefix)  //move to phalcon ifnull
-                return $this->Api()->response("Failed prefix", false);
 
             //end here with prefix and score
-            $game = \Game::findFirst("prefix = '$prefix'");
+            $game = \Game::findFirst("prefix = '$this->gamePrefix'");
 
             if ($game && $game->count() > 0) {    //we have game
                 //we have game object
@@ -354,6 +361,14 @@ class ApiController extends ControllerBase
             return $this->Api()->response("no user logged in", false);
         }
 
+    }
+
+    protected function Request()
+    {
+        if ($this->_request == null)
+            $this->_request = new Phalcon\Http\Request();
+
+        return $this->_request;
     }
 
     /**
