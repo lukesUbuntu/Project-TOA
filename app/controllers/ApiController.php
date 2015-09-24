@@ -256,12 +256,48 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * Save game data
-     * score
+     * @api {get} /saveGameData saves game data
+     * @api {get} /saveGameData?game_score=10&   Returns games matching test
+     *
+     * @apiName usersGamesAction
+     *
+     * @apiDescription returns a list of the current logged in users games
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/saveGameData
+     *
+     * @apiSuccess {Int}      game_game_id  Game ID of the game
+     * @apiSuccess {Int}      game_score    Users current score on this game
+     * @apiSuccess {Int}      users_id      User ID
+     * @apiSuccess {Object}   game_details   Refer to Game::Object or api /listGames
+     * @apiSuccess {Object}   user_details   Refer to User::Object or api /user
+     *
+     * @apiError no games in system
+     *
+     * @apiErrorExample {json} Failed-Login:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "no user logged in"
+     *     }
+     * @apiErrorExample {json} Failed-Response:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "no game data found for user"
+     *     }
+     *
+     * @apiErrorExample {json} Failed-Prefix:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "Failed prefix"
+     *     }
+     *
      */
     public function saveGameDataAction()
     {
+        //used for getting request
+        $request = new Phalcon\Http\Request();
         try {
+
             $GET = $_GET;
             //check if a user is logged in
             if (!Sentry::check())
@@ -275,16 +311,18 @@ class ApiController extends ControllerBase
 
             //we have valid user
             //get game_score
-            if (!isset($GET['game_score']))  //move to phalcon ifnull
+            $game_score = $request->getQuery("game_score", null, false);
+
+            if (!$game_score)  //move to phalcon ifnull
                 return $this->Api()->response("Failed game_score", false);
 
             //get game_prefix
-            if (!isset($GET['prefix']))  //move to phalcon ifnull
+
+            $prefix = $request->getQuery("prefix", null, false);
+            if (!$prefix)  //move to phalcon ifnull
                 return $this->Api()->response("Failed prefix", false);
 
             //end here with prefix and score
-            $prefix = $GET['prefix'];
-            $game_score = $GET['game_score'];
             $game = \Game::findFirst("prefix = '$prefix'");
 
             if ($game && $game->count() > 0) {    //we have game
@@ -309,7 +347,7 @@ class ApiController extends ControllerBase
 
 
             } else
-                return $this->Api()->response("haxor", false);
+                return $this->Api()->response("Invalid Prefix", false);
 
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             // User wasn't found, should only happen if the user was deleted during api call
