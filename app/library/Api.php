@@ -40,6 +40,7 @@ class Api
         $response->setStatusCode($status_code, $status_message);
         $response->setContentType('application/json', 'utf-8');
         $response->setHeader('Access-Control-Allow-Origin', '*');
+        $response->setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         //encode call
         $json = json_encode(array('success' => $success, 'data' => $data));
         //set response to send back check for callback

@@ -95,6 +95,15 @@ class ApiController extends ControllerBase
         }
     }
 
+    //returns a word
+    public function wordsAction()
+    {
+
+        $wordsData = \Words::find();
+        return $this->Api()->response($wordsData->toArray(), true);
+
+    }
+
     /**
      * @description gets the feathers for users
      */
@@ -107,7 +116,16 @@ class ApiController extends ControllerBase
 
             // Get the current active/logged in user
             $user = Users::findFirst(Sentry::getUser()->id);
+
+
+            $feathers = $this->Request()->getQuery("amount", null, false);
+
+            if ($feathers)
+                $user->addFeathers($feathers);
+            else
             $user->addFeather();
+
+
             $user->save();
 
             return $this->Api()->response("Updated", true);
@@ -116,6 +134,14 @@ class ApiController extends ControllerBase
             return $this->Api()->response("no user logged in", false);
         }
 
+    }
+
+    protected function Request()
+    {
+        if ($this->_request == null)
+            $this->_request = new Phalcon\Http\Request();
+
+        return $this->_request;
     }
 
     /**
@@ -361,14 +387,6 @@ class ApiController extends ControllerBase
             return $this->Api()->response("no user logged in", false);
         }
 
-    }
-
-    protected function Request()
-    {
-        if ($this->_request == null)
-            $this->_request = new Phalcon\Http\Request();
-
-        return $this->_request;
     }
 
     /**

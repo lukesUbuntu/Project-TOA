@@ -169,6 +169,14 @@ class Users extends \Phalcon\Mvc\Model
         $this->feathers_earned++;
     }
 
+    //add feathers by amount
+    public function addFeathers($amount)
+    {
+        if ($amount <= 5)
+            $this->feathers_earned += $amount;
+
+    }
+
     /**
      * Define what information is allowed from Users to API
      */

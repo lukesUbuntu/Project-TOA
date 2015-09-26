@@ -63,8 +63,11 @@ class LoginController extends \Phalcon\Mvc\Controller
                 'email'    => $email,
                 'password' => $password,
             ));
+
             //login user
             Sentry::login($user, false);
+            $_SESSION['user_id'] = Sentry::getUser()->id;
+
             return $this->response->redirect('index');
 
         }catch(\Exception $e){
@@ -77,6 +80,23 @@ class LoginController extends \Phalcon\Mvc\Controller
         if ($errors) return $errors;
 
         return $this->response->redirect('login');
+    }
+
+    /**
+     * @param array $errors
+     * @return bool | returns false if no errors else returns the re
+     */
+    private function errorCheck($errors = array())
+    {
+        if (count($errors) > 0) {
+            //set any errors
+            foreach ($errors as $error)
+                $this->flash->error($error);
+
+            //return user to login and render errors
+            return $this->view->render('login', 'index');
+        }
+        return false;
     }
 
     /**
@@ -104,7 +124,7 @@ class LoginController extends \Phalcon\Mvc\Controller
         $confirm = $this->request->getPost("confirm", null, false);
         if ($confirm == false) $errors[] = "Missing confirm password";
 
-        if($confirm !=false && $confirm != $password)
+        if ($confirm != false && $confirm != $password)
             $errors[] = "Passwords don't match";
 
         //check any errors
@@ -112,28 +132,21 @@ class LoginController extends \Phalcon\Mvc\Controller
         if ($errors) return $errors;
 
 
-       /** safe to register user below this point **/
+        /** safe to register user below this point **/
 
-        try
-        {
+        try {
             // Let's register a user.
             $user = Sentry::register(array(
-                'email'    => $email,
+                'email' => $email,
                 'password' => $password,
                 'activated' => true,  //activate user
             ));
             // Send activation code to the user so he can activate the account
-        }
-        catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
-        {
+        } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             $errors[] = 'Login field is required.';
-        }
-        catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
-        {
+        } catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
             $errors[] = 'Password field is required.';
-        }
-        catch (Cartalyst\Sentry\Users\UserExistsException $e)
-        {
+        } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
             $errors[] = 'User with this login already exists.';
         }
 
@@ -146,23 +159,6 @@ class LoginController extends \Phalcon\Mvc\Controller
         Sentry::login($user, false);
         return $this->response->redirect('index');
 
-    }
-
-
-    /**
-     * @param array $errors
-     * @return bool | returns false if no errors else returns the re
-     */
-    private function errorCheck($errors = array()){
-        if (count($errors) > 0){
-            //set any errors
-            foreach ($errors as $error)
-                $this->flash->error($error);
-
-            //return user to login and render errors
-            return $this->view->render('login', 'index');
-        }
-        return false;
     }
 
 }
