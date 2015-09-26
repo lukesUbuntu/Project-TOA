@@ -1,6 +1,6 @@
 {
-  "name" : "Hangi-Man",
-  "description" : "Guess the correct word, but don't let your Paua burn!",
-  "start_file" : "index.html",
+  "name" : "HangiMan",
+  "description" : "Keep the Hangi going by correctly guessing the right word!",
+  "start_file" : "index.php",
   "author" : "Nikolai Allen"
 }
