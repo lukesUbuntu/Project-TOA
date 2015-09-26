@@ -63,18 +63,19 @@ class ApiController extends ControllerBase
      *       }
      * @apiSuccessExample {json} Success-Response:
      * {
-     * "success": true,
-     * "data": {
-     * "id":           "2",
-     * "email":        "test@test.com",
-     * "permissions":  null,
-     * "activated":    "1",
-     * "activated_at": null,
-     * "last_login":   "2015-08-27 00:34:53",
-     * "first_name":   null,
-     * "last_name":    null,
-     * "created_at":   "2015-08-07 22:15:06",
-     * "updated_at":   "2015-08-27 00:34:53"
+     *      "success": true,
+     *          "data": {
+     *              "id":           "2",
+     *              "email":        "test@test.com",
+     *              "permissions":  null,
+     *              "activated":    "1",
+     *              "activated_at": null,
+     *              "last_login":   "2015-08-27 00:34:53",
+     *              "first_name":   null,
+     *              "last_name":    null,
+     *              "created_at":   "2015-08-07 22:15:06",
+     *              "updated_at":   "2015-08-27 00:34:53"
+     *
      * }
      * }
      */
@@ -95,7 +96,37 @@ class ApiController extends ControllerBase
         }
     }
 
-    //returns a word
+    /**
+     * @api {get} /words Returns list of words with description english and maori
+     *
+     * @apiName words
+     *
+     * @apiDescription returns users current feathers owned
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/words
+     *
+     * @apiSuccess {Int}      index  index of item
+     * @apiSuccess {String}   mri_word  maori word
+     * @apiSuccess {String}   eng_word  english translation of word
+     * @apiSuccess {String}   img_src   image src tag of word
+     * @apiSuccess {String}   audio_src audio src tag of word
+     * @apiSuccess {String}   desc      description of word
+     *
+     *
+     * @apiSuccessExample {json} Success-response
+     *{
+     *  "success": true,
+     *      "data": {
+     *          "index": "2",
+     *          "mri_word": "kia ora",
+     *          "eng_word": "hello",
+     *          "img_src": "",
+     *          "desc": "",
+     *          "audio_src": ""
+     *      }
+     *}
+     */
     public function wordsAction()
     {
 
@@ -105,7 +136,19 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @description gets the feathers for users
+     * @api {get} /addFeather adds a feather to the users account
+     *
+     * @apiName addFeather
+     *
+     * @apiDescription adds a feather to the users account
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/addFeather
+     * http://localhost/api/addFeather?amount=5 //adds 5 feathers (1 > 5 max)
+     *
+     * @apiSuccess {String}   data      updated
+     *
+     *
      */
     public function addFeatherAction()
     {
@@ -154,11 +197,7 @@ class ApiController extends ControllerBase
      * @apiExample Example usage:
      * http://localhost/api/getFeathers
      *
-     * @apiSuccess {Int}      game_game_id  Game ID of the game
-     * @apiSuccess {Int}      game_score    Users current score on this game
-     * @apiSuccess {Int}      users_id      User ID
-     * @apiSuccess {Object}   game_details   Refer to Game::Object or api /listGames
-     * @apiSuccess {Object}   user_details   Refer to User::Object or api /user
+     * @apiSuccess {Int}      feathers  Users feather count
      *
      * @apiError no feathers count
      *
@@ -172,6 +211,13 @@ class ApiController extends ControllerBase
      *       "success"  :   false,
      *       "data"     :   "no game data found for user"
      *     }
+     * @apiSuccessExample {json} Success-response
+     * {
+     *   "success": true,
+     *      "data": {
+     *          "feathers": 0
+     *      }
+     *   }
      */
     public function getFeathersAction()
     {

@@ -1,0 +1,55 @@
+<?php use Phalcon\Tag; ?>
+<?php echo $this->getContent(); ?>
+
+<table width="100%">
+    <tr>
+        <td align="left">
+            <?php echo $this->tag->linkTo(array("words/index", "Go Back")); ?>
+        </td>
+        <td align="right">
+            <?php echo $this->tag->linkTo(array("words/new", "Create ")); ?>
+        </td>
+    </tr>
+</table>
+
+<table class="browse" align="center">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Mri Of Word</th>
+            <th>Eng Of Word</th>
+            <th>Img Of Src</th>
+            <th>Desc</th>
+            <th>Audio Of Src</th>
+         </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($page->items as $word) { ?>
+        <tr>
+            <td><?php echo $word->index ?></td>
+            <td><?php echo $word->mri_word ?></td>
+            <td><?php echo $word->eng_word ?></td>
+            <td><?php echo $word->img_src ?></td>
+            <td><?php echo $word->desc ?></td>
+            <td><?php echo $word->audio_src ?></td>
+            <td><?php echo $this->tag->linkTo(array("words/edit/" . $word->index, "Edit")); ?></td>
+            <td><?php echo $this->tag->linkTo(array("words/delete/" . $word->index, "Delete")); ?></td>
+        </tr>
+    <?php } ?>
+    </tbody>
+    <tbody>
+        <tr>
+            <td colspan="2" align="right">
+                <table align="center">
+                    <tr>
+                        <td><?php echo $this->tag->linkTo("words/search", "First") ?></td>
+                        <td><?php echo $this->tag->linkTo("words/search?page=" . $page->before, "Previous") ?></td>
+                        <td><?php echo $this->tag->linkTo("words/search?page=" . $page->next, "Next") ?></td>
+                        <td><?php echo $this->tag->linkTo("words/search?page=" . $page->last, "Last") ?></td>
+                        <td><?php echo $page->current, "/", $page->total_pages ?></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

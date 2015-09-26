@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 /*
   +------------------------------------------------------------------------+
   | Phalcon Developer Tools                                                |
@@ -29,7 +31,8 @@
 //defined('PTOOLS_IP') || define('PTOOLS_IP', '192.168.');
 
 //defined('PTOOLS_IP') || define('PTOOLS_IP', '192.168.');
-defined('PTOOLS_IP') || define('PTOOLS_IP', '127.0.0.1');
+
+defined('PTOOLS_IP') || define('PTOOLS_IP', '202.20.5.');
 
 
 

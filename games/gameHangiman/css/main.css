@@ -47,6 +47,14 @@
 {
 }
 */
+@media all and (min-width: 300px)
+{
+	.KeyboardKey{ padding-left: 1%; padding-right: 1%;}
+}
+@media all and (min-width: 400px)
+{
+	.KeyboardKey{ padding-left: 2%; padding-right: 2%;}
+}
 
 body
 {
@@ -57,7 +65,10 @@ body
 {
 	position: relative !important;
 }
-
+#WonGame
+{
+	text-align: center;
+}
 html
 {
 	height: 100%;
@@ -70,21 +81,13 @@ html
 	vertical-align: middle;
 }
 
-#HeaderPauaBags
-{
-	float: left;
-}
-
-#PauaScores
-{
-	float: right;
-}
 
 #Hangi
 {
-	background-color: Orange;
-	height: calc(100% - 265.7813px);
+	/*background-color: Orange;*/
+	height: calc(100% - 294px);
 	text-align: center;
+	padding: 10px;
 }
 #HangiImage
 {
@@ -94,19 +97,24 @@ html
 
 #GameOptions
 {
-	background-color: darkred;
-	text-align: center;
+	/*background-color: darkred;*/
+
 	overflow: hidden;
-	height: 5%;
+	position: relative;
+	text-align: center;
+	height: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	width: 100%;
-	padding-left: 5%;
+
 
 }
 
 #GameOptions .btn
 {
+	vertical-align: center;
+	position: relative;
 	height: 100%;
-	float: left;
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;
@@ -116,28 +124,32 @@ html
 #WordToGuess
 {
 	font-size:35px;
-	background-color: blue;
+	/*background-color: blue;*/
 	vertical-align: bottom;
 
 	font-weight: bold;
 	text-align: center;
 	width:100%;
+	font-family: Helvetic;
 }
 
 #Keyboard
 {
 	min-height: 140px;
 
-	background-color: Pink;
+	/*background-color: Pink;*/
 	overflow: hidden;
 	font-size: 20pt;
 	display: table;
 	width: 100%;
 	vertical-align: middle;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-.keyboardRow 
+.KeyboardRow
 {
+	position: relative;
 	text-align: center;
 	overflow: hidden;
 	display: table-row;
@@ -145,11 +157,11 @@ html
 	vertical-align: middle;
 }
 .KeyboardKey
-{ 
+{
+	background-color: lightgrey;
 	display:inline-block;
-	border:1px solid red;
-	width: 25px;
-	padding-left:1%;
-	padding-right: 1%;
+	border:1px solid grey;
+	width: 20px;
+
 
 }

@@ -159,7 +159,7 @@ class Users extends \Phalcon\Mvc\Model
     //return the current feathers of this user
     public function getFeathers()
     {
-
+        if ($this->feathers_earned == null) $this->feathers_earned = 0;
         return array('feathers' => $this->feathers_earned);
     }
 

@@ -1,0 +1,13 @@
+{
+  "name": "project-toa",
+  "version": "0.1.0",
+  "description": "API Document Project Toa",
+  "title": "API Document",
+  "url": "http://toa-dev.devlab.ac.nz/api",
+  "header": {
+    "title": "Project Toa API"
+  },
+  "template": {
+    "withGenerator": true
+  }
+}
