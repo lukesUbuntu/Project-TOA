@@ -24,6 +24,4 @@ $result=mysqli_query($con,$sql);
 
 mysqli_close($con);
 
-header ("Location: index.php");
-
 ?>

@@ -1,6 +1,6 @@
 {
   "name" : "Guess the Te Reo Word",
-  "description": "Guess the word from the four pictures! can you figure it out?",
-  "start_file": "index.php",
+  "description" : "Guess the word from the four pictures! can you figure it out?",
+  "start_file" : "index.php",
   "author" : "Carl Blance"
 }

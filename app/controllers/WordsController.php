@@ -115,8 +115,7 @@ class WordsController extends ControllerBase
         $word->desc = $this->request->getPost("desc");
         $word->audio_src = $this->request->getPost("audio_src");
 
-        print_r($word);
-        exit;
+
 
         if (!$word->save()) {
             foreach ($word->getMessages() as $message) {

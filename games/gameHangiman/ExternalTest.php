@@ -5,18 +5,11 @@
  * Date: 24/09/2015
  * Time: 1:15 AM
  */
-$con = mysqli_connect("127.0.0.1","toa","toa123","gameHangiman");
-if (mysqli_connect_errno())
-{
-    //echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-$id = 5;
-$con -> set_charset("utf8");
-$sql = "SELECT * FROM in_progress WHERE userID = $id";
-//Check if user exists in game database
+if (session_id() == "")
+session_start();
 
-$result=mysqli_query($con,$sql);
-$row = mysqli_fetch_row($result);
-$gameScore = $row[1];
-echo $gameScore;
+$id = $_SESSION['user_id'];
+
+echo $id;
+var_dump($json);
 ?>

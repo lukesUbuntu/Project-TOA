@@ -26,7 +26,6 @@ class UsersHasGame extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-
         $this->belongsTo('game_game_id', 'Game', 'game_id', array('alias' => 'Game'));
         $this->belongsTo('users_id', 'Users', 'id', array('alias' => 'Users'));
     }

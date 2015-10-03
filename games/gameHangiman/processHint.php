@@ -1,6 +1,7 @@
 <?php
 header ("Content-Type:text/xml");
 include 'noMacron.php';
+include 'getUserInfo.php';
 $objMacron = new noMacron();
 
 $con = mysqli_connect("127.0.0.1","toa","toa123","gameHangiman");
@@ -10,7 +11,7 @@ if (mysqli_connect_errno())
 }
 
 //check Login, get ID
-$id = $_POST["id"];
+/*$id = $_POST["id"];
 
 $con -> set_charset("utf8");
 $sql = "SELECT * FROM in_progress WHERE userID = $id";
@@ -24,7 +25,7 @@ if ($result=mysqli_query($con,$sql)){
     $lettersGuessedArray = preg_split('//u',$row[6], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
     $wordBeingGuessed = preg_split('//u',$row[7], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
     $gameProgress = $row[8];
-}
+}*/
 
 $gameScore += 5;
 $currentPage = '#game';
@@ -68,8 +69,7 @@ if(!$gameWin == false){
 $lettersGuessedString = join($lettersGuessedArray);
 
 
-$sql = "UPDATE in_progress SET `gameScore` = $gameScore, `livesRemaining` = $livesRemaining, `totalFeathersEarned` = $totalFeathersEarned, `roundNumber` = $roundNumber, `lettersGuessed` = '$lettersGuessedString', `gameProgress` = '$gameProgress', `wordToDisplay` = '$wordToDisplay' WHERE `userID` = 5";
-
+$sql = "UPDATE in_progress SET `gameScore` = $gameScore, `livesRemaining` = $livesRemaining, `totalFeathersEarned` = $totalFeathersEarned, `roundNumber` = $roundNumber, `lettersGuessed` = '$lettersGuessedString', `gameProgress` = '$gameProgress', `wordToDisplay` = '$wordToDisplay' WHERE `userID` = $id";
 mysqli_query($con,$sql);
 
 mysqli_close($con);

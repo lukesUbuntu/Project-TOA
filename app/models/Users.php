@@ -177,6 +177,20 @@ class Users extends \Phalcon\Mvc\Model
 
     }
 
+    //remove feathers to the user
+    public function removeFeather()
+    {
+        $this->feathers_earned--;
+    }
+
+    //remove feathers by amount
+    public function removeFeathers($amount)
+    {
+        if ($amount <= 5)
+            $this->feathers_earned -= $amount;
+
+    }
+
     /**
      * Define what information is allowed from Users to API
      */

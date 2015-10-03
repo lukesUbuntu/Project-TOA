@@ -105,8 +105,8 @@ class Game extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Define what information is allowed from Users to API
-     */
+ * Define what information is allowed from Users to API
+ */
     public function apiCall(){
         //unset important attributes they don't need
         return $this->toArray();

@@ -5,19 +5,27 @@
  * Date: 22/09/2015
  * Time: 10:48 PM
  */
-$id = 5;
+if (session_id() == "")
+    session_start();
+$id = $_SESSION['user_id'];
+
+if($id == ""){
+    return header ("Location: /");
+}
+
 $con = mysqli_connect("127.0.0.1","toa","toa123","gameHangiman");
 if (mysqli_connect_errno())
 {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-$sql = "SELECT `gameProgress` FROM in_progress WHERE userID = 5";
+$sql = "SELECT `gameProgress` FROM in_progress WHERE userID = $id";
 $result=mysqli_query($con,$sql);
 $row = mysqli_fetch_row($result);
 $gameProgress = $row[0];
 mysqli_close($con);
 
 $runningPage = basename($_SERVER['PHP_SELF']);
+
 /*
 if($runningPage != 'game.php'){
     switch ($gameProgress){

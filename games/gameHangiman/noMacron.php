@@ -72,7 +72,9 @@
              "W" => "w",
              "X" => "x",
              "Y" => "y",
-             "Z" => "z"
+             "Z" => "z",
+             "-" => "-",
+             " " => " "
          );
          return $translationArray[$letter];
      }

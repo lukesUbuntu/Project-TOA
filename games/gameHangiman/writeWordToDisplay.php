@@ -1,6 +1,6 @@
 <?php
 
- class writeWordToDiplay
+class writeWordToDisplay
 {
 	$translationArray = array(
              "ā" => "a",

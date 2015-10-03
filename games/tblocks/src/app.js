@@ -14,7 +14,8 @@
 
 
 
-
+setScore();
+throw Error("Testing");
 
 
 
@@ -417,7 +418,7 @@ function refreshPage() {
  * get current score for game
  */
 function getScore(){
-    $.getJSON('/api/usersGames?prefix=tblocks',function(response){
+    $.getJSON('/api/usersGames',function(response){
         console.log("response",response)
         if (response.success == true){
             console.log("response.data",response.data);
@@ -433,7 +434,7 @@ function getScore(){
  */
 function setScore(score){
     //saveGameData?game_score=454545&prefix=tblocks
-    $.getJSON('/api/saveGameData?prefix=tblocks&game_score='+score,function(response){
+    $.getJSON('/api/saveGameData?game_score='+score,function(response){
         console.log("response",response)
         if (response.success == true){
             console.log("response.data",response.data);

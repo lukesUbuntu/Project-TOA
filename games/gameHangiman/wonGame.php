@@ -32,7 +32,7 @@ include('getUserInfo.php');
              <h4>
 				Round Completed: <?php echo $roundNumber; ?>
 				<br><br>
-                 Feathers: +1
+                 Feathers: <?php echo $totalFeathersEarned; ?>
                  <br><br>
                  Score: <?php echo $gameScore; ?>
                  <br><br>

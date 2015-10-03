@@ -1,5 +1,6 @@
 <?php
 include 'noMacron.php';
+include 'getUserInfo.php';
 $objMacron = new noMacron();
 
 header ("Content-Type:text/xml");
@@ -9,7 +10,7 @@ if (mysqli_connect_errno())
  //echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 //check Login, get ID
-$id = $_POST["id"];
+/*$id = $_POST["id"];
 
 $con -> set_charset("utf8");
 $sql = "SELECT * FROM in_progress WHERE userID = $id";
@@ -24,7 +25,7 @@ if ($result=mysqli_query($con,$sql)){
     $lettersGuessedArray = preg_split('//u',$row[6], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
     $wordBeingGuessed = preg_split('//u',$row[7], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
     $gameProgress = $row[8];
-}
+}*/
 
 $inputLetter = $_POST["letter"];
 

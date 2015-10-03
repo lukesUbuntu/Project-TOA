@@ -152,6 +152,34 @@ class ApiController extends ControllerBase
      */
     public function addFeatherAction()
     {
+      try {
+           //check if a user is logged in
+           if (!Sentry::check())
+               return $this->Api()->response("no user logged in", false);
+
+           // Get the current active/logged in user
+           $user = Users::findFirst(Sentry::getUser()->id);
+
+
+           $feathers = $this->Request()->getQuery("amount", null, false);
+
+           if ($feathers)
+               $user->addFeathers($feathers);
+            else
+                $user->addFeather();
+
+
+            $user->save();
+
+            return $this->Api()->response("Updated", true);
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+           // User wasn't found, should only happen if the user was deleted during api call
+           return $this->Api()->response("no user logged in", false);
+       }
+    }
+
+    public function removeFeatherAction()
+    {
         try {
             //check if a user is logged in
             if (!Sentry::check())
@@ -164,9 +192,9 @@ class ApiController extends ControllerBase
             $feathers = $this->Request()->getQuery("amount", null, false);
 
             if ($feathers)
-                $user->addFeathers($feathers);
+                $user->removeFeathers($feathers);
             else
-            $user->addFeather();
+                $user->removeFeather();
 
 
             $user->save();
@@ -176,7 +204,6 @@ class ApiController extends ControllerBase
             // User wasn't found, should only happen if the user was deleted during api call
             return $this->Api()->response("no user logged in", false);
         }
-
     }
 
     protected function Request()

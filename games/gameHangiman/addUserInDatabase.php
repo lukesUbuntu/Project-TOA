@@ -5,8 +5,7 @@
  * Date: 21/09/2015
  * Time: 3:29 PM
  */
-function createUser($gameProgress){
-    $id = 7;
+function createUser($id, $gameProgress){
     $con = mysqli_connect("127.0.0.1","toa","toa123","gameHangiman");
     $createUserSQL = "INSERT INTO in_progress (
      `userID`,
