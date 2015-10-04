@@ -195,12 +195,23 @@ class Users extends \Phalcon\Mvc\Model
      * Define what information is allowed from Users to API
      */
     public function apiCall(){
+
+        return array(
+            'id' => $this->id,
+            'email' =>  $this->email,
+            'permissions' =>  $this->permissions,
+            'activated' =>  $this->activated,
+            'activated_at' =>  $this->activated_at,
+            'last_login' =>  $this->last_login,
+            'first_name' =>  $this->first_name,
+            'last_name' =>  $this->last_name,
+            'created_at' =>  $this->created_at,
+            'updated_at' =>  $this->updated_at,
+            'feathers_earned' =>  $this->feathers_earned,
+            'gamertag' =>  $this->gamerTag
+        );
         //unset important attributes they don't need
-        unset($this->password);
-        unset($this->persist_code);
-        unset($this->reset_password_code);
-        unset($this->activation_code);
-        return $this;
+        //return $this->toArray();
     }
 
 

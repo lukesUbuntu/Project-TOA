@@ -19,7 +19,7 @@ return new \Phalcon\Config(array(
         'cacheDir'       => __DIR__ . '/../../app/cache/',
         'vendor'         => __DIR__ . '/../../vendor/',
         'gameFolder'     => __DIR__ . '/../../games/',
-        'gameWebRoot' => 'toa-dev.devlab.ac.nz/games',
+        'gameWebRoot' => 'toa.devlab.ac.nz/games',
         'baseUri'        => '/',
     )
 ));
