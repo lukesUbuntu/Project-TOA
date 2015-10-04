@@ -31,7 +31,7 @@ class Words extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $desc;
+    public $word_desc;
 
     /**
      *

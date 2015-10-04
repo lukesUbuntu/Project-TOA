@@ -127,12 +127,63 @@ class ApiController extends ControllerBase
      *      }
      *}
      */
+
     public function wordsAction()
     {
+        //basic query call
+        $url = str_replace('/api/words','',$this->Request()->getURI());
+        //"&word_desc&eng_word&limit=10&&random";
 
-        $wordsData = \Words::find();
+        //specify in_array security what calls above can be made
+
+        $acceptableFlags = array('mri_word', 'eng_word', 'img_src', 'word_desc', 'audio_src', 'limit');
+        foreach($acceptableFlags as $acceptableFlag){
+            
+        }
+
+        //parse to our search array
+        $searchFlag = array();
+        $flags = array();
+
+        //parse it
+        parse_str($url,$searchFlag);
+
+        //any manual flag not for search goes here
+        //kill limit if passed
+        if (isset($searchFlag['limit'])){
+            //word limit
+            unset($searchFlag['limit']);
+        }
+
+        if (isset($searchFlag['random'])){
+            //randomise wordlise
+            unset($searchFlag['random']);
+        }
+
+        //unique flags
+        foreach($searchFlag as $key => $value)
+            $flags[] = $key. ' != "" ';
+
+        //implode into our query
+        $query = implode(' AND ', $flags);
+
+        //check ? at 1st point of scring then remove
+        $query = str_replace('?','',$query);
+
+            $wordsData = \Words::find(
+                array($query)
+            );
         return $this->Api()->response($wordsData->toArray(), true);
+    }
 
+    function addAnd($n)
+    {
+        return($n.' != ""');
+    }
+
+    protected function ifFlagExists($flagName){
+        $theFlags = $this->Request()->getQuery($flagName, null, false);
+        return ($theFlags !== false && gettype($theFlags) == "string");
     }
 
     /**
