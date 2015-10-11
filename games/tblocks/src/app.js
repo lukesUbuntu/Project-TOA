@@ -11,17 +11,14 @@
 //get score
 
 
-
-
-
-setScore();
-throw Error("Testing");
+//setScore();
+//throw Error("Testing");
 
 
 
 
 //Globals
-var game_grid,image_block_grid, word_block_grid, word_blocks,image_block;
+var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, gameScore;
 
 
 
@@ -54,7 +51,7 @@ console.log("game",game);
 console.log("app.js loaded");
 //gameModule used between scripts app.js loaded first point
 var gameModule = {
-    debug : true,   //logout more console and skip some pages for testing
+    debug: false,   //logout more console and skip some pages for testing
     screen : {
         height: null,   //current screen
         width: null
@@ -222,10 +219,14 @@ var dropImage = {
 $(document).on('pageinit','#splash',function(){
 
     //just splash screen while int.
-//    if (!gameModule.debug)
+    //if (!gameModule.debug)
+
     splashScreen();
 
+    //
+    getScore();//async call get score
     //lets passheight to our gamemodule
+
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
     gameModule.screen.width = $(window).width();
 
@@ -345,6 +346,7 @@ function createWords(){
  * Fake Loading Demo lol
  */
 function splashScreen(){
+
     var x = ".";
     //on loading
     var loading = setInterval(function(){
@@ -415,14 +417,19 @@ function refreshPage() {
 }
 
 /**
- * get current score for game
+ * get current score for game either by callback or setting gameScore can be used via callback or async
  */
-function getScore(){
+function getScore(callback) {
     $.getJSON('/api/usersGames',function(response){
         console.log("response",response)
         if (response.success == true){
-            console.log("response.data",response.data);
-            return response.data.game_score;
+            console.log("getScore response.data", response.data);
+
+            if (typeof callback == "function")
+                callback(response.data);
+            else
+                gameScore = response.data;
+            //return response.data.game_score;
         }
 
     })
