@@ -56,8 +56,6 @@ class UsersHasGame extends \Phalcon\Mvc\Model
         $data = $this->toArray();
         $data['game_details'] = $this->getRelated('Game')->apiCall();
         $data['user_details'] = $this->getRelated('Users')->apiCall();
-
-
         return $data;
     }
 
