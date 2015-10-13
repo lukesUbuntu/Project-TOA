@@ -24,9 +24,13 @@ class IndexController extends ControllerBase
 
         $games = \Game::find();//get our games
         $user = Users::findFirst(Sentry::getUser()->id); //get user
-
+        //scores
+        $ScoreBoard = UsersHasGame::find(array("limit" => 5));
+        //print_r($ScoreBoard->toArray());exit;
         $this->view->setVar("Games",$games);
         $this->view->setVar("User", $user);
+
+        $this->view->setVar("ScoreBoard", $ScoreBoard);
     }
 
 
