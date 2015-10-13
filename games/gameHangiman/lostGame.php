@@ -9,8 +9,6 @@
 //include('checkGameStatus.php');
 include('getUserInfo.php');
 include_once('checkGameStatus.php');
-include_once('resetProgress.php');
-
 ?>
 <html>
 <head>
@@ -27,19 +25,14 @@ include_once('resetProgress.php');
 <body>
 <div data-role="page" id="WonGame">
     <h1>Game Over</h1>
-    <div id="wordGuessed">
-        <h2>The word was: <?php echo $wordBeingGuessedString; ?></h2>
-    </div>
-
-    <div id=PointsEarned">
+    <h2><div id="Word"></div></h2>
+    <h3><div id="Rounds"></div></h3>
         <h4>
-            Final Score: <?php echo $gameScore; ?>
-            <br><br>
-            Feathers Earned: <?php echo $totalFeathersEarned; ?>
-            <br><br>
+            <div id="Score"></div>
+            <br>
+            <div id="Feathers"></div>
         </h4>
-    </div>
-
+    <br><br>
     <button id="ButtonHighScores" data-role="button" class="btn" >View High Scores</button>
 	<br>
     <button id="ButtonMenu" data-role="button" class="btn" >Back to Main Menu</button>
@@ -47,11 +40,27 @@ include_once('resetProgress.php');
 </body>
 
 <script>
+    var wordBeingGuessed = '<?php echo "$wordBeingGuessedString"; ?>';
+    var gameScore = <?php echo $gameScore; ?>;
+    var feathersEarned = <?php echo $totalFeathersEarned; ?>;
+    var rounds = <?php echo $roundNumber; ?>;
+
+    $( document).ready(function(){
+        $("#Word").text("The word was: " + wordBeingGuessed);
+        $("#Score").text("Final Score: " + gameScore);
+        $("#Feathers").text("Feathers Earned: " + feathersEarned);
+        $("#Rounds").text("You survived " + rounds + " rounds!");
+        addFeathers(feathersEarned);
+        addScore(gameScore);
+    });
     $("#ButtonHighScores").click(function(){
         alert("To be implemented");
     });
     $("#ButtonMenu").click(function(){
-
+        window.location.href='index.php';
     });
 </script>
 </html>
+<?php
+include_once('resetProgress.php');
+?>

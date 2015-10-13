@@ -56,24 +56,74 @@
 	.KeyboardKey{ padding-left: 2%; padding-right: 2%;}
 }
 
+.modal
+{
+	display:    none;
+	position:   fixed;
+	z-index:    1000;
+	top:        0;
+	left:       0;
+	height:     100%;
+	width:      100%;
+	background: rgba( 255, 255, 255, .8 )
+	url('http://i.stack.imgur.com/FhHRx.gif')
+	50% 50%
+	no-repeat;
+}
+
+body.loading
+{
+	overflow: hidden;
+}
+
+body.loading .modal
+{
+	display: block;
+}
+
 body
 {
 	margin: 0;
 	height: 100%;
 }
+
 #game
 {
 	position: relative !important;
 }
+
+
+#HighScores
+{
+	position: fixed;
+	padding: 0;
+	width: 50%;
+	height:100%;
+	overflow: scroll;
+}
+
+#HighScoresTable
+{
+width: inherit;
+}
+#HighScoresTable thead
+{
+
+}
+#HighScoresTable tr
+{
+	height: 40px;
+}
+
 #WonGame
 {
 	text-align: center;
 }
+
 html
 {
 	height: 100%;
 	margin: 0;
-
 }
 
 #InfoBar

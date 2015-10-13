@@ -49,10 +49,12 @@ if($gameProgress == 'running'){
         foreach ($wordBeingGuessed as $letterInWord) {
             if (strcasecmp($objMacron->removeMacron($letterInWord), $inputLetter) == 0) {
                 $letterIsInWord = true;
-				$gameScore += 10;
+
             }
         }
-        if(!$letterIsInWord){
+        if($letterIsInWord) {
+            $gameScore += 15;
+        }else{
             $incorrectGuesses--;
 			$gameScore -= 10;
         }

@@ -28,7 +28,6 @@ if ($result=mysqli_query($con,$sql)){
 }*/
 
 $gameScore += 5;
-$currentPage = '#game';
 
 //create list of letters in word that aren't guessed, select random letter from list
 $listOfApplicableHints = array();
@@ -63,18 +62,14 @@ if(!$gameWin == false){
     $totalFeathersEarned++;
 }
 
-
-
-
 $lettersGuessedString = join($lettersGuessedArray);
-
 
 $sql = "UPDATE in_progress SET `gameScore` = $gameScore, `livesRemaining` = $livesRemaining, `totalFeathersEarned` = $totalFeathersEarned, `roundNumber` = $roundNumber, `lettersGuessed` = '$lettersGuessedString', `gameProgress` = '$gameProgress', `wordToDisplay` = '$wordToDisplay' WHERE `userID` = $id";
 mysqli_query($con,$sql);
 
 mysqli_close($con);
 
-$success =  true;
+$success = true;
 
 $json = json_encode(array(
     'success' => $success,
