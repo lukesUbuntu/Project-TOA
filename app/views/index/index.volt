@@ -74,7 +74,7 @@
         -->
         <div class="col-sm-3 col-lg-3">
 
-            <!-- LOCAL TIME BLOCK -->
+            <!-- LOCAL TIME BLOCK
             <div class="half-unit">
                 <dtitle>Top Score</dtitle>
                 <hr>
@@ -82,7 +82,7 @@
                     <digiclock>10000</digiclock>
                 </div>
             </div>
-
+            -->
             <!-- SERVER UPTIME -->
             <div class="half-unit">
                 <dtitle>Feathers</dtitle>
@@ -110,18 +110,25 @@
         <div class="col-sm-3 col-lg-3">
             <!-- MAIL BLOCK -->
             <div class="dash-unit">
-                <dtitle>Top Players - Rank (10)</dtitle>
+                <dtitle>Top Players - Rank (5)</dtitle>
                 <hr>
                 <div class="framemail">
                     <div class="window">
+
+
+
                         <ul class="mail">
+                            {% for score in ScoreBoard %}
                             <li>
                                 <i class="unread"></i>
-                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo01.jpeg" alt="avatar">
-                                <p class="sender">Adam W.</p>
-                                <p class="message"><strong>10000</strong> - Last Played Tetris. </p>
 
+                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo01.jpeg" alt="avatar">
+                                <p class="message"><strong>{{ score.game_score }}</strong> - {{score.Game.name}} </p>
+                                <p class="sender">{{ score.Users.gamerTag }}</p>
                             </li>
+                            {% endfor  %}
+
+                            <!--
                             <li>
                                 <i class="read"></i>
                                 <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo02.jpg" alt="avatar">
@@ -143,7 +150,9 @@
                                 <p class="message"><strong>10000</strong> - Last Played Tetris</p>
 
                             </li>
+                            !-->
                         </ul>
+
                     </div>
                 </div>
             </div><!-- /dash-unit -->

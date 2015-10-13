@@ -9,6 +9,7 @@ include('checkGameStatus.php')
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="models/APICalls.js"></script>
 
 		<title>Hangiman</title>
 	</head>
@@ -24,15 +25,13 @@ include('checkGameStatus.php')
     <div data-role="page" id="game">
         <div data-role="main">
             <div id="infobar" class="ui-bar ui-bar-a">
-
                 <h4 id="FoodRemaining" style="float: left;">Lives Remaining: X</h4>
                 <h4 id="Score" style="float: right;">Score: XXXX</h4>
-
             </div>
 
 
             <div id="Hangi">
-                <img id="HangiImage" src="images/hangiPlaceholder.gif">
+                <img id="HangiImage">
             </div>
 
             <div id="WordToGuess">
@@ -98,13 +97,29 @@ include('checkGameStatus.php')
     var wordToDisplay = '<?php echo $wordToDisplay; ?>';
     var gameProgress = '<?php echo "$gameProgress"; ?>';
 
-    $( document).ready(function() {
-        updateGameScreen();
-    });
+    var hangiAnimateDestroyAndReplaceFoodBasket = new Image();
+    var hangiAnimateNewFoodBasket = new Image();
+    hangiAnimateDestroyAndReplaceFoodBasket.src = "images/hangiPlaceholder.gif";
+    hangiAnimateNewFoodBasket.src = "images/hangiPlaceholderNew.gif";
 
+
+    $( document).ready(function(){
+        updateGameScreen();
+        animateBasketNew();
+    });
+    $("#ButtonHint").click(function(){
+        getFeathers(function(response){
+            if( response < 5){
+                alert("You don't have enough feathers to perform this action. Hints cost 5 feathers.");
+            }else {
+                if (confirm("Hints cost 5 feathers, and will leave you with " + (response - 5) + " feathers. Are you sure?")) {
+                    processHint();
+                }
+            }
+        })
+    });
     $(".KeyboardKey").click(function(){
         var $keyLetter = $(this).text();
-        //
         $.ajax({
             type:"POST",
             cache:false,
@@ -117,6 +132,9 @@ include('checkGameStatus.php')
             dataType: "jsonp",
             success: function(response){
                 if (response.success == true){
+                    if( incorrectGuesses != response.incorrectGuesses ){
+                        animateBasketDestroyAndReplace();
+                    }
                     gameScore = response.gameScore;
                     livesRemaining = response.livesRemaining;
                     incorrectGuesses = response.incorrectGuesses;
@@ -125,15 +143,19 @@ include('checkGameStatus.php')
                     gameProgress = response.gameProgress;
                     updateGameScreen();
                 }
-                console.log(response);
             },
             failure: function(){
                 alert("Failed to contact server, please try again");
             }
         });
     });
-
-    $("#ButtonHint").click(function(){
+    $("#ButtonForfeit").click(function(){
+        if(confirm("Are you sure you want to forfeit the game?")){
+			window.location.href='lostGame.php';
+        }
+    });
+    function processHint(){
+        removeFeathers(5);
         $.ajax({
             type:"POST",
             cache:false,
@@ -153,26 +175,17 @@ include('checkGameStatus.php')
                     gameProgress = response.gameProgress;
                     updateGameScreen();
                 }
-                console.log(response);
             },
             failure: function(){
                 alert("Failed to contact server, please try again");
             }
         });
-    });
-
-    $("#ButtonForfeit").click(function(){
-        if(confirm("Are you sure you want to forfeit the game?")){
-			window.location.href='lostGame.php';
-        }
-    });
-
+    }
     function updateGameScreen(){
         if (lettersGuessed.length > 0){
             for (var i=0; i < lettersGuessed.length; i++) {
                 letterToMark = lettersGuessed.charAt(i);
                 $("span:contains('" + letterToMark + "')").css("background-color", "black");
-                console.log(letterToMark);
             }
         }
         $("#Score").text("Score: " + gameScore);
@@ -187,6 +200,14 @@ include('checkGameStatus.php')
         else if(gameProgress == 'gameover'){
             window.location.href='lostGame.php';
         }
+    }
+    function animateBasketNew(){
+        console.log("animated");
+        $("#HangiImage").attr('src', hangiAnimateNewFoodBasket.src);
+    }
+    function animateBasketDestroyAndReplace(){
+        console.log("animated");
+        $("#HangiImage").attr('src', hangiAnimateDestroyAndReplaceFoodBasket.src);
     }
 
 </script>

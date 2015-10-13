@@ -27,6 +27,8 @@ mysqli_close($con);
 $runningPage = basename($_SERVER['PHP_SELF']);
 
 /*
+
+
 if($runningPage != 'game.php'){
     switch ($gameProgress){
         case "":

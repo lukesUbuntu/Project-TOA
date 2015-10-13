@@ -51,16 +51,4 @@ $wordBeingGuessedString = $row[7];
 $gameProgress = $row[8];
 $wordToDisplay = $row[9];
 mysqli_close($con);
-
-
-
-function getUserFromDatabase(){
-    $json = file_get_contents('http://toa-dev.devlab.ac.nz/api//user');
-    $objWords = json_decode($json);
-    $wordArray = $objWords->data;
-
-    $word=$wordArray[array_rand($wordArray)]->mri_word;
-
-    return $word;
-}
 ?>

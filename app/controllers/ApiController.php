@@ -138,7 +138,7 @@ class ApiController extends ControllerBase
 
         $acceptableFlags = array('mri_word', 'eng_word', 'img_src', 'word_desc', 'audio_src', 'limit');
         foreach($acceptableFlags as $acceptableFlag){
-            
+
         }
 
         //parse to our search array
@@ -170,9 +170,9 @@ class ApiController extends ControllerBase
         //check ? at 1st point of scring then remove
         $query = str_replace('?','',$query);
 
-            $wordsData = \Words::find(
-                array($query)
-            );
+        $wordsData = \Words::find(
+            array($query)
+        );
         return $this->Api()->response($wordsData->toArray(), true);
     }
 
@@ -346,32 +346,32 @@ class ApiController extends ControllerBase
      *     }
      * @apiSuccessExample {json} Success-Response:
      * {
-     * "success": true,
-     * "data": {
-     * "game_game_id": "7",
-     * "game_score": "100",
-     * "users_id": "2",
-     * "game_details": {
-     * "game_id": "7",
-     * "name": "This is my test Game",
-     * "description": "The description",
-     * "start_file": "start.html",
-     * "author": "James",
-     * "prefix": "testgame"
-     * },
-     * "user_details": {
-     * "id": "2",
-     * "email": "test@test.com",
-     * "permissions": null,
-     * "activated": "1",
-     * "activated_at": null,
-     * "last_login": "2015-08-27 00:34:53",
-     * "first_name": null,
-     * "last_name": null,
-     * "created_at": "2015-08-07 22:15:06",
-     * "updated_at": "2015-08-27 00:34:53"
-     * }
-     * }
+     *      "success": true,
+     *      "data": {
+     *              "game_game_id": "7",
+     *              "game_score": "100",
+     *              "users_id": "2",
+     *                  "game_details": {
+     *                          "game_id": "7",
+     *                          "name": "This is my test Game",
+     *                          "description": "The description",
+     *                          "start_file": "start.html",
+     *                          "author": "James",
+     *                          "prefix": "testgame"
+     *              },
+     *      "user_details": {
+     *                  "id": "2",
+     *                  "email": "test@test.com",
+     *                  "permissions": null,
+     *                  "activated": "1",
+     *                  "activated_at": null,
+     *                  "last_login": "2015-08-27 00:34:53",
+     *                  "first_name": null,
+     *                  "last_name": null,
+     *                  "created_at": "2015-08-07 22:15:06",
+     *                  "updated_at": "2015-08-27 00:34:53"
+     *      }
+     *  }
      * }
      */
     public function usersGamesAction()
@@ -380,9 +380,6 @@ class ApiController extends ControllerBase
             //check if a user is logged in
             if (!Sentry::check())
                 return $this->Api()->response("no user logged in", false);
-
-            //possible get users game by prefix if passed
-            $prefix = (isset($_GET['prefix'])) ? $_GET['prefix'] : false;
 
 
             // Get the current active/logged in users game
@@ -398,12 +395,13 @@ class ApiController extends ControllerBase
 
             //loop users games
             $games = array();
+
             foreach ($users_games as $game) {
 
-                if (!$prefix)
+                if (!$this->gamePrefix)
                     $games[] = $game->apiCall();
-                else//condition
-                    if ($prefix == $game->Game->prefix) {
+                else //if we are called from within game then return just that users game details
+                    if ($this->gamePrefix == $game->Game->prefix) {
                         $games = $game->apiCall();
                         break;
                     }
@@ -425,6 +423,29 @@ class ApiController extends ControllerBase
 
     }
 
+
+    public function GamesScoreAction()
+    {
+
+
+            // Get all games with scores
+            $gameData = \UsersHasGame::find();
+
+            $gameScores = array();
+
+            foreach($gameData as $score)
+                //$gameScores[] =  $score->getRelated('Users')->apiCall();
+                //$gameScores[] =  $score->getRelated('Game')->apiCall();
+                $gameScores[] =  $score->apiCall();
+
+
+
+            return $this->Api()->response($gameScores, true);
+
+
+
+
+    }
     /**
      * @api {get} /saveGameData?game_score=10   saves game data score
      *
