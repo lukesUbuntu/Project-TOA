@@ -13,7 +13,7 @@ class ControllerBase extends Controller
      * @description heck user is logged in otherwise redirect to /LoginController
      * @return void or redirects to login page
      */
-    public function loginCheck(){
+    public function loginCheck($redirectTo = 'index'){
         //adding cron job here to test
         $gamePlugin = new Games\Plugin\Plugin();
         $gamePlugin->runAsCron();
@@ -24,7 +24,7 @@ class ControllerBase extends Controller
 
             // User is not logged in, or is not activated
             $this->view->disable();
-            $this->response->redirect('login');
+            $this->response->redirect('login?url='.$redirectTo);
         }
     }
 

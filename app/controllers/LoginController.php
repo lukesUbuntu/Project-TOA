@@ -1,29 +1,53 @@
 <?php
+use Phalcon\Http\Request;
 
 class LoginController extends \Phalcon\Mvc\Controller
 {
+
+    private $_request = null;
+    private $getRequest = false;
+    private $url = false;
 
     /**
      * Controller constructor
      * @return mixed
      */
     public function initialize(){
-        //load any assets for this controller
-        $this->assets->addJs('js/login.js');
-        $this->assets->addCss('css/login.css');
+        //set our redirect URL if defined
+        $redirectTo = $this->Request()->getQuery("url", null, false);
+        $this->url = $redirectTo != false ? $redirectTo : 'index';
+
+        //pass on any getRequest to the post url
+        $this->getRequest = str_replace('/login', '', $this->Request()->getURI());
+
+
         //check we not already logged in
         if (Sentry::check())
         {
-            return $this->response->redirect('index');
+
+            return $this->response->redirect($this->url);
         }
     }
 
+    protected function Request()
+    {
+        if ($this->_request == null)
+            $this->_request = new Phalcon\Http\Request();
+
+        return $this->_request;
+    }
 
     public function indexAction()
     {
 
-    }
+        //load any assets for this controller
+        $this->assets->addJs('js/login.js');
+        $this->assets->addCss('css/login.css');
 
+        $this->view->setVar("getRequest", $this->getRequest);
+
+        //$this->view->setVar("getRequest",$this->getRequest != false ? $this->getRequest: '');
+    }
 
     /**
      * Checks the users details and logins them into members
@@ -68,7 +92,10 @@ class LoginController extends \Phalcon\Mvc\Controller
             Sentry::login($user, false);
             $_SESSION['user_id'] = Sentry::getUser()->id;
 
-            return $this->response->redirect('index');
+
+            return $this->response->redirect($this->url);
+
+            //return $this->response->redirect('index');
 
         }catch(\Exception $e){
             //get the error message
