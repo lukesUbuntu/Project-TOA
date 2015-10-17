@@ -15,8 +15,8 @@ class ControllerBase extends Controller
      */
     public function loginCheck($redirectTo = 'index'){
         //adding cron job here to test
-        //$gamePlugin = new Games\Plugin\Plugin();
-        //$gamePlugin->runAsCron();
+        $gamePlugin = new Games\Plugin\Plugin();
+        $gamePlugin->runAsCron();
 
         if (!Sentry::check())
         {
