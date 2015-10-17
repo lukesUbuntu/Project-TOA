@@ -1,13 +1,19 @@
 <?php
+use Phalcon\Mvc\Controller;
+
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 
 class AdminController extends ControllerBase
 {
+    public function initialize(){
+        //check user is logged in and admin
+        $this->loginCheck('admin');
+    }
 
     public function indexAction()
     {
-
-        //check user is logged in and admin
-        $this->loginCheck('admin');
 
         //get the current user logged in
         $userProfile = Users::findFirst(Sentry::getUser()->id); //get user

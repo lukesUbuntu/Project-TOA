@@ -15,16 +15,16 @@ class ControllerBase extends Controller
      */
     public function loginCheck($redirectTo = 'index'){
         //adding cron job here to test
-        $gamePlugin = new Games\Plugin\Plugin();
-        $gamePlugin->runAsCron();
+        //$gamePlugin = new Games\Plugin\Plugin();
+        //$gamePlugin->runAsCron();
 
         if (!Sentry::check())
         {
             //Module
-
             // User is not logged in, or is not activated
             $this->view->disable();
-            $this->response->redirect('login?url='.$redirectTo);
+            header('Location: login?url='.$redirectTo);
+            die();
         }
     }
 
