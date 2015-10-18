@@ -11,9 +11,25 @@ class AdminController extends ControllerBase
     public function indexAction()
     {
         //check user is logged in and admin
-        $this->loginCheck('admin');
+        $userProfile = $this->loginCheck();
 
         //get the current user logged in
+        $this->view->setVar("User", $userProfile);
+
+
+    }
+
+    public function loginCheck($redirectTo = 'admin')
+    {
+
+        if (!Sentry::check()) {
+            //Module
+            // User is not logged in, or is not activated
+            $this->view->disable();
+            header('Location: login?url=' . $redirectTo);
+            die();
+        }
+
         //get the usersID
         $userId = Sentry::getUser()->id;
 
@@ -27,13 +43,14 @@ class AdminController extends ControllerBase
 
         // Check if the user is in the administrator group
         if (!$user->inGroup($admin)) {
+            //add user to group for now
+            //if (Sentry::getUser()->addGroup($admin));
             // User is not in Administrator group
             die ("Not Administrator Account");//@todo return user to an error page
         }
 
-        $this->view->setVar("User", $userProfile);
-
-
+        //return the $userprofile
+        return $userProfile;
     }
 
     /**
@@ -47,7 +64,7 @@ class AdminController extends ControllerBase
             $ConfigWriteAble = true;
             echo 'Config file is writable<p>';
         } else {
-            echo "Config file is not writable. Please chmod 777 $configFile or edit config manually<p>";
+            echo "Config file is not writable. Please run <pre>$ chmod 777 $configFile</pre>  or edit config manually<p>";
         }
         //lets check adminGroup
         //get admin group and check if user is an admin
