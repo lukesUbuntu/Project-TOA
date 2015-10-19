@@ -11,7 +11,7 @@ class AdminController extends ControllerBase
     public function indexAction()
     {
         //check user is logged in and admin
-        $this->loginCheck('admin');
+        $userProfile = $this->loginCheck('admin');
 
         //get the current user logged in
         $this->view->setVar("User", $userProfile);
@@ -24,9 +24,10 @@ class AdminController extends ControllerBase
 
         if (!Sentry::check()) {
             //Module
+
             // User is not logged in, or is not activated
             $this->view->disable();
-            header('Location: login?url=' . $redirectTo);
+            header('Location: '.$this->config->baseUri.'login?url=' . $redirectTo);
             die();
         }
 

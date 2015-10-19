@@ -119,7 +119,7 @@
                     <p>
                         <bold>
                             <!--
-                            feathers goes here from users object
+                            Score goes here from scores object
                             !-->
                             {{ User.feathers_earned }}
                         </bold>

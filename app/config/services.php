@@ -36,6 +36,11 @@ $di->set('gamePrefix', function () use ($config) {
     return false;
 
 }, true);
+//return config file
+$di->set('config', function () use ($config) {
+    return $config;
+}, true);
+
 
 
 /**
