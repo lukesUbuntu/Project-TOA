@@ -58,14 +58,41 @@ class AdminController extends ControllerBase
         return $userProfile;
     }
 
+    /**
+     * Words Action View
+     */
     public function wordsAction(){
         //render the list of current words in system
         $wordsData = \Words::find();
-
         $this->view->setVar("WordsList",$wordsData);
         echo $this->view->getRender('admin/words', 'listWords');
     }
 
+    /**
+     *  Users Action View
+     */
+    public function usersAction(){
+        //Get all the users
+        $users = \Users::find();
+
+        //get admin group and check if user is an admin
+        $admin = Sentry::findGroupByName('Administrator');
+
+        //find what users are admin
+        $allUsers = array();
+        foreach($users as $thisUser)
+        {
+            $tmpUser = Sentry::findUserByID($thisUser->id);
+            $thisUser->admin = $tmpUser->inGroup($admin);
+
+            $allUsers[] = $thisUser;
+        }
+
+        //render view
+        $this->view->setVar("Users",$allUsers);
+        // if (!$user->inGroup($admin)) {
+        echo $this->view->getRender('admin/users', 'index');
+    }
     /**
      * Installer for when moving to another system
      */
