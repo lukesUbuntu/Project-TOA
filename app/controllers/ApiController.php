@@ -228,7 +228,21 @@ class ApiController extends ControllerBase
            return $this->Api()->response("no user logged in", false);
        }
     }
-
+    /**
+     * @api {get} /removeFeather removes a feather from the users account
+     *
+     * @apiName removeFeather
+     *
+     * @apiDescription removes a feather from the users account
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/removeFeather
+     * http://localhost/api/removeFeather?amount=5 //adds 5 feathers (1 > 5 max)
+     *
+     * @apiSuccess {String}   data      updated
+     *
+     *
+     */
     public function removeFeatherAction()
     {
         try {
@@ -423,29 +437,26 @@ class ApiController extends ControllerBase
 
     }
 
-
+    /**
+     * @api {get} /GamesScore   saves game data score
+     *
+     * @apiName GamesScore
+     *
+     */
     public function GamesScoreAction()
     {
-
-
             // Get all games with scores
             $gameData = \UsersHasGame::find();
 
             $gameScores = array();
 
             foreach($gameData as $score)
-                //$gameScores[] =  $score->getRelated('Users')->apiCall();
-                //$gameScores[] =  $score->getRelated('Game')->apiCall();
                 $gameScores[] =  $score->apiCall();
 
 
-
             return $this->Api()->response($gameScores, true);
-
-
-
-
     }
+
     /**
      * @api {get} /saveGameData?game_score=10   saves game data score
      *
