@@ -53,6 +53,7 @@
         </div>
 
         <!-- DONUT CHART BLOCK -->
+        <!--
         <div class="col-sm-3 col-lg-3">
             <div class="dash-unit">
                 <dtitle>Top Game</dtitle>
@@ -61,7 +62,34 @@
                 <h2>Tetris</h2>
             </div>
         </div>
+        !-->
+        <div class="col-sm-3 col-lg-3">
+            <!-- MAIL BLOCK -->
+            <div class="dash-unit">
+                <dtitle>Top Scores - Rank (5)</dtitle>
+                <hr>
+                <div class="framemail">
+                    <div class="window">
 
+
+
+                        <ul class="mail">
+                            {% for score in ScoreBoard %}
+                                <li>
+                                    <i class="unread"></i>
+
+                                    <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo01.jpeg" alt="avatar">
+                                    <p class="message"><strong>{{ score.game_score }}</strong> - {{score.Game.name}} </p>
+                                    <p class="sender">{{ score.Users.gamerTag }}</p>
+                                </li>
+                            {% endfor  %}
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div><!-- /dash-unit -->
+        </div><!-- /span3 -->
         <!-- DONUT CHART BLOCK
         <div class="col-sm-3 col-lg-3">
             <div class="dash-unit">
@@ -85,6 +113,21 @@
             -->
             <!-- SERVER UPTIME -->
             <div class="half-unit">
+                <dtitle>Score</dtitle>
+                <hr>
+                <div class="cont">
+                    <p>
+                        <bold>
+                            <!--
+                            feathers goes here from users object
+                            !-->
+                            {{ User.feathers_earned }}
+                        </bold>
+                        | Score.
+                    </p>
+                </div>
+            </div>
+            <div class="half-unit">
                 <dtitle>Feathers</dtitle>
                 <hr>
                 <div class="cont">
@@ -99,7 +142,6 @@
                     </p>
                 </div>
             </div>
-
         </div>
 
     </div><!-- /row -->
@@ -107,57 +149,8 @@
 
     <!-- SECOND ROW OF BLOCKS -->
     <div class="row">
-        <div class="col-sm-3 col-lg-3">
-            <!-- MAIL BLOCK -->
-            <div class="dash-unit">
-                <dtitle>Top Players - Rank (5)</dtitle>
-                <hr>
-                <div class="framemail">
-                    <div class="window">
 
-
-
-                        <ul class="mail">
-                            {% for score in ScoreBoard %}
-                            <li>
-                                <i class="unread"></i>
-
-                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo01.jpeg" alt="avatar">
-                                <p class="message"><strong>{{ score.game_score }}</strong> - {{score.Game.name}} </p>
-                                <p class="sender">{{ score.Users.gamerTag }}</p>
-                            </li>
-                            {% endfor  %}
-
-                            <!--
-                            <li>
-                                <i class="read"></i>
-                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo02.jpg" alt="avatar">
-                                <p class="sender">Dan E.</p>
-                                <p class="message"><strong>10000</strong> - Last Played Tetris.</p>
-
-                            </li>
-                            <li>
-                                <i class="read"></i>
-                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo03.jpg" alt="avatar">
-                                <p class="sender">Leonard N.</p>
-                                <p class="message"><strong>10000</strong> - Last Played Tetris</p>
-
-                            </li>
-                            <li>
-                                <i class="read"></i>
-                                <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo04.jpg" alt="avatar">
-                                <p class="sender">Peter B.</p>
-                                <p class="message"><strong>10000</strong> - Last Played Tetris</p>
-
-                            </li>
-                            !-->
-                        </ul>
-
-                    </div>
-                </div>
-            </div><!-- /dash-unit -->
-        </div><!-- /span3 -->
-
+        <!--
         <div class="col-sm-3 col-lg-3">
             <div class="dash-unit">
                 <dtitle>Game Tetris</dtitle>
@@ -193,6 +186,7 @@
         </div>
 
     </div><!-- /row -->
+
         <!-- GAME BLOCK -->
 
     {% for game in Games %}

@@ -47,8 +47,17 @@ class AdminController extends ControllerBase
             $ConfigWriteAble = true;
             echo 'Config file is writable<p>';
         } else {
-            echo "Config file is not writable. Please chmod 777 $configFile or edit config manually<p>";
+            echo "Config file is not writable. Please <code>chmod 777 $configFile</code> or edit config manually<p>";
         }
+
+        $cacheFolder = getcwd().'/../app/cache';
+        if (is_writable($cacheFolder)) {
+            $cacheFolder = true;
+            echo 'Cache Folder is writable<p>';
+        } else {
+            echo "Cache folder is not writable. Please run <code>chmod -R 777 $cacheFolder </code><p>";
+        }
+
         //lets check adminGroup
         //get admin group and check if user is an admin
         try{
