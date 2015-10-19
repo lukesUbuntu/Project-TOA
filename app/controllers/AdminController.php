@@ -58,8 +58,12 @@ class AdminController extends ControllerBase
         return $userProfile;
     }
 
-    public function wordsNewAction(){
-        echo $this->view->getRender('admin/words', 'new');
+    public function wordsAction(){
+        //render the list of current words in system
+        $wordsData = \Words::find();
+
+        $this->view->setVar("WordsList",$wordsData);
+        echo $this->view->getRender('admin/words', 'listWords');
     }
 
     /**
