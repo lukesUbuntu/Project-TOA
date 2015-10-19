@@ -1,7 +1,7 @@
 ##ignores from luke start
 # phalcon framework ignore
 /cache/
-/app/config/
+/app/config/config.php
 /config/development/
 app/cache/
 /games/*/.git

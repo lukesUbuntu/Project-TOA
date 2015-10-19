@@ -13,6 +13,8 @@ class LoginController extends \Phalcon\Mvc\Controller
      * @return mixed
      */
     public function initialize(){
+        //don't show navbar
+        $this->view->show_navigation = false;
         //set our redirect URL if defined
         $redirectTo = $this->Request()->getQuery("url", null, false);
         $this->url = $redirectTo != false ? $redirectTo : 'index';

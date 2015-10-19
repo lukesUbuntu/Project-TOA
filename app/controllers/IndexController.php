@@ -5,13 +5,13 @@ use  \Phalcon\Mvc\Model;
 class IndexController extends ControllerBase
 {
 
+    public function initialize(){
+        $this->view->show_navigation = true;
+    }
     /**
      * @description __construct
      */
-    public function onConstruct()
-    {
-
-    }
+    public function onConstruct(){ }
 
     /**
      * Display Login View

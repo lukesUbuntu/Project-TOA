@@ -7,12 +7,16 @@ error_reporting(-1);
 
 class AdminController extends ControllerBase
 {
-    public function initialize(){}
+    public function initialize(){
+        $this->view->show_navigation = true;
+    }
     public function indexAction()
     {
         //check user is logged in and admin
         $userProfile = $this->loginCheck('admin');
 
+        //show nav
+        $this->view->show_navigation = true;
         //get the current user logged in
         $this->view->setVar("User", $userProfile);
 
@@ -52,6 +56,10 @@ class AdminController extends ControllerBase
 
         //return the $userprofile
         return $userProfile;
+    }
+
+    public function wordsNewAction(){
+        echo $this->view->getRender('admin/words', 'new');
     }
 
     /**
