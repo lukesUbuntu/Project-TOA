@@ -33,23 +33,7 @@
 
         <!-- USER PROFILE BLOCK -->
         <div class="col-sm-3 col-lg-3">
-            <div class="dash-unit">
-                <dtitle>User Profile</dtitle>
-                <hr>
-                <div class="thumbnail">
-                    <img src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/face80x80.jpg" alt="Marcel Newman" class="img-circle">
-                </div><!-- /thumbnail -->
-                <h1></h1>
-
-                <h3> {{ User.gamerTag }}</h3>
-                <br>
-                <div class="info-user">
-                    <span aria-hidden="true" class="li_user fs1"></span>
-                    <span aria-hidden="true" class="li_settings fs1"></span>
-                    <span aria-hidden="true" class="li_mail fs1"></span>
-                    <a href="/Index/logout"><span aria-hidden="true" class="li_key fs1"></span></a>
-                </div>
-            </div>
+            <a href="admin/words">Words</a>
         </div>
 
 
@@ -57,18 +41,7 @@
 
 
 </div> <!-- /container -->
-<div id="footerwrap">
-    <footer class="clearfix"></footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-lg-12">
-                <p>{{ image("images/logo_big.png") }}</p>
-                <p><h1>TOA - Project</h1></p>
-            </div>
 
-        </div><!-- /row -->
-    </div><!-- /container -->
-</div><!-- /footerwrap -->
 
         <!--
         {{ javascript_include("js/vendor/lineandbars.js") }}
@@ -88,4 +61,3 @@
         {{ javascript_include("js/vendor/noty/themes/default.js") }}
 
         {{ javascript_include("js/vendor/jquery.flexslider.js")}}
-        !-->

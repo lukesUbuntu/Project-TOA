@@ -14,6 +14,22 @@ class AdminController extends ControllerBase
         $this->loginCheck('admin');
 
         //get the current user logged in
+        $this->view->setVar("User", $userProfile);
+
+
+    }
+
+    public function loginCheck($redirectTo = 'admin')
+    {
+
+        if (!Sentry::check()) {
+            //Module
+            // User is not logged in, or is not activated
+            $this->view->disable();
+            header('Location: login?url=' . $redirectTo);
+            die();
+        }
+
         //get the usersID
         $userId = Sentry::getUser()->id;
 
@@ -27,13 +43,14 @@ class AdminController extends ControllerBase
 
         // Check if the user is in the administrator group
         if (!$user->inGroup($admin)) {
+            //add user to group for now
+            //if (Sentry::getUser()->addGroup($admin));
             // User is not in Administrator group
             die ("Not Administrator Account");//@todo return user to an error page
         }
 
-        $this->view->setVar("User", $userProfile);
-
-
+        //return the $userprofile
+        return $userProfile;
     }
 
     /**
@@ -47,17 +64,8 @@ class AdminController extends ControllerBase
             $ConfigWriteAble = true;
             echo 'Config file is writable<p>';
         } else {
-            echo "Config file is not writable. Please <code>chmod 777 $configFile</code> or edit config manually<p>";
+            echo "Config file is not writable. Please run <pre>$ chmod 777 $configFile</pre>  or edit config manually<p>";
         }
-
-        $cacheFolder = getcwd().'/../app/cache';
-        if (is_writable($cacheFolder)) {
-            $cacheFolder = true;
-            echo 'Cache Folder is writable<p>';
-        } else {
-            echo "Cache folder is not writable. Please run <code>chmod -R 777 $cacheFolder </code><p>";
-        }
-
         //lets check adminGroup
         //get admin group and check if user is an admin
         try{
