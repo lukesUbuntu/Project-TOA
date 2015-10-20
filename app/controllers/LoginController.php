@@ -21,7 +21,8 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         //pass on any getRequest to the post url
         $this->getRequest = str_replace('/login', '', $this->Request()->getURI());
-
+        //pass the any view the getRequest
+        $this->view->setVar("getRequest", $this->getRequest);
 
         //check we not already logged in
         if (Sentry::check())
@@ -46,7 +47,7 @@ class LoginController extends \Phalcon\Mvc\Controller
         $this->assets->addJs('js/login.js');
         $this->assets->addCss('css/login.css');
 
-        $this->view->setVar("getRequest", $this->getRequest);
+
 
         //$this->view->setVar("getRequest",$this->getRequest != false ? $this->getRequest: '');
     }
@@ -142,6 +143,10 @@ class LoginController extends \Phalcon\Mvc\Controller
         }
         //preset our error if any
         $errors = array();
+
+        //Username
+        $username = $this->request->getPost("username", null, false);
+        if ($username == false) $errors[] = "Missing username";
 
         //get our posts required
         $email = $this->request->getPost("email", null, false);

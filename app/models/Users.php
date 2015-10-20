@@ -81,7 +81,7 @@ class Users extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $gamerTag;
+    public $username;
 
     /**
      *
@@ -100,13 +100,14 @@ class Users extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $feathers_earned;
-	
+
     /**
      * Validations and business logic
+     *
+     * @return boolean
      */
     public function validation()
     {
-
         $this->validate(
             new Email(
                 array(
@@ -115,9 +116,19 @@ class Users extends \Phalcon\Mvc\Model
                 )
             )
         );
+
+        //lets make sure username is unique
+        $this->validate(new Uniqueness(array(
+            "field"   => "username",
+            "message" => "username is already taken"
+        )));
+
         if ($this->validationHasFailed() == true) {
             return false;
         }
+
+
+        return true;
     }
 
     /**
@@ -125,7 +136,39 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->hasMany('id', 'Users_has_game', 'users_id', array('alias' => 'Users_has_game'));
+        $this->hasMany('id', 'UsersHasGame', 'users_id', array('alias' => 'UsersHasGame'));
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'users';
+    }
+
+    /**
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Users[]
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
+    }
+
+    /**
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Users
+     */
+    public static function findFirst($parameters = null)
+    {
+        return parent::findFirst($parameters);
     }
 
     /**
@@ -137,18 +180,18 @@ class Users extends \Phalcon\Mvc\Model
     public function columnMap()
     {
         return array(
-            'id' => 'id', 
-            'email' => 'email', 
-            'password' => 'password', 
-            'permissions' => 'permissions', 
-            'activated' => 'activated', 
-            'activation_code' => 'activation_code', 
-            'activated_at' => 'activated_at', 
-            'last_login' => 'last_login', 
-            'persist_code' => 'persist_code', 
-            'reset_password_code' => 'reset_password_code', 
-            'first_name' => 'first_name', 
-            'last_name' => 'last_name', 
+            'id' => 'id',
+            'email' => 'email',
+            'password' => 'password',
+            'permissions' => 'permissions',
+            'activated' => 'activated',
+            'activation_code' => 'activation_code',
+            'activated_at' => 'activated_at',
+            'last_login' => 'last_login',
+            'persist_code' => 'persist_code',
+            'reset_password_code' => 'reset_password_code',
+            'first_name' => 'first_name',
+            'last_name' => 'last_name',
             'created_at' => 'created_at',
             'updated_at' => 'updated_at',
             'feathers_earned' => 'feathers_earned',

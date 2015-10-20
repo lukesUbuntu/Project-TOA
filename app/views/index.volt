@@ -11,6 +11,7 @@
         {{ stylesheet_link("css/styles.css") }}
 
         {{ assets.outputCss() }}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style type="text/css">
@@ -26,7 +27,7 @@
     <body>
     <!-- NAVIGATION MENU -->
     {% if show_navigation %}
-        <div class="navbar-nav navbar-inverse navbar-fixed-top">
+        <div class="navbar-inverse navbar-fixed-top">
             <div class="container">
 
                 <div class="navbar-header">

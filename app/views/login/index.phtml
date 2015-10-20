@@ -3,10 +3,14 @@
 //@todo client side validation
 //@todo after user registers redirect to login tab or auto log user in.
 !-->
+
+<link rel="stylesheet/less" type="text/css" href="http://ad-says.com/themes/login-pack1/login1/css/login.css">
+
 <script>
     //define our login_tab we are showing either login or register
     var login_tab = '<?php echo (isset($login_tab)) ? $login_tab : "login-form"; ?>'
 </script>
+
 
 <div class="container ">
     <div class="jumbotron">
@@ -62,13 +66,16 @@
                             </form>
                             <?php echo $this->tag->form(array("login/register", "autocomplete" => "off","id"=>"register-form", "style" => "display:none")) ?>
                             <div class="form-group">
-                                <input type="email" name="email" id="email" tabindex="1" class="form-control" required placeholder="Email Address" value="">
+                                <input type="text" name="gameTag" id="gameTag" tabindex="1" class="form-control" required placeholder="Username" value="">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                <input type="email" name="email" id="email" tabindex="2" class="form-control" required placeholder="Email Address" value="">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="confirm" id="confirm" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                <input type="password" name="password" id="password" tabindex="3" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="confirm" id="confirm" tabindex="4" class="form-control" placeholder="Confirm Password">
                             </div>
                             <div class="form-group">
                                 <div class="row">
