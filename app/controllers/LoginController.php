@@ -23,6 +23,9 @@ class LoginController extends \Phalcon\Mvc\Controller
         $this->getRequest = str_replace('/login', '', $this->Request()->getURI());
         //pass the any view the getRequest
         $this->view->setVar("getRequest", $this->getRequest);
+        //load any assets for this controller
+        $this->assets->addJs('js/login.js');
+        $this->assets->addCss('css/login.css');
 
         //check we not already logged in
         if (Sentry::check())
@@ -43,9 +46,7 @@ class LoginController extends \Phalcon\Mvc\Controller
     public function indexAction()
     {
 
-        //load any assets for this controller
-        $this->assets->addJs('js/login.js');
-        $this->assets->addCss('css/login.css');
+
 
 
 
@@ -88,7 +89,7 @@ class LoginController extends \Phalcon\Mvc\Controller
 
             $user = Sentry::authenticate(array(
                 'email'    => $email,
-                'password' => $password,
+                'password' => $password
             ));
 
             //login user
@@ -173,7 +174,8 @@ class LoginController extends \Phalcon\Mvc\Controller
             $user = Sentry::register(array(
                 'email' => $email,
                 'password' => $password,
-                'activated' => true,  //activate user
+                'username' => $username,
+                'activated' => true  //activate user
             ));
             // Send activation code to the user so he can activate the account
         } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {

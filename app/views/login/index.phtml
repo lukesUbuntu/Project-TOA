@@ -4,7 +4,6 @@
 //@todo after user registers redirect to login tab or auto log user in.
 !-->
 
-<link rel="stylesheet/less" type="text/css" href="http://ad-says.com/themes/login-pack1/login1/css/login.css">
 
 <script>
     //define our login_tab we are showing either login or register
@@ -66,7 +65,7 @@
                             </form>
                             <?php echo $this->tag->form(array("login/register", "autocomplete" => "off","id"=>"register-form", "style" => "display:none")) ?>
                             <div class="form-group">
-                                <input type="text" name="gameTag" id="gameTag" tabindex="1" class="form-control" required placeholder="Username" value="">
+                                <input type="text" name="username" id="username" tabindex="1" class="form-control" required placeholder="Username" value="">
                             </div>
                             <div class="form-group">
                                 <input type="email" name="email" id="email" tabindex="2" class="form-control" required placeholder="Email Address" value="">
