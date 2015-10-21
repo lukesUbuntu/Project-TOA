@@ -65,6 +65,11 @@ class AdminController extends ControllerBase
         //render the list of current words in system
         $wordsData = \Words::find();
         $this->view->setVar("WordsList",$wordsData);
+        //pass the datatables jquery plugin
+        $this->assets
+            ->addJs('//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
+            ->addJs('//cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
+            ->addJs('/js/words.js');
         echo $this->view->getRender('admin/words', 'listWords');
     }
 

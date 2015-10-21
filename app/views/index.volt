@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
         <style type="text/css">
             body {
                 padding-top: 60px;
