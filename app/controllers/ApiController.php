@@ -536,7 +536,7 @@ class ApiController extends ControllerBase
 
 
             } else
-                return $this->Api()->response("Invalid Prefix", false);
+                return $this->Api()->response("Invalid Prefix ".$this->gamePrefix, false);
 
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
             // User wasn't found, should only happen if the user was deleted during api call

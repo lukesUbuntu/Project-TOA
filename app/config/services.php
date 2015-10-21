@@ -26,6 +26,7 @@ $di->set('url', function () use ($config) {
 /**
  * Returns a gamePrefix
  * @description returns the root folder of where the game location is. This is our game prefix
+ * @todo resolve if gamewebroot incorrect use hostname as failed with wrong folder
  */
 $di->set('gamePrefix', function () use ($config) {
     $request = new Phalcon\Http\Request();

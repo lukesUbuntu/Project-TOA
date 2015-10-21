@@ -152,6 +152,8 @@ var dropImage = {
             //can not drop any more blocks
             $("#game_grid").hide();
             $("#game_over").show();
+            //set score
+            setScore($(".game_score").text());
             console.log("app.js can not drop any more blocks");
             return false;
         }
@@ -362,7 +364,7 @@ function splashScreen(){
             $.mobile.changePage("start_game.html", "fade");
         else
         $.mobile.changePage("game.html", "fade");
-    }, 3000);
+    }, 100);
 }
 
 /**
@@ -448,3 +450,21 @@ function setScore(score){
         }
     });
 }
+
+$(document).on('pageinit','#start_page',function(){
+    console.log("startPage Loaded");
+    var template = $('#score_entry');
+    var container = $("#score_board");
+
+    $.each(gameScore,function(i,game){
+
+        console.log("score",game.user_details.username);
+        var tmp = $('#score_entry').clone();
+        $('.username',tmp).text(game.user_details.username);
+        $('.score',tmp).text(game.game_score);
+        tmp.removeClass('hidden');
+        console.log("tmp",tmp.html());
+        $("#score_board").append(tmp);
+    });
+    //render scoreboard
+});
