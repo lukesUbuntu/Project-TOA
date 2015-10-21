@@ -127,6 +127,8 @@ class LoginController extends \Phalcon\Mvc\Controller
             foreach ($errors as $error)
                 $this->flash->error($error);
 
+
+
             //return user to login and render errors
             return $this->view->render('login', 'index');
         }
@@ -151,7 +153,8 @@ class LoginController extends \Phalcon\Mvc\Controller
         //Username
         $username = $this->request->getPost("username", null, false);
         if ($username == false) $errors[] = "Missing username";
-
+        else
+            $username = strtolower($username);//lowercase username
 
         //get our posts required
         $email = $this->request->getPost("email", null, false);
@@ -168,8 +171,20 @@ class LoginController extends \Phalcon\Mvc\Controller
             $errors[] = "Passwords don't match";
 
         //lets check username is okay
+        //pattern for username
+        $usernamePattern = '^[a-z0-9_-]{3,15}$';
         $exists = Users::find("username = '$username'");
         if (count($exists) > 0)$errors[] = "username exists";
+        else
+        if (!preg_match($usernamePattern,$username))
+            $errors[] = "username doesn't match requirements
+            <ul>
+                <li>3 - 15 chars</li>
+                <li>letters and numbers only</li>
+                <li>No spaces</li>
+            </ul>
+            ";
+
         //present
         $this->view->setVar("username", ($username == false)?  '': $username);
         $this->view->setVar("email", ($email == false) ?  '':$email);
@@ -203,6 +218,7 @@ class LoginController extends \Phalcon\Mvc\Controller
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
             $errors[] = 'User with this login already exists.';
         }
+
 
 
         //check any errors
