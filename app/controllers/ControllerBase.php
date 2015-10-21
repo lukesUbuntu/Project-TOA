@@ -42,6 +42,21 @@ class ControllerBase extends Controller
         }
     }
 
+    protected function isAdmin(){
+
+        $userId = Sentry::getUser()->id;
+
+        //aget the user from sentry to check against admin group
+        $user = Sentry::findUserByID($userId);
+
+        //get admin group and check if user is an admin
+        $admin = Sentry::findGroupByName('Administrator');
+
+        return $user->inGroup($admin);
+
+
+    }
+
 
 
 }

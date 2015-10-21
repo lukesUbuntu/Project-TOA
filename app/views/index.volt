@@ -21,7 +21,7 @@
         <div class="col-md-12">
             <nav class="navbar navbar-default navbar-static" role="navigation">
                 <div class="navbar-header">
-                    <a><img src="images/ngati-toa.gif"></a>
+                    <a>{{ image("images/ngati-toa.gif") }}</a>
 
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
@@ -45,6 +45,11 @@
                                 <li>
                                     <a id="menuStyle" href="includes/editProfile.php">Edit Profile</a>
                                 </li>
+                                {% if Admin %}
+                                    <li>
+                                        <a id="menuStyle" href="/admin">Admin Mode</a>
+                                    </li>
+                                {% endif %}
                                 <li>
                                     <a id="menuStyle" href="/Index/logout">Sign Out</a>
                                 </li>

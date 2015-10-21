@@ -10,19 +10,27 @@ class AdminController extends ControllerBase
     public function initialize(){
         $this->view->show_navigation = true;
     }
-    public function indexAction()
-    {
-        //check user is logged in and admin
-        $userProfile = $this->loginCheck('admin');
 
+    /**
+     * Pass data to all the templates if user is logged in
+     */
+    public function passAdmin(){
         //show nav
+        $User = $this->loginCheck();
+        $this->view->setVar("User", $User);   //checks login and pass's admins details
         $this->view->show_navigation = true;
-        //get the current user logged in
-        $this->view->setVar("User", $userProfile);
-
 
     }
+    public function indexAction()
+    {
+        $this->passAdmin();
+    }
 
+    /**
+     * Override the default controllerBase login checks as we want to check for admin login.
+     * @param string $redirectTo
+     * @return Users |
+     */
     public function loginCheck($redirectTo = 'admin')
     {
 
@@ -62,21 +70,31 @@ class AdminController extends ControllerBase
      * Words Action View
      */
     public function wordsAction(){
+        $this->passAdmin();
         //render the list of current words in system
-        $wordsData = \Words::find();
-        $this->view->setVar("WordsList",$wordsData);
-        //pass the datatables jquery plugin
-        $this->assets
-            ->addJs('//cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
-            ->addJs('//cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
-            ->addJs('/js/words.js');
-        echo $this->view->getRender('admin/words', 'listWords');
-    }
+        $WordsList = \Words::find();
 
+        $this->assets
+            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
+            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
+            ->addJs('js/words.js');
+
+        $this->view->partial('admin/words/listWords', array('WordsList' => $WordsList));
+
+       // die();
+
+
+    }
+    public function ConfigAction(){
+        echo "Testing";
+        $test = $this->view->getRender('admin/users', 'index');
+
+    }
     /**
      *  Users Action View
      */
     public function usersAction(){
+        $this->passAdmin();
         //Get all the users
         $users = \Users::find();
 

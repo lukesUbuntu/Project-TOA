@@ -8,7 +8,6 @@
                         <li>
                             <a href="#panel-635371" data-toggle="tab">Scoreboard</a>
                         </li>
-
                     </ul>
 
                     <!--
@@ -76,70 +75,6 @@
                             {% endfor  %}
 
 
-
-
-
-                            <!---
-                            <div class="row" id="gameRow">
-                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <img alt="" src="images/guessTeReoLogo.jpg" class="img-thumbnail pull-right">
-                                </div>
-                                <div class="col-md-1 col-sm-1 col-xs-1">
-
-                                </div>
-                                <div class="col-md-7 col-sm-7 col-xs-7">
-                                    <dl>
-                                        <dt>
-                                        <h4>
-                                            <span>Game Title</span>
-                                        </h4></dt>
-                                        <dd>
-                                            Game description
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-
-                            <div class="row" id="gameRow">
-                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
-                                </div>
-                                <div class="col-md-1 col-sm-1 col-xs-1">
-
-                                </div>
-                                <div class="col-md-7 col-sm-7 col-xs-7">
-                                    <dl>
-                                        <dt>
-                                        <h4>
-                                            <span>Game Title</span>
-                                        </h4></dt>
-                                        <dd>
-                                            Game description
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-
-                            <div class="row" id="gameRow">
-                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
-                                </div>
-                                <div class="col-md-1 col-sm-1 col-xs-1">
-
-                                </div>
-                                <div class="col-md-7 col-sm-7 col-xs-7">
-                                    <dl>
-                                        <dt>
-                                        <h4>
-                                            <span>Game Title</span>
-                                        </h4></dt>
-                                        <dd>
-                                            Game description
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            !-->
                         </div>
 
                             <!--Scoreboard Section-->

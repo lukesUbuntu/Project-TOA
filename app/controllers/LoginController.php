@@ -48,12 +48,7 @@ class LoginController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-
-
-
-
-
-        //$this->view->setVar("getRequest",$this->getRequest != false ? $this->getRequest: '');
+        $this->view->login_tab = "login_form";
     }
 
     /**
