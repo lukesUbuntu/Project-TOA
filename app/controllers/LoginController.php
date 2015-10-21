@@ -122,7 +122,7 @@ class LoginController extends \Phalcon\Mvc\Controller
      */
     private function errorCheck($errors = array())
     {
-        if (count($errors) > 0) {
+        if (count($errors) > 0 && $errors != false) {
             //set any errors
             foreach ($errors as $error)
                 $this->flash->error($error);
@@ -178,7 +178,9 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         //check any errors
         $errors = $this->errorCheck($errors);
-        if ($errors) return $errors;
+        if ($errors != false) return $errors;
+
+
 
 
 
@@ -202,14 +204,18 @@ class LoginController extends \Phalcon\Mvc\Controller
             $errors[] = 'User with this login already exists.';
         }
 
+
         //check any errors
         $errors = $this->errorCheck($errors);
-        if ($errors) return $errors;
+        if ($errors != false) return $errors;
+
 
 
         // Authenticate the user and log them in
-        Sentry::login($user, false);
-        return $this->response->redirect('index');
+        $this->view->login_tab = "login_form";
+
+        //Sentry::login($user, false);
+        return $this->view->render('login', 'index');
 
     }
 
