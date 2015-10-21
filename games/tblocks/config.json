@@ -1,6 +1,7 @@
 {
   "name": "TBlocks",
-  "description": "Tblocks match images and words",
-	"start_file" : "index.html",
-	"author" : "Luke"
+  "description": "Tblocks match up images and the correct words",
+  "start_file" : "index.html",
+  "logo" : "logo.jpg",
+  "author" : "Luke"
 }

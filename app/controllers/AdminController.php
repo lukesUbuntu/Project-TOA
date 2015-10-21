@@ -78,17 +78,16 @@ class AdminController extends ControllerBase
         $this->assets
             ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
             ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
-            ->addJs('js/words.js');
+            ->addJs('js/admin/words.js');
 
         $this->view->partial('admin/words/listWords', array('WordsList' => $WordsList));
 
-       // die();
 
 
     }
     public function ConfigAction(){
-        echo "Testing";
-        $test = $this->view->getRender('admin/users', 'index');
+
+        return "Sorry not enabled";
 
     }
     /**
@@ -112,10 +111,35 @@ class AdminController extends ControllerBase
             $allUsers[] = $thisUser;
         }
 
-        //render view
-        $this->view->setVar("Users",$allUsers);
-        // if (!$user->inGroup($admin)) {
-        echo $this->view->getRender('admin/users', 'index');
+
+
+
+        //render the list of current words in system
+
+
+        $this->assets
+            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
+            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
+            ->addJs('js/admin/users.js');
+        //app/views/admin/users
+        //$this->view->render('admin/users', array('Users' => $allUsers));
+        $this->view->setVar("Users", $allUsers);
+        return $this->view->render('admin', 'users');
+
+    }
+    public function GamesAction(){
+        $this->passAdmin();
+        //Get all the users
+        $games = Game::find();
+
+        $this->assets
+            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
+            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
+            ->addJs('js/admin/users.js');
+
+        $this->view->setVar("Games", $games);
+        return $this->view->render('admin', 'games');
+
     }
     /**
      * Installer for when moving to another system
