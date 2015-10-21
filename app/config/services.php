@@ -100,6 +100,23 @@ $di->setShared('session', function () {
 
     return $session;
 });
+$di->set('isAdmin', function ($session) {
+    if (!isset($session['admin'])){
+        $userId = Sentry::getUser()->id;
+
+        //aget the user from sentry to check against admin group
+        $user = Sentry::findUserByID($userId);
+
+        //get admin group and check if user is an admin
+        $admin = Sentry::findGroupByName('Administrator');
+
+        $session['admin'] = $user->inGroup($admin);
+    }
+
+
+
+    return $session['admin'];
+});
 /**
  * Setup flash messages for alerts
  */

@@ -18,6 +18,7 @@ class AdminController extends ControllerBase
         //show nav
         $User = $this->loginCheck();
         $this->view->setVar("User", $User);   //checks login and pass's admins details
+        $this->view->setVar("Admin",$this->isAdmin);
         $this->view->show_navigation = true;
 
     }

@@ -167,7 +167,8 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         //lets check username is okay
         //pattern for username
-        $usernamePattern = '^[a-z0-9_-]{3,15}$';
+
+        $usernamePattern = '/^(?=.*[a-zA-Z]{1,})(?=.*[\d]{0,})[a-zA-Z0-9]{1,15}$/';
         $exists = Users::find("username = '$username'");
         if (count($exists) > 0)$errors[] = "username exists";
         else

@@ -29,7 +29,7 @@ class IndexController extends ControllerBase
 
 
 
-        $this->view->setVar("Admin",$this->isAdmin());
+        $this->view->setVar("Admin",$this->isAdmin);
 
         $this->view->setVar("Games",$games);
         $this->view->setVar("User", $user);

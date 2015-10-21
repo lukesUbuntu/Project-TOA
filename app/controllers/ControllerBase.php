@@ -41,7 +41,7 @@ class ControllerBase extends Controller
             die();
         }
     }
-
+    /*
     protected function isAdmin(){
 
         $userId = Sentry::getUser()->id;
@@ -56,6 +56,7 @@ class ControllerBase extends Controller
 
 
     }
+    */
 
 
 
