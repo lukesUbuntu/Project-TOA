@@ -1,0 +1,124 @@
+html {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #232323 ;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/*styling for the game section background*/
+#panel-417568 {
+    background-image: url("background-img.jpg");
+    color: rgba(255, 255, 255, 0.93);
+    margin: 0;
+    padding: 0;
+    width: 100%
+}
+
+/*Styles around the top nav bar*/
+#panel-41711 {
+    background-color: #262626;
+}
+
+.navbar-default {
+    border-color: #262626;
+}
+
+/*Styles the nav bar*/
+#bs-example-navbar-collapse-1 {
+    background-color: #262626;
+    width: 100%
+}
+
+/*styling for the users gamer icon*/
+.img-circle {
+    width :60px;
+    height :60px
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/*Nav bar background colour*/
+#tabs-315995 {
+    background-color: rgba(202, 202, 202, 0.93);
+}
+
+/*Changes nav tags to use black for font colouring*/
+.navtabs, a {
+    color: black;
+}
+
+/*Styling hovering over selected nav*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #262626;
+    color: white;
+}
+
+/*Styles the menu items in the dropdown list*/
+#menuStyle {
+    color: rgba(173, 173, 173, 0.93);
+    background-color: #262626;
+}
+
+/*styling for the font in the dropdown menu but not list items*/
+.navbar-default {
+    font-size: 12pt;
+}
+
+/* */
+#dropdown-menu {
+    background-color: #262626;
+    color: white;
+}
+
+/*Styles the dropdown font text*/
+#dropdown {
+    color: rgba(173, 173, 173, 0.93);
+}
+
+/* */
+.dropdown open {
+    background-color: #122b40; !important;
+    border-color: #337ab7;
+}
+
+/*  Could be redundant will test later
+#active {
+    text-align: center;
+}
+*/
+/*This fixes the size of the feather image*/
+#featherLocation {
+    width: 53pt;
+    height: 57pt;
+}
+
+/*This styles both Score and Feathers in the nav bar*/
+#scoreTabs {
+    padding-right: 20pt;
+    font-size: 12pt;
+    text-align: right;
+    list-style-type: none;
+    position: relative;
+    display: inline-block;
+}
+
+/*This styles the very top of the game list*/
+#gameRowTop {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/*This styles all the other games in the game list*/
+#gameRow {
+    padding-bottom: 20px;
+}
+
+#gameRow, img {
+
+}
+/*Scoreboard Section*/

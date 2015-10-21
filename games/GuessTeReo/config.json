@@ -1,6 +1,6 @@
 {
   "name" : "Guess the Te Reo Word",
-  "description" : "Guess the word from the four pictures! can you figure it out?",
+  "description" : "Based off the very popular game 4 Pics 1 Word, can you guess the Te Reo Maori puzzles that are waiting for you. Use the four images to try guess what the word could be, but if you get stuck you can always use the hint button to get the english word.",
   "start_file" : "index.php",
   "author" : "Carl Blance"
 }

@@ -1,3 +1,3 @@
 <?php
-echo "shit";exit;
+exit;
 ?>
