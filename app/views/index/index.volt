@@ -41,7 +41,7 @@
                 </div><!-- /thumbnail -->
                 <h1></h1>
 
-                <h3> {{ User.gamerTag }}</h3>
+                <h3> {{ User.username }}</h3>
                 <br>
                 <div class="info-user">
                     <span aria-hidden="true" class="li_user fs1"></span>
@@ -80,7 +80,7 @@
 
                                     <img class="avatar" src="http://www.prepbootstrap.com/Content/images/shared/single-page-admin/photo01.jpeg" alt="avatar">
                                     <p class="message"><strong>{{ score.game_score }}</strong> - {{score.Game.name}} </p>
-                                    <p class="sender">{{ score.Users.gamerTag }}</p>
+                                    <p class="sender">{{ score.Users.username }}</p>
                                 </li>
                             {% endfor  %}
 

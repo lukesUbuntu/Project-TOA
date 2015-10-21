@@ -195,7 +195,7 @@ class Users extends \Phalcon\Mvc\Model
             'created_at' => 'created_at',
             'updated_at' => 'updated_at',
             'feathers_earned' => 'feathers_earned',
-            'gamertag' => 'gamerTag'
+            'username' => 'username'
         );
     }
 
@@ -251,7 +251,7 @@ class Users extends \Phalcon\Mvc\Model
             'created_at' =>  $this->created_at,
             'updated_at' =>  $this->updated_at,
             'feathers_earned' =>  $this->feathers_earned,
-            'gamertag' =>  $this->gamerTag
+            'username' =>  $this->username
         );
         //unset important attributes they don't need
         //return $this->toArray();

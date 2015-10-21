@@ -117,7 +117,7 @@ class UsersMigration_101 extends Migration
                     )
                 ),
                 new Column(
-                    'gamertag',
+                    'username',
                     array(
                         'type' => Column::TYPE_VARCHAR,
                         'size' => 15,
@@ -130,7 +130,7 @@ class UsersMigration_101 extends Migration
                         'type' => Column::TYPE_VARCHAR,
                         'notNull' => true,
                         'size' => 1,
-                        'after' => 'gamertag'
+                        'after' => 'username'
                     )
                 ),
                 new Column(

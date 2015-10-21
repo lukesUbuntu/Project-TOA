@@ -23,9 +23,12 @@ class LoginController extends \Phalcon\Mvc\Controller
         $this->getRequest = str_replace('/login', '', $this->Request()->getURI());
         //pass the any view the getRequest
         $this->view->setVar("getRequest", $this->getRequest);
+
+
         //load any assets for this controller
         $this->assets->addJs('js/login.js');
         $this->assets->addCss('css/login.css');
+
 
         //check we not already logged in
         if (Sentry::check())
@@ -149,9 +152,11 @@ class LoginController extends \Phalcon\Mvc\Controller
         $username = $this->request->getPost("username", null, false);
         if ($username == false) $errors[] = "Missing username";
 
+
         //get our posts required
         $email = $this->request->getPost("email", null, false);
         if ($email == false) $errors[] = "Missing email address";
+
 
         $password = $this->request->getPost("password", null, false);
         if ($password == false) $errors[] = "Missing password";
@@ -162,9 +167,20 @@ class LoginController extends \Phalcon\Mvc\Controller
         if ($confirm != false && $confirm != $password)
             $errors[] = "Passwords don't match";
 
+        //lets check username is okay
+        $exists = Users::find("username = '$username'");
+        if (count($exists) > 0)$errors[] = "username exists";
+        //present
+        $this->view->setVar("username", ($username == false)?  '': $username);
+        $this->view->setVar("email", ($email == false) ?  '':$email);
+        $this->view->setVar("password", ($password == false) ? '' : $password);
+
+
         //check any errors
         $errors = $this->errorCheck($errors);
         if ($errors) return $errors;
+
+
 
 
         /** safe to register user below this point **/
