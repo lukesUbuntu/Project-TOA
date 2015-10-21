@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Ngati Toa Rangatira</title>
 
@@ -11,7 +11,7 @@
     <meta name="author" content="LayoutIt!">
     {{ stylesheet_link("css/bootstrap.min.css") }}
     {{ stylesheet_link("css/style.css") }}
-
+    {{ assets.outputCss() }}
 </head>
 <body>
 
@@ -40,13 +40,13 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" id="dropdown" data-toggle="dropdown"
-                               style="">Username<strong class="caret"></strong></a>
+                               style="">{{ User.username }}<strong class="caret"></strong></a>
                             <ul class="dropdown-menu" id="dropdown-menu">
                                 <li>
                                     <a id="menuStyle" href="includes/editProfile.php">Edit Profile</a>
                                 </li>
                                 <li>
-                                    <a id="menuStyle" href="https://Index/logout">Sign Out</a>
+                                    <a id="menuStyle" href="/Index/logout">Sign Out</a>
                                 </li>
                             </ul>
                         </li>
@@ -56,8 +56,6 @@
         </div>
     </div>
     {% endif %}
-
-
 
     <div class="row" id="bodyContainer">
         {{ content() }}

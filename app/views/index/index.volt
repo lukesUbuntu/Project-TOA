@@ -29,6 +29,8 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="panel-417568">
 
+
+                            {% for game in Games %}
                             <div class="row" id="gameRowTop">
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
@@ -40,14 +42,44 @@
                                     <dl>
                                         <dt>
                                         <h4>
-                                            <span>Game Title</span>
+                                            <span>{{ game.name }}</span>
                                         </h4></dt>
                                         <dd>
-                                            Game description
+                                            {{ game.description }}
                                         </dd>
                                     </dl>
+                                    <div class="text">
+                                        <button class="btn btn-success"><a href="/games/{{ game.path() }}">Play Now</a></button>
+                                    </div>
                                 </div>
                             </div>
+
+
+                            <!--
+                            <div class="col-sm-3 col-lg-3">
+                                <div class="dash-unit">
+                                    <dtitle>{{ game.name }}</dtitle>
+                                    <hr>
+                                    <div class="info-user">
+                                        <span aria-hidden="true" class="li_display fs2"></span>
+                                    </div>
+                                    <br>
+                                    <div class="text">
+                                        <button class="btn btn-success center-block"><a href="/games/{{ game.path() }}">Play Now</a></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            !-->
+
+
+                            {% endfor  %}
+
+
+
+
+
+                            <!---
                             <div class="row" id="gameRow">
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <img alt="" src="images/guessTeReoLogo.jpg" class="img-thumbnail pull-right">
@@ -67,6 +99,7 @@
                                     </dl>
                                 </div>
                             </div>
+
                             <div class="row" id="gameRow">
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
@@ -86,6 +119,7 @@
                                     </dl>
                                 </div>
                             </div>
+
                             <div class="row" id="gameRow">
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
@@ -105,7 +139,8 @@
                                     </dl>
                                 </div>
                             </div>
-                            </div>
+                            !-->
+                        </div>
 
                             <!--Scoreboard Section-->
                             <div class="tab-pane" id="panel-635371">
@@ -115,12 +150,20 @@
                                         <tr>
                                             <th>Username</th>
                                             <th>Score</th>
-                                            <th>Feathers</th>
                                             <th>Most Played</th>
                                             <th>Rank</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for score in ScoreBoard %}
+                                        <tr>
+                                            <td>{{ score.Users.username }}</td>
+                                            <td>{{ score.game_score }}</td>
+                                            <td>{{score.Game.name}}</td>
+                                            <td>1</td>
+                                        </tr>
+                                        {% endfor  %}
+                                        <!--
                                         <tr>
                                             <td>PuRgE</td>
                                             <td>1254</td>
@@ -142,6 +185,7 @@
                                             <td>Guess Te Reo</td>
                                             <td>83</td>
                                         </tr>
+                                        !-->
                                         </tbody>
                                     </table>
                                 </div>
