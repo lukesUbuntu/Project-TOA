@@ -3,19 +3,13 @@
 //@todo client side validation
 //@todo after user registers redirect to login tab or auto log user in.
 !-->
-
-
 <script>
     //define our login_tab we are showing either login or register
-    var login_tab = '<?php echo (isset($login_tab)) ? $login_tab : "login-form"; ?>'
+    var login_tab = 'login-form'
 </script>
-
-
-<div class="container ">
-    <div class="jumbotron">
-        <h1>Project TOA-DEV</h1>
-
-    </div>
+<div id="head">
+    <?php echo $this->tag->image("images/loginTitle.jpg");?>
+</div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">
