@@ -112,5 +112,16 @@ class Game extends \Phalcon\Mvc\Model
         return $this->toArray();
     }
 
+    /**
+     * @return array | Returns basic information
+     */
+    public function basicData(){
+        return array(
+            'game_id' => $this->game_id,
+            'name' => $this->name,
+            'prefix' => $this->prefix
+        );
+    }
+
 
 }

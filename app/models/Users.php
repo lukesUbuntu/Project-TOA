@@ -256,6 +256,19 @@ class Users extends \Phalcon\Mvc\Model
         //unset important attributes they don't need
         //return $this->toArray();
     }
+    /**
+     * Define what information is allowed from Users to API
+     */
+    public function basicData(){
 
+        return array(
+            'id' => $this->id,
+            'email' =>  $this->email,
+            'feathers_earned' =>  $this->feathers_earned,
+            'username' =>  $this->username
+        );
+        //unset important attributes they don't need
+        //return $this->toArray();
+    }
 
 }

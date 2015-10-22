@@ -331,7 +331,6 @@ class ApiController extends ControllerBase
 
     /**
      * @api {get} /usersGames Returns all users games
-     * @api {get} /usersGames?prefix=test   Returns games matching test
      *
      * @apiName usersGamesAction
      *
@@ -446,12 +445,24 @@ class ApiController extends ControllerBase
     public function GamesScoreAction()
     {
             // Get all games with scores
-            $gameData = \UsersHasGame::find();
+            $gamesData = \UsersHasGame::find();
 
+            //store game users scores
             $gameScores = array();
+            //store games
+            $gameData = array();
 
-            foreach($gameData as $score)
-                $gameScores[] =  $score->apiCall();
+            foreach($gamesData as $score){
+                //store the game info into gameArray
+                $theGame =  $score->getRelated('Game');
+                $theUsers = $score->getRelated('Users');
+
+                $gameScores[$score->game_game_id] = $score->gameDetailsBrief();
+                array_add($gameScores[$score->game_game_id]['scores'],$score->userDetailsBrief());
+                print_r($score->userDetailsBrief());
+            }
+exit;
+            //print_r($gameScores);exit;
 
 
             return $this->Api()->response($gameScores, true);
@@ -597,5 +608,57 @@ class ApiController extends ControllerBase
 
     }
 
+    /**
+     * @api {get} /gameScores Returns all information about current game including scores
+     * @apiName gameData
+     *
+     * @apiDescription Returns all the games on the system from the plugin folder
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/listGames
+     *
+     * @apiSuccess {Int}      game_id       Game ID of the current game
+     * @apiSuccess {String}   name          Name of the game
+     * @apiSuccess {String}   description   Description of the game
+     * @apiSuccess {String}   start_file    Start File that will be loaded
+     * @apiSuccess {String}   author        Developer of the game
+     * @apiSuccess {String}   prefix        Prefix folder name of the game
+     *
+     * @apiError no games in system
+     *
+     * @apiErrorExample {json} Failed-Response:
+     *     {
+     *       "success"  :   false,
+     *       "data"     :   "no games in system"
+     *     }
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *      "success":true,
+     *      "data":[
+     *              {
+     *                 "game_id":"7",
+     *                  "name":"This is my test Game",
+     *                  "description":"The description",
+     *                  "start_file":"start.html",
+     *                  "author":"James",
+     *                  "prefix":"testgame"
+     *              }
+     *          ]
+     * }
+
+    public function listGamesAction()
+    {
+        //get all games
+        $games = Game::find();
+
+        //check we have games
+        if (count($games) <= 0)
+            return $this->Api()->response("no games in system", false);
+
+        //return all games
+        return $this->Api()->response($games->toArray());
+
+    }
+     */
 }
 
