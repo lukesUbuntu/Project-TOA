@@ -30,8 +30,10 @@ $di->set('url', function () use ($config) {
  */
 $di->set('gamePrefix', function () use ($config) {
     $request = new Phalcon\Http\Request();
+    $gameFolder = $request->getServerName().$config->gameWebRoot;   //@todo check gameWebRoot if slash or not
+
     //simple regex the the config gameWebRoot folder and extract the first path after
-    if (preg_match('#' . $config->application->gameWebRoot . '/(.*)/#', $request->getHTTPReferer(), $prefixs))
+    if (preg_match('#' . $gameFolder . '/(.*)/#', $request->getHTTPReferer(), $prefixs))
         return (count($prefixs) > 1) ? $prefixs[1] : false;
 
     return false;
