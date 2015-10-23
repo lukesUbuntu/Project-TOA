@@ -459,9 +459,9 @@ class ApiController extends ControllerBase
 
                 $gameScores[$score->game_game_id] = $score->gameDetailsBrief();
                 array_add($gameScores[$score->game_game_id]['scores'],$score->userDetailsBrief());
-                print_r($score->userDetailsBrief());
+                //print_r($score->userDetailsBrief());
             }
-exit;
+            //exit;
             //print_r($gameScores);exit;
 
 
