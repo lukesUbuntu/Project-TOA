@@ -59,4 +59,24 @@ class UsersHasGame extends \Phalcon\Mvc\Model
         return $data;
     }
 
+
+
+    /**
+     * @return mixed | returns basic information on user
+     */
+    public function gameDetailsBrief()
+    {
+        return $this->getRelated('Game')->basicData();
+
+    }
+    /**
+     * @return mixed | returns basic information on user
+     */
+    public function userDetailsBrief()
+    {
+        $data = $this->getRelated('Users')->basicData();
+        $data['score'] = $this->game_score;
+        return $data;
+    }
+
 }
