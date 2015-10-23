@@ -302,66 +302,6 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/saveGameData?game_score=10",
-    "title": "saves game data score",
-    "name": "usersGamesAction",
-    "description": "<p>returns a list of the current logged in users games</p> ",
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "http://localhost/api/saveGameData",
-        "type": "json"
-      }
-    ],
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "data",
-            "description": "<p>updated game</p> "
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "no",
-            "description": "<p>games in system</p> "
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Failed-Login:",
-          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no user logged in\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Failed-Response:",
-          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no game data found for user\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Failed-Prefix:",
-          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"Failed prefix\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "app/controllers/ApiController.php.bak",
-    "group": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php_bak",
-    "groupTitle": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php_bak"
-  },
-  {
-    "type": "get",
     "url": "/usersGames?prefix=test",
     "title": "Returns games matching test",
     "name": "usersGamesAction",
@@ -441,6 +381,66 @@ define({ "api": [
         {
           "title": "Failed-Response:",
           "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no game data found for user\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/ApiController.php.bak",
+    "group": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php_bak",
+    "groupTitle": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php_bak"
+  },
+  {
+    "type": "get",
+    "url": "/saveGameData?game_score=10",
+    "title": "saves game data score",
+    "name": "usersGamesAction",
+    "description": "<p>returns a list of the current logged in users games</p> ",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/saveGameData",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "data",
+            "description": "<p>updated game</p> "
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "no",
+            "description": "<p>games in system</p> "
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Failed-Login:",
+          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no user logged in\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Failed-Response:",
+          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no game data found for user\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Failed-Prefix:",
+          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"Failed prefix\"\n}",
           "type": "json"
         }
       ]
@@ -548,6 +548,98 @@ define({ "api": [
           }
         ]
       }
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/ApiController.php",
+    "group": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php",
+    "groupTitle": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php"
+  },
+  {
+    "type": "get",
+    "url": "/gameScores",
+    "title": "Returns all information about current game including scores",
+    "name": "gameData",
+    "description": "<p>Returns all the games on the system from the plugin folder</p> ",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/listGames",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>Int</p> ",
+            "optional": false,
+            "field": "game_id",
+            "description": "<p>Game ID of the current game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description of the game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "start_file",
+            "description": "<p>Start File that will be loaded</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "author",
+            "description": "<p>Developer of the game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "prefix",
+            "description": "<p>Prefix folder name of the game</p> "
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n     \"success\":true,\n     \"data\":[\n             {\n                \"game_id\":\"7\",\n                 \"name\":\"This is my test Game\",\n                 \"description\":\"The description\",\n                 \"start_file\":\"start.html\",\n                 \"author\":\"James\",\n                 \"prefix\":\"testgame\"\n             }\n         ]\n}\n\n    public function listGamesAction()\n    {\n        //get all games\n        $games = Game::find();\n\n        //check we have games\n        if (count($games) <= 0)\n            return $this->Api()->response(\"no games in system\", false);\n\n        //return all games\n        return $this->Api()->response($games->toArray());\n\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "no",
+            "description": "<p>games in system</p> "
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Failed-Response:",
+          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no games in system\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "app/controllers/ApiController.php",
@@ -907,8 +999,8 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/usersGames?prefix=test",
-    "title": "Returns games matching test",
+    "url": "/usersGames",
+    "title": "Returns all users games",
     "name": "usersGamesAction",
     "description": "<p>returns a list of the current logged in users games</p> ",
     "examples": [
