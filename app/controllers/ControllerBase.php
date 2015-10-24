@@ -18,6 +18,7 @@ class ControllerBase extends Controller
 
         if (Sentry::check()) {
             Sentry::logout();
+            $this->session->destroy();
             return $this->response->redirect('index');
         }
 
