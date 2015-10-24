@@ -121,6 +121,7 @@ $di->set('isAdmin', function () {
         $session->set("admin",$user->inGroup($admin));
 
     }
+
     return $session->get("admin");
 });
 /**

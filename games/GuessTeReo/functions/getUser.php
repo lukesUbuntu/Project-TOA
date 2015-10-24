@@ -35,6 +35,8 @@ $row = mysqli_fetch_row($result);
 $gameScore = $row[1];
 $totalFeathersEarned = $row[2];
 $roundNumber = $row[3];
-$roundNumber = $row[4];
+$lettersGuessedArray = preg_split('//u',$row[4], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
+$wordBeingGuessed = preg_split('//u',$row[5], -1, PREG_SPLIT_NO_EMPTY);//ensures Maori characters are properly encoded within string
+$wordBeingGuessedString = $row[6];
 mysqli_close($con);
 ?>

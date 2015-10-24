@@ -43,7 +43,7 @@
                                style="">{{ User.username }}<strong class="caret"></strong></a>
                             <ul class="dropdown-menu" id="dropdown-menu">
                                 <li>
-                                    <a id="menuStyle" href="includes/editProfile.php">Edit Profile</a>
+                                    <a id="menuStyle" href="/Editprofile">Edit Profile</a>
                                 </li>
                                 {% if Admin %}
                                     <li>

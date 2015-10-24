@@ -9,8 +9,7 @@ require_once 'includes/header.php';
 <body>
 <div data-role="" class="ui-content">
     <?php
-        require_once 'includes/gameImages.php';
-        require_once 'includes/guessSection.php';
+        require_once 'includes/gameSection.php';
         require_once 'includes/keyboard.php';
     ?>
 </div>
