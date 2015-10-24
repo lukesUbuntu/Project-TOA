@@ -5,13 +5,12 @@ use  \Phalcon\Mvc\Model;
 class IndexController extends ControllerBase
 {
 
-    public function initialize(){
-        $this->view->show_navigation = true;
-    }
+    public function initialize(){}
     /**
      * @description __construct
      */
     public function onConstruct(){ }
+
 
     /**
      * Display Login View
@@ -23,7 +22,7 @@ class IndexController extends ControllerBase
         //load our games into view
 
         $games = \Game::find();//get our games
-        $user = Users::findFirst(Sentry::getUser()->id); //get user
+
         //scores
         $ScoreBoard = UsersHasGame::find(array("limit" => 5));
 
@@ -32,7 +31,7 @@ class IndexController extends ControllerBase
         $this->view->setVar("Admin",$this->isAdmin);
 
         $this->view->setVar("Games",$games);
-        $this->view->setVar("User", $user);
+
 
         $this->view->setVar("ScoreBoard", $ScoreBoard);
     }

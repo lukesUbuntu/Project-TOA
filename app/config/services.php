@@ -122,7 +122,6 @@ $di->set('isAdmin', function () {
 
     }
 
-    //echo $session->get("admin");exit;
     return $session->get("admin");
 });
 /**
