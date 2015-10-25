@@ -441,6 +441,47 @@ class ApiController extends ControllerBase
      *
      * @apiName GamesScore
      *
+     * @apiDescription returns a list of all games and scores
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/GamesScore
+     *
+     * @apiSuccess {Int}      game_id                   Game ID of the game
+     * @apiSuccess {String}   name                      Name of game
+     * @apiSuccess {String}   prefix                    Game prefix (refers to folder)
+     * @apiSuccess {Object}   scores                    Lists all users scores for game
+     * @apiSuccess {Int}      scores.id                 Users ID
+     * @apiSuccess {String}   scores.email              Users Email
+     * @apiSuccess {Int}      scores.feathers_earned    Users Email
+     * @apiSuccess {String}   scores.username           Users username
+     * @apiSuccess {Int}      scores.score              Users username
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *      "success": true,
+     *      "data": {
+     *               "19": {
+     *                  "game_id": "19",
+     *                  "name": "TBlocks",
+     *                  "prefix": "tblocks",
+     *                  "scores": [
+     *                          {
+     *                              "id": "7",
+     *                              "email": "test2@gmail.com",
+     *                              "feathers_earned": "341",
+     *                              "username": "test3",
+     *                              "score": "150150"
+     *                          },
+     *                          {
+     *                              "id": "8",
+     *                              "email": "tester@tester.com",
+     *                              "feathers_earned": "16",
+     *                              "username": "tester",
+     *                              "score": "800"
+     *                          }
+     *                          ]
+     *           }
+     * }
      */
     public function GamesScoreAction()
     {
@@ -454,15 +495,15 @@ class ApiController extends ControllerBase
 
             foreach($gamesData as $score){
                 //store the game info into gameArray
-                $theGame =  $score->getRelated('Game');
-                $theUsers = $score->getRelated('Users');
-
+                //$theGame =  $score->getRelated('Game');
+                //$theUsers = $score->getRelated('Users');
+                if (!isset($gameScores[$score->game_game_id]))
                 $gameScores[$score->game_game_id] = $score->gameDetailsBrief();
-                array_add($gameScores[$score->game_game_id]['scores'],$score->userDetailsBrief());
-                //print_r($score->userDetailsBrief());
+
+                $gameScores[$score->game_game_id]['scores'][] = $score->userDetailsBrief();
+
             }
-            //exit;
-            //print_r($gameScores);exit;
+
 
 
             return $this->Api()->response($gameScores, true);
@@ -526,24 +567,33 @@ class ApiController extends ControllerBase
             $game = \Game::findFirst("prefix = '$this->gamePrefix'");
 
             if ($game && $game->count() > 0) {    //we have game
+                //find the users current data else create new record
+
                 //we have game object
                 $game_id = $game->game_id;
-                $theGame = \UsersHasGame::findFirst("game_game_id = '$game_id'");
-                if ($theGame && $theGame->count() > 0) {
+                $users_id = Sentry::getUser()->id;
 
-                    $theGame->game_score = $game_score;
-                    //var_dump($game);exit;
-                    $theGame->save();
-                    return $this->Api()->response("updated game");
-                } else {
-                    $NewGame = new \UsersHasGame;
+                $theGame = \UsersHasGame::findfirst("users_id  = '$users_id' AND game_game_id = '$game_id'");
+
+                if (count($theGame) <= 0){
+                    $theGame = new \UsersHasGame;
                     //push any changes
-                    $NewGame->game_game_id = $game->game_id;
-                    $NewGame->game_score = $game_score;
-                    $NewGame->users_id = Sentry::getUser()->id;
-                    $NewGame->save();
-                    return $this->Api()->response("updated game");
+                    $theGame->game_game_id = $game->game_id;
+                    $theGame->game_score = $game_score;
+                    $theGame->users_id = Sentry::getUser()->id;
+
+                    return $this->Api()->response("Updated game data, new score");
                 }
+                //only update if new score is bigger
+                if ($game_score > $theGame->game_score){
+                    $theGame->game_score = $game_score;
+                    $theGame->save();
+                    return $this->Api()->response("updated game data");
+                }
+
+
+                return $this->Api()->response("not updated score same or lower");
+
 
 
             } else

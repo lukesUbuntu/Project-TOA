@@ -24,17 +24,29 @@ $di->set('url', function () use ($config) {
 }, true);
 
 /**
+ * Returns a path replacing / at start and end if exist
+ */
+$di->set('fixPath', function ($path) {
+    rtrim(ltrim($path,'/'), '/');
+}, true);
+/**
  * Returns a gamePrefix
  * @description returns the root folder of where the game location is. This is our game prefix
  * @todo resolve if gamewebroot incorrect use hostname as failed with wrong folder
  */
 $di->set('gamePrefix', function () use ($config) {
-    $request = new Phalcon\Http\Request();
-    $gameFolder = $request->getServerName().$config->gameWebRoot;   //@todo check gameWebRoot if slash or not
 
+    //get the $_REQUEST
+    $request = new Phalcon\Http\Request();
+    //define gamefolder check slashes otherwise this will stuff the below regex up
+    $gameFolder = $request->getServerName().'/'.rtrim(ltrim($config->application->gameWebRoot,'/'), '/');   //@todo check gameWebRoot if slash or not
     //simple regex the the config gameWebRoot folder and extract the first path after
     if (preg_match('#' . $gameFolder . '/(.*)/#', $request->getHTTPReferer(), $prefixs))
         return (count($prefixs) > 1) ? $prefixs[1] : false;
+
+
+
+
 
     return false;
 

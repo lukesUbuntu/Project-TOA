@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <img src="images/profileImages/profile02.jpg" class="img-circle" alt="">
+                            <img src="assets/profiles/{{User.id}}.jpg" class="img-circle" alt="">
                         </li>
                     </ul>
 
