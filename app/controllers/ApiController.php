@@ -552,7 +552,8 @@ class ApiController extends ControllerBase
 
             // Get the current active/logged in users game
             $users_games = \UsersHasGame::findFirst(array('users_id' => Sentry::getUser()->id));
-
+            //add expierance to user
+            $this->addExperience();
             //we have valid user
             if (count($users_games) <= 0)
                 return $this->Api()->response("no game data found for user", false);
@@ -573,7 +574,12 @@ class ApiController extends ControllerBase
                 $game_id = $game->game_id;
                 $users_id = Sentry::getUser()->id;
 
+
                 $theGame = \UsersHasGame::findfirst("users_id  = '$users_id' AND game_game_id = '$game_id'");
+
+
+
+                //$user->addExperience();
 
                 if (count($theGame) <= 0){
                     $theGame = new \UsersHasGame;
@@ -581,13 +587,14 @@ class ApiController extends ControllerBase
                     $theGame->game_game_id = $game->game_id;
                     $theGame->game_score = $game_score;
                     $theGame->users_id = Sentry::getUser()->id;
-
-                    return $this->Api()->response("Updated game data, new score");
+                    //return $this->Api()->response("Updated game data, new score");
                 }
+
                 //only update if new score is bigger
                 if ($game_score > $theGame->game_score){
                     $theGame->game_score = $game_score;
                     $theGame->save();
+
                     return $this->Api()->response("updated game data");
                 }
 
@@ -710,5 +717,13 @@ class ApiController extends ControllerBase
 
     }
      */
+    private function addExperience(){
+        //update users experiance
+        $users_id = Sentry::getUser()->id;
+        $theUser = \Users::findFirst("id = '$users_id'");
+        $theUser->addExperience();
+        $theUser->save();
+
+    }
 }
 

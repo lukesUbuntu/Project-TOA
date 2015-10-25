@@ -102,6 +102,12 @@ class Users extends \Phalcon\Mvc\Model
     public $feathers_earned;
 
     /**
+     *
+     * @var integer
+     */
+    public $experience;
+
+    /**
      * Validations and business logic
      *
      * @return boolean
@@ -118,11 +124,12 @@ class Users extends \Phalcon\Mvc\Model
         );
 
         //lets make sure username is unique
+        /*
         $this->validate(new Uniqueness(array(
             "field"   => "username",
             "message" => "username is already taken"
         )));
-
+        */
         if ($this->validationHasFailed() == true) {
             return false;
         }
@@ -195,6 +202,7 @@ class Users extends \Phalcon\Mvc\Model
             'created_at' => 'created_at',
             'updated_at' => 'updated_at',
             'feathers_earned' => 'feathers_earned',
+            'experience'    => 'experience',
             'username' => 'username'
         );
     }
@@ -210,6 +218,14 @@ class Users extends \Phalcon\Mvc\Model
     public function addFeather()
     {
         $this->feathers_earned++;
+    }
+
+    //add Experience to the user
+    public function addExperience()
+    {
+
+        $this->experience += 1;
+
     }
 
     //add feathers by amount
@@ -251,7 +267,8 @@ class Users extends \Phalcon\Mvc\Model
             'created_at' =>  $this->created_at,
             'updated_at' =>  $this->updated_at,
             'feathers_earned' =>  $this->feathers_earned,
-            'username' =>  $this->username
+            'username' =>  $this->username,
+            'experience' => $this->experience
         );
         //unset important attributes they don't need
         //return $this->toArray();
@@ -265,6 +282,7 @@ class Users extends \Phalcon\Mvc\Model
             'id' => $this->id,
             'email' =>  $this->email,
             'feathers_earned' =>  $this->feathers_earned,
+            'experience' => $this->experience,
             'username' =>  $this->username
         );
         //unset important attributes they don't need
