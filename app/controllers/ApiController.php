@@ -567,24 +567,33 @@ class ApiController extends ControllerBase
             $game = \Game::findFirst("prefix = '$this->gamePrefix'");
 
             if ($game && $game->count() > 0) {    //we have game
+                //find the users current data else create new record
+
                 //we have game object
                 $game_id = $game->game_id;
-                $theGame = \UsersHasGame::findFirst("game_game_id = '$game_id'");
-                if ($theGame && $theGame->count() > 0) {
+                $users_id = Sentry::getUser()->id;
 
-                    $theGame->game_score = $game_score;
-                    //var_dump($game);exit;
-                    $theGame->save();
-                    return $this->Api()->response("updated game");
-                } else {
-                    $NewGame = new \UsersHasGame;
+                $theGame = \UsersHasGame::findfirst("users_id  = '$users_id' AND game_game_id = '$game_id'");
+
+                if (count($theGame) <= 0){
+                    $theGame = new \UsersHasGame;
                     //push any changes
-                    $NewGame->game_game_id = $game->game_id;
-                    $NewGame->game_score = $game_score;
-                    $NewGame->users_id = Sentry::getUser()->id;
-                    $NewGame->save();
-                    return $this->Api()->response("updated game");
+                    $theGame->game_game_id = $game->game_id;
+                    $theGame->game_score = $game_score;
+                    $theGame->users_id = Sentry::getUser()->id;
+
+                    return $this->Api()->response("Updated game data, new score");
                 }
+                //only update if new score is bigger
+                if ($game_score > $theGame->game_score){
+                    $theGame->game_score = $game_score;
+                    $theGame->save();
+                    return $this->Api()->response("updated game data");
+                }
+
+
+                return $this->Api()->response("not updated score same or lower");
+
 
 
             } else
