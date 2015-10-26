@@ -330,7 +330,7 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @api {get} /usersGames Returns all users games
+     * @api {get} /usersGames Returns all users games played
      *
      * @apiName usersGamesAction
      *
@@ -437,11 +437,11 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @api {get} /GamesScore   saves game data score
+     * @api {get} /GamesScore  returns all games scores
      *
      * @apiName GamesScore
      *
-     * @apiDescription returns a list of all games and scores
+     * @apiDescription returns all games and there scores
      *
      * @apiExample Example usage:
      * http://localhost/api/GamesScore
@@ -485,6 +485,9 @@ class ApiController extends ControllerBase
      */
     public function GamesScoreAction()
     {
+
+
+
             // Get all games with scores
             $gamesData = \UsersHasGame::find();
 
@@ -612,6 +615,83 @@ class ApiController extends ControllerBase
         }
 
     }
+    /**
+     * @api {get} /getGameScore   returns all game scores for your game
+     *
+     * @apiName getGameScore
+     *
+     * @apiDescription returns all game scores for your game or game_id
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/getGameScore
+     * http://localhost/api/getGameScore?game_id=19
+     *
+     * @apiSuccess {Int}      game_id                   Game ID of the game
+     * @apiSuccess {String}   name                      Name of game
+     * @apiSuccess {String}   prefix                    Game prefix (refers to folder)
+     * @apiSuccess {Object}   scores                    Lists all users scores for game
+     * @apiSuccess {Int}      scores.id                 Users ID
+     * @apiSuccess {String}   scores.email              Users Email
+     * @apiSuccess {Int}      scores.feathers_earned    Users Email
+     * @apiSuccess {String}   scores.username           Users username
+     * @apiSuccess {Int}      scores.score              Users username
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *      "success": true,
+     *      "data": {
+     *              "game_id": "19",
+     *               "name": "TBlocks",
+     *               "prefix": "tblocks",
+     *                  "scores": [
+     *                          {
+     *                              "id": "7",
+     *                              "email": "test2@gmail.com",
+     *                              "feathers_earned": "341",
+     *                              "username": "test3",
+     *                              "score": "150150"
+     *                          },
+     *                          {
+     *                              "id": "8",
+     *                              "email": "tester@tester.com",
+     *                              "feathers_earned": "16",
+     *                              "username": "tester",
+     *                              "score": "800"
+     *                          }
+     *                          ]
+     *           }
+     * }
+    */
+    public function getGameScoreAction()
+    {
+        //can get game score from
+
+        //get the game id
+        $game_id = $this->Request()->getQuery("game_id", null, false);
+
+        //if no game_id passed lets get the game for the rendered prefix
+        if ($game_id == false){
+            $game = \Game::findFirst("prefix = '$this->prefix'");
+            $game_id = $game->id;
+        }
+
+
+        // Get all games with scores
+        $gamesData = \UsersHasGame::find("game_game_id = '$game_id' ");
+
+        //store game users scores
+        $gameScores = array();
+        $gameScores= $gamesData[0]->gameDetailsBrief();
+
+        foreach($gamesData as $score){
+            $gameScores['scores'][] = $score->userDetailsBrief();
+        }
+
+        if (count($gameScores) > 0)
+        return $this->Api()->response($gameScores, true);
+        else
+            return $this->Api()->response("Invalid game_id or not loaded from a game", false);
+    }
 
     /**
      * @api {get} /listGames Returns all games
@@ -665,58 +745,7 @@ class ApiController extends ControllerBase
 
     }
 
-    /**
-     * @api {get} /gameScores Returns all information about current game including scores
-     * @apiName gameData
-     *
-     * @apiDescription Returns all the games on the system from the plugin folder
-     *
-     * @apiExample Example usage:
-     * http://localhost/api/listGames
-     *
-     * @apiSuccess {Int}      game_id       Game ID of the current game
-     * @apiSuccess {String}   name          Name of the game
-     * @apiSuccess {String}   description   Description of the game
-     * @apiSuccess {String}   start_file    Start File that will be loaded
-     * @apiSuccess {String}   author        Developer of the game
-     * @apiSuccess {String}   prefix        Prefix folder name of the game
-     *
-     * @apiError no games in system
-     *
-     * @apiErrorExample {json} Failed-Response:
-     *     {
-     *       "success"  :   false,
-     *       "data"     :   "no games in system"
-     *     }
-     * @apiSuccessExample {json} Success-Response:
-     * {
-     *      "success":true,
-     *      "data":[
-     *              {
-     *                 "game_id":"7",
-     *                  "name":"This is my test Game",
-     *                  "description":"The description",
-     *                  "start_file":"start.html",
-     *                  "author":"James",
-     *                  "prefix":"testgame"
-     *              }
-     *          ]
-     * }
 
-    public function listGamesAction()
-    {
-        //get all games
-        $games = Game::find();
-
-        //check we have games
-        if (count($games) <= 0)
-            return $this->Api()->response("no games in system", false);
-
-        //return all games
-        return $this->Api()->response($games->toArray());
-
-    }
-     */
     private function addExperience(){
         //update users experiance
         $users_id = Sentry::getUser()->id;

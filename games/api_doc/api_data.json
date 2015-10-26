@@ -2,9 +2,9 @@
   {
     "type": "get",
     "url": "/GamesScore",
-    "title": "saves game data score",
+    "title": "returns all games scores",
     "name": "GamesScore",
-    "description": "<p>returns a list of all games and scores</p> ",
+    "description": "<p>returns all games and there scores</p> ",
     "examples": [
       {
         "title": "Example usage:",
@@ -126,98 +126,6 @@
   },
   {
     "type": "get",
-    "url": "/gameScores",
-    "title": "Returns all information about current game including scores",
-    "name": "gameData",
-    "description": "<p>Returns all the games on the system from the plugin folder</p> ",
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "http://localhost/api/listGames",
-        "type": "json"
-      }
-    ],
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "<p>Int</p> ",
-            "optional": false,
-            "field": "game_id",
-            "description": "<p>Game ID of the current game</p> "
-          },
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "name",
-            "description": "<p>Name of the game</p> "
-          },
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "description",
-            "description": "<p>Description of the game</p> "
-          },
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "start_file",
-            "description": "<p>Start File that will be loaded</p> "
-          },
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "author",
-            "description": "<p>Developer of the game</p> "
-          },
-          {
-            "group": "Success 200",
-            "type": "<p>String</p> ",
-            "optional": false,
-            "field": "prefix",
-            "description": "<p>Prefix folder name of the game</p> "
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n     \"success\":true,\n     \"data\":[\n             {\n                \"game_id\":\"7\",\n                 \"name\":\"This is my test Game\",\n                 \"description\":\"The description\",\n                 \"start_file\":\"start.html\",\n                 \"author\":\"James\",\n                 \"prefix\":\"testgame\"\n             }\n         ]\n}\n\n    public function listGamesAction()\n    {\n        //get all games\n        $games = Game::find();\n\n        //check we have games\n        if (count($games) <= 0)\n            return $this->Api()->response(\"no games in system\", false);\n\n        //return all games\n        return $this->Api()->response($games->toArray());\n\n    }",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "no",
-            "description": "<p>games in system</p> "
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Failed-Response:",
-          "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no games in system\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "app/controllers/ApiController.php",
-    "group": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php",
-    "groupTitle": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php"
-  },
-  {
-    "type": "get",
     "url": "/getFeathers",
     "title": "Returns the current users feather count",
     "name": "getFeathers",
@@ -269,6 +177,100 @@
         {
           "title": "Failed-Response:",
           "content": "{\n  \"success\"  :   false,\n  \"data\"     :   \"no game data found for user\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/ApiController.php",
+    "group": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php",
+    "groupTitle": "_home_toa_public_html_Project_TOA_app_controllers_ApiController_php"
+  },
+  {
+    "type": "get",
+    "url": "/getGameScore",
+    "title": "returns all game scores for your game",
+    "name": "getGameScore",
+    "description": "<p>returns all game scores for your game or game_id</p> ",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/getGameScore\nhttp://localhost/api/getGameScore?game_id=19",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "<p>Int</p> ",
+            "optional": false,
+            "field": "game_id",
+            "description": "<p>Game ID of the game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "prefix",
+            "description": "<p>Game prefix (refers to folder)</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>Object</p> ",
+            "optional": false,
+            "field": "scores",
+            "description": "<p>Lists all users scores for game</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>Int</p> ",
+            "optional": false,
+            "field": "scores.id",
+            "description": "<p>Users ID</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "scores.email",
+            "description": "<p>Users Email</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>Int</p> ",
+            "optional": false,
+            "field": "scores.feathers_earned",
+            "description": "<p>Users Email</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>String</p> ",
+            "optional": false,
+            "field": "scores.username",
+            "description": "<p>Users username</p> "
+          },
+          {
+            "group": "Success 200",
+            "type": "<p>Int</p> ",
+            "optional": false,
+            "field": "scores.score",
+            "description": "<p>Users username</p> "
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n     \"success\": true,\n     \"data\": {\n             \"game_id\": \"19\",\n              \"name\": \"TBlocks\",\n              \"prefix\": \"tblocks\",\n                 \"scores\": [\n                         {\n                             \"id\": \"7\",\n                             \"email\": \"test2@gmail.com\",\n                             \"feathers_earned\": \"341\",\n                             \"username\": \"test3\",\n                             \"score\": \"150150\"\n                         },\n                         {\n                             \"id\": \"8\",\n                             \"email\": \"tester@tester.com\",\n                             \"feathers_earned\": \"16\",\n                             \"username\": \"tester\",\n                             \"score\": \"800\"\n                         }\n                         ]\n          }\n}",
           "type": "json"
         }
       ]
@@ -510,7 +512,7 @@
   {
     "type": "get",
     "url": "/usersGames",
-    "title": "Returns all users games",
+    "title": "Returns all users games played",
     "name": "usersGamesAction",
     "description": "<p>returns a list of the current logged in users games</p> ",
     "examples": [
