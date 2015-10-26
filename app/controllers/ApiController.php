@@ -564,7 +564,7 @@ class ApiController extends ControllerBase
 
             //get game_score
             $game_score = $this->Request()->getQuery("game_score", null, false);
-            if (!$game_score) return $this->Api()->response("Failed game_score", false);
+            if ($game_score == false) return $this->Api()->response("game_score not supplied or 0 game score applied", false);
 
 
             //end here with prefix and score

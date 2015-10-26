@@ -82,7 +82,24 @@ var gameModule = {
         return 1000 * this._speed;
     },
     levelUp:function(){
-        this._speed-= 0.1;
+        this._speed-= 0.2;
+    },
+    finished : function(){
+        //finished the game
+        $("#game_grid").hide();
+        $("#game_over").show();
+        //update game with score
+        this.saveScore();
+    },
+    saveScore : function(){
+        //save score
+        //saveGameData?game_score=454545&prefix=tblocks
+        $.getJSON('/api/saveGameData?game_score='+ this._score,function(response){
+            console.log("response",response)
+            if (response.success == true){
+                console.log("response.data",response.data);
+            }
+        });
     }
 
 };
@@ -150,10 +167,7 @@ var dropImage = {
 
         if (desiredDrop < image_block.height() - 50){
             //can not drop any more blocks
-            $("#game_grid").hide();
-            $("#game_over").show();
-            //set score
-            setScore($(".game_score").text());
+            gameModule.finished();
             console.log("app.js can not drop any more blocks");
             return false;
         }
@@ -462,7 +476,7 @@ function getAllScores(callback) {
  * Set current for game
  * @param score
  */
-function setScore(score){
+function saveScore(score){
     //saveGameData?game_score=454545&prefix=tblocks
     $.getJSON('/api/saveGameData?game_score='+score,function(response){
         console.log("response",response)
