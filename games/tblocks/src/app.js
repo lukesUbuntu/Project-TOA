@@ -18,7 +18,7 @@
 
 
 //Globals
-var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, gameScore;
+var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, CurrentScore, AllScores;
 
 
 
@@ -226,7 +226,9 @@ $(document).on('pageinit','#splash',function(){
     splashScreen();
 
     //
-    getScore();//async call get score
+    getCurrentScore();//async call get current score
+    getAllScores();//async get all scores for our game
+
     //lets passheight to our gamemodule
 
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
@@ -419,24 +421,43 @@ function refreshPage() {
 }
 
 /**
- * get current score for game either by callback or setting gameScore can be used via callback or async
+ * gets the current users score for game either by callback or setting gameScore can be used via callback or async
  */
-function getScore(callback) {
+function getCurrentScore(callback) {
     $.getJSON('/api/usersGames',function(response){
-        console.log("response",response)
+        console.log("getCurrentScore response",response.data)
         if (response.success == true){
-            console.log("getScore response.data", response.data);
+
+            CurrentScore = response.data;
 
             if (typeof callback == "function")
                 callback(response.data);
-            else
-                gameScore = response.data;
+
             //return response.data.game_score;
         }
 
     })
 };
+/**
+ * get current score for game either by callback or setting gameScore can be used via callback or async
+ */
+function getAllScores(callback) {
+    $.getJSON('/api/getGameScore',function(response){
+        console.log("response",response)
+        if (response.success == true){
+            console.log("getAllScores response.data", response);
+            AllScores =  typeof response.data.scores == "object" ? response.data.scores : response.data
 
+            if (typeof callback == "function")
+                callback(AllScores);
+
+
+                //AllScores = response.data.scores;
+            //return response.data.game_score;
+        }
+
+    })
+};
 /**
  * Set current for game
  * @param score
@@ -450,22 +471,19 @@ function setScore(score){
         }
     });
 }
-
 $(document).on('pageinit','#start_page',function(){
     console.log("startPage Loaded");
     var template = $('#score_entry');
     var container = $("#score_board");
-	console.log("gameScore -> ",gameScore);
-	/*
-    $.map(gameScore,function(ss,gameUser){
+	console.log("AllScores -> ",AllScores);
 
-        console.log("ss",ss);
+    $.each(AllScores,function(index,gameUser){
         var tmp = $('#score_entry').clone();
-        $('.username',tmp).text(game.user_details.username);
-        $('.score',tmp).text(game.game_score);
+        $('.username',tmp).text(gameUser.username);
+        $('.score',tmp).text(gameUser.score);
         tmp.removeClass('hidden');
-        console.log("tmp",tmp.html());
+
         $("#score_board").append(tmp);
-    });*/
+    });
     //render scoreboard
 });

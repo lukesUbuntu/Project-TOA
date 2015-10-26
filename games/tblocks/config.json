@@ -2,6 +2,6 @@
   "name": "TBlocks",
   "description": "Tblocks match up images and the correct words",
   "start_file" : "index.html",
-  "logo" : "logo.jpg",
+  "logo" : "images/title_image.png",
   "author" : "Luke Hardiman"
 }

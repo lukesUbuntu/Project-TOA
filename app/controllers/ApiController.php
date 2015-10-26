@@ -665,14 +665,17 @@ class ApiController extends ControllerBase
     public function getGameScoreAction()
     {
         //can get game score from
-
         //get the game id
         $game_id = $this->Request()->getQuery("game_id", null, false);
 
         //if no game_id passed lets get the game for the rendered prefix
         if ($game_id == false){
-            $game = \Game::findFirst("prefix = '$this->prefix'");
-            $game_id = $game->id;
+            $game = \Game::findFirst("prefix = '$this->gamePrefix'");
+
+            if ($game && count($game) > 0)
+                $game_id = $game->game_id;
+            else
+            return $this->Api()->response("Invalid game_id or not loaded from a game", false);
         }
 
 
@@ -680,7 +683,6 @@ class ApiController extends ControllerBase
         $gamesData = \UsersHasGame::find("game_game_id = '$game_id' ");
 
         //store game users scores
-        $gameScores = array();
         $gameScores= $gamesData[0]->gameDetailsBrief();
 
         foreach($gamesData as $score){
