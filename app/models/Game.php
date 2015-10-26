@@ -111,7 +111,12 @@ class Game extends \Phalcon\Mvc\Model
     public function path(){
         return $this->prefix.DIRECTORY_SEPARATOR.$this->start_file;
     }
-
+    /**
+     * Returns the game image
+     */
+    public function logo(){
+        return (isset($this->logo) && strlen(trim($this->logo)) > 3) ? $this->prefix.DIRECTORY_SEPARATOR.$this->logo : '../public/images/gameImageDefault.png';
+    }
     /**
  * Define what information is allowed from Users to API
  */

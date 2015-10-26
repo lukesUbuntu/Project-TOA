@@ -12,12 +12,13 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="panel-417568">
+                            <?php
+                            foreach($Games as $game ){
+                            ?>
 
-
-                            {% for game in Games %}
                             <div class="row" id="gameRowTop">
                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <img alt="" src="http://lorempixel.com/140/140/" class="img-thumbnail pull-right">
+                                    <img alt="" src="/games/<?php echo $game->logo()?>" class="img-thumbnail pull-right">
                                 </div>
                                 <div class="col-md-1 col-sm-1 col-xs-1">
 
@@ -26,20 +27,20 @@
                                     <dl>
                                         <dt>
                                         <h4>
-                                            <span>{{ game.name }}</span>
+                                            <span><?php echo $game->name ?></span>
                                         </h4></dt>
                                         <dd>
-                                            {{ game.description }}
+                                            <?php echo $game->description ?>
                                         </dd>
                                     </dl>
                                     <div class="text">
-                                <a href="/games/{{ game.path() }}"><span class="btn btn-success">Play Now</span></a>
+                                <a href="/games/<?php echo $game->path()?>" ><span class="btn btn-success">Play Now</span></a>
                                     </div>
                                 </div>
                             </div>
-
-                            {% endfor  %}
-
+                            <?php
+                            }
+                            ?>
 
                         </div>
 
@@ -52,19 +53,22 @@
                                             <th>Username</th>
                                             <th>Score</th>
                                             <th>Most Played</th>
-                                            <th>Rank</th>
+                                            <!--<th>Rank</th>!-->
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for score in ScoreBoard %}
-                                        <tr>
-                                            <td>{{ score.Users.username }}</td>
-                                            <td>{{ score.game_score }}</td>
-                                            <td>{{score.Game.name}}</td>
-                                            <td>1</td>
-                                        </tr>
-                                        {% endfor  %}
-
+                                        <?php
+                                        foreach($ScoreBoard as $score ) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $score->Users->username; ?></td>
+                                                <td><?php echo $score->game_score; ?></td>
+                                                <td><?php echo $score->Game->name; ?></td>
+                                               <!-- <td>1</td>!-->
+                                            </tr>
+                                            <?php
+                                            }
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>
