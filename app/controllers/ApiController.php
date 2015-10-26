@@ -566,8 +566,8 @@ class ApiController extends ControllerBase
 
             //end here with prefix and score
             $game = \Game::findFirst("prefix = '$this->gamePrefix'");
-
-            if ($game && $game->count() > 0) {    //we have game
+            //->count()
+            if ($game && count($game) > 0) {    //we have game
                 //find the users current data else create new record
 
                 //we have game object

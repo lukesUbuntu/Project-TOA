@@ -83,19 +83,21 @@ class LoginController extends \Phalcon\Mvc\Controller
             // invalid usernameEmail
             $user = \Users::findFirst("username = '$usernameEmail'");
 
-            if ($user->count() > 0)
+            if ($user && count($user) > 0)
                 $usernameEmail = $user->email;
             else
                 $errors[] = "invalid username";
+
         }else{
             // check email
             $user = \Users::findFirst("email = '$usernameEmail'");
 
-            if ($user->count() > 0)
+            if ($user && count($user) > 0)
                 $usernameEmail = $user->email;
             else
-                $errors[] = "invalid username";
+                $errors[] = "invalid email address";
         }
+
 
         //check any errors
         $errors = $this->errorCheck($errors);
