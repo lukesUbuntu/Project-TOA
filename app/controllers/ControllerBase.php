@@ -18,6 +18,7 @@ class ControllerBase extends Controller
 
         if (Sentry::check()) {
             Sentry::logout();
+            $this->session->destroy();
             return $this->response->redirect('index');
         }
 
@@ -40,6 +41,14 @@ class ControllerBase extends Controller
             header('Location: login?url=' . $redirectTo);
             die();
         }
+        //show nav
+        $this->view->show_navigation = true;
+        $this->view->setVar("Admin",$this->isAdmin);
+
+        $user = Users::findFirst(Sentry::getUser()->id); //get user
+
+        $this->view->setVar("User", $user);
+
     }
     /*
     protected function isAdmin(){

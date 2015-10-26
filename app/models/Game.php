@@ -42,6 +42,12 @@ class Game extends \Phalcon\Mvc\Model
     public $prefix;
 
     /**
+     *
+     * @var string
+     */
+    public $logo;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -78,7 +84,8 @@ class Game extends \Phalcon\Mvc\Model
             'name' => 'name', 
             'description' => 'description', 
             'start_file' => 'start_file', 
-            'author' => 'author', 
+            'author' => 'author',
+            'logo'  =>  'logo',
             'prefix' => 'prefix',
             'created_at' => 'created_at',
             'updated_at' => 'updated_at'
@@ -95,6 +102,7 @@ class Game extends \Phalcon\Mvc\Model
         $this->name = $gameData->name;
         $this->prefix = $gameData->prefix;
         $this->description = $gameData->description;
+        $this->logo = $gameData->logo;
         $this->start_file = $gameData->start_file;
     }
     /**
@@ -103,13 +111,29 @@ class Game extends \Phalcon\Mvc\Model
     public function path(){
         return $this->prefix.DIRECTORY_SEPARATOR.$this->start_file;
     }
-
+    /**
+     * Returns the game image
+     */
+    public function logo(){
+        return (isset($this->logo) && strlen(trim($this->logo)) > 3) ? $this->prefix.DIRECTORY_SEPARATOR.$this->logo : '../public/images/gameImageDefault.png';
+    }
     /**
  * Define what information is allowed from Users to API
  */
     public function apiCall(){
         //unset important attributes they don't need
         return $this->toArray();
+    }
+
+    /**
+     * @return array | Returns basic information
+     */
+    public function basicData(){
+        return array(
+            'game_id' => $this->game_id,
+            'name' => $this->name,
+            'prefix' => $this->prefix
+        );
     }
 
 

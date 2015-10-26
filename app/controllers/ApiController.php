@@ -330,8 +330,7 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @api {get} /usersGames Returns all users games
-     * @api {get} /usersGames?prefix=test   Returns games matching test
+     * @api {get} /usersGames Returns all users games played
      *
      * @apiName usersGamesAction
      *
@@ -438,20 +437,76 @@ class ApiController extends ControllerBase
     }
 
     /**
-     * @api {get} /GamesScore   saves game data score
+     * @api {get} /GamesScore  returns all games scores
      *
      * @apiName GamesScore
      *
+     * @apiDescription returns all games and there scores
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/GamesScore
+     *
+     * @apiSuccess {Int}      game_id                   Game ID of the game
+     * @apiSuccess {String}   name                      Name of game
+     * @apiSuccess {String}   prefix                    Game prefix (refers to folder)
+     * @apiSuccess {Object}   scores                    Lists all users scores for game
+     * @apiSuccess {Int}      scores.id                 Users ID
+     * @apiSuccess {String}   scores.email              Users Email
+     * @apiSuccess {Int}      scores.feathers_earned    Users Email
+     * @apiSuccess {String}   scores.username           Users username
+     * @apiSuccess {Int}      scores.score              Users username
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *      "success": true,
+     *      "data": {
+     *               "19": {
+     *                  "game_id": "19",
+     *                  "name": "TBlocks",
+     *                  "prefix": "tblocks",
+     *                  "scores": [
+     *                          {
+     *                              "id": "7",
+     *                              "email": "test2@gmail.com",
+     *                              "feathers_earned": "341",
+     *                              "username": "test3",
+     *                              "score": "150150"
+     *                          },
+     *                          {
+     *                              "id": "8",
+     *                              "email": "tester@tester.com",
+     *                              "feathers_earned": "16",
+     *                              "username": "tester",
+     *                              "score": "800"
+     *                          }
+     *                          ]
+     *           }
+     * }
      */
     public function GamesScoreAction()
     {
+
+
+
             // Get all games with scores
-            $gameData = \UsersHasGame::find();
+            $gamesData = \UsersHasGame::find();
 
+            //store game users scores
             $gameScores = array();
+            //store games
+            $gameData = array();
 
-            foreach($gameData as $score)
-                $gameScores[] =  $score->apiCall();
+            foreach($gamesData as $score){
+                //store the game info into gameArray
+                //$theGame =  $score->getRelated('Game');
+                //$theUsers = $score->getRelated('Users');
+                if (!isset($gameScores[$score->game_game_id]))
+                $gameScores[$score->game_game_id] = $score->gameDetailsBrief();
+
+                $gameScores[$score->game_game_id]['scores'][] = $score->userDetailsBrief();
+
+            }
+
 
 
             return $this->Api()->response($gameScores, true);
@@ -500,7 +555,8 @@ class ApiController extends ControllerBase
 
             // Get the current active/logged in users game
             $users_games = \UsersHasGame::findFirst(array('users_id' => Sentry::getUser()->id));
-
+            //add expierance to user
+            $this->addExperience();
             //we have valid user
             if (count($users_games) <= 0)
                 return $this->Api()->response("no game data found for user", false);
@@ -508,31 +564,46 @@ class ApiController extends ControllerBase
 
             //get game_score
             $game_score = $this->Request()->getQuery("game_score", null, false);
-            if (!$game_score) return $this->Api()->response("Failed game_score", false);
+            if ($game_score == false) return $this->Api()->response("game_score not supplied or 0 game score applied", false);
 
 
             //end here with prefix and score
             $game = \Game::findFirst("prefix = '$this->gamePrefix'");
+            //->count()
+            if ($game && count($game) > 0) {    //we have game
+                //find the users current data else create new record
 
-            if ($game && $game->count() > 0) {    //we have game
                 //we have game object
                 $game_id = $game->game_id;
-                $theGame = \UsersHasGame::findFirst("game_game_id = '$game_id'");
-                if ($theGame && $theGame->count() > 0) {
+                $users_id = Sentry::getUser()->id;
 
-                    $theGame->game_score = $game_score;
-                    //var_dump($game);exit;
-                    $theGame->save();
-                    return $this->Api()->response("updated game");
-                } else {
-                    $NewGame = new \UsersHasGame;
+
+                $theGame = \UsersHasGame::findfirst("users_id  = '$users_id' AND game_game_id = '$game_id'");
+
+
+
+                //$user->addExperience();
+
+                if (count($theGame) <= 0){
+                    $theGame = new \UsersHasGame;
                     //push any changes
-                    $NewGame->game_game_id = $game->game_id;
-                    $NewGame->game_score = $game_score;
-                    $NewGame->users_id = Sentry::getUser()->id;
-                    $NewGame->save();
-                    return $this->Api()->response("updated game");
+                    $theGame->game_game_id = $game->game_id;
+                    $theGame->game_score = $game_score;
+                    $theGame->users_id = Sentry::getUser()->id;
+                    //return $this->Api()->response("Updated game data, new score");
                 }
+
+                //only update if new score is bigger
+                if ($game_score > $theGame->game_score){
+                    $theGame->game_score = $game_score;
+                    $theGame->save();
+
+                    return $this->Api()->response("updated game data");
+                }
+
+
+                return $this->Api()->response("not updated score same or lower");
+
 
 
             } else
@@ -543,6 +614,85 @@ class ApiController extends ControllerBase
             return $this->Api()->response("no user logged in", false);
         }
 
+    }
+    /**
+     * @api {get} /getGameScore   returns all game scores for your game
+     *
+     * @apiName getGameScore
+     *
+     * @apiDescription returns all game scores for your game or game_id
+     *
+     * @apiExample Example usage:
+     * http://localhost/api/getGameScore
+     * http://localhost/api/getGameScore?game_id=19
+     *
+     * @apiSuccess {Int}      game_id                   Game ID of the game
+     * @apiSuccess {String}   name                      Name of game
+     * @apiSuccess {String}   prefix                    Game prefix (refers to folder)
+     * @apiSuccess {Object}   scores                    Lists all users scores for game
+     * @apiSuccess {Int}      scores.id                 Users ID
+     * @apiSuccess {String}   scores.email              Users Email
+     * @apiSuccess {Int}      scores.feathers_earned    Users Email
+     * @apiSuccess {String}   scores.username           Users username
+     * @apiSuccess {Int}      scores.score              Users username
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *      "success": true,
+     *      "data": {
+     *              "game_id": "19",
+     *               "name": "TBlocks",
+     *               "prefix": "tblocks",
+     *                  "scores": [
+     *                          {
+     *                              "id": "7",
+     *                              "email": "test2@gmail.com",
+     *                              "feathers_earned": "341",
+     *                              "username": "test3",
+     *                              "score": "150150"
+     *                          },
+     *                          {
+     *                              "id": "8",
+     *                              "email": "tester@tester.com",
+     *                              "feathers_earned": "16",
+     *                              "username": "tester",
+     *                              "score": "800"
+     *                          }
+     *                          ]
+     *           }
+     * }
+    */
+    public function getGameScoreAction()
+    {
+        //can get game score from
+        //get the game id
+        $game_id = $this->Request()->getQuery("game_id", null, false);
+
+        //if no game_id passed lets get the game for the rendered prefix
+        if ($game_id == false){
+            $game = \Game::findFirst("prefix = '$this->gamePrefix'");
+
+            if ($game && count($game) > 0)
+                $game_id = $game->game_id;
+            else
+            return $this->Api()->response("Invalid game_id or not loaded from a game", false);
+        }
+
+
+        // Get all games with scores
+        $gamesData = \UsersHasGame::find("game_game_id = '$game_id' ");
+
+        //store game users scores
+        $gameScores= $gamesData[0]->gameDetailsBrief();
+
+        foreach($gamesData as $score){
+            $gameScores['scores'][] = $score->userDetailsBrief();
+        }
+
+        if (count($gameScores) > 0)
+        return $this->Api()->response($gameScores, true);
+        else
+            return $this->Api()->response("Invalid game_id or not loaded from a game", false);
     }
 
     /**
@@ -597,5 +747,14 @@ class ApiController extends ControllerBase
 
     }
 
+
+    private function addExperience(){
+        //update users experiance
+        $users_id = Sentry::getUser()->id;
+        $theUser = \Users::findFirst("id = '$users_id'");
+        $theUser->addExperience();
+        $theUser->save();
+
+    }
 }
 

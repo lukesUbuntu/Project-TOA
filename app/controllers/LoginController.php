@@ -68,25 +68,49 @@ class LoginController extends \Phalcon\Mvc\Controller
         $errors = array();
 
         //get email or return false
-        $email = $this->request->getPost("email",null,false);
+        $usernameEmail = $this->request->getPost("email",null,false);
 
-        if ($email == false)$errors[] = "Missing email address";
+        if ($usernameEmail == false)$errors[] = "Missing Username/Email address";
 
         $password = $this->request->getPost("password",null,false);
         if ($password == false)$errors[] = "Missing password";
+
+
+        /** safe to authenticate user below this point **/
+        //check if its a email address or username
+        if ($usernameEmail != false)
+        if (!filter_var($usernameEmail, FILTER_VALIDATE_EMAIL)) {
+            // invalid usernameEmail
+            $user = \Users::findFirst("username = '$usernameEmail'");
+
+            if ($user && count($user) > 0)
+                $usernameEmail = $user->email;
+            else
+                $errors[] = "invalid username";
+
+        }else{
+            // check email
+            $user = \Users::findFirst("email = '$usernameEmail'");
+
+            if ($user && count($user) > 0)
+                $usernameEmail = $user->email;
+            else
+                $errors[] = "invalid email address";
+        }
+
 
         //check any errors
         $errors = $this->errorCheck($errors);
         if ($errors) return $errors;
 
 
-        /** safe to authenticate user below this point **/
+
 
         //get sentry to authenticate
         try{
 
             $user = Sentry::authenticate(array(
-                'email'    => $email,
+                'email'    => $usernameEmail,
                 'password' => $password
             ));
 
@@ -223,7 +247,7 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         // Authenticate the user and log them in
         $this->view->login_tab = "login_form";
-        $this->flash->error("Account Created! for $email");
+        $this->flash->success("Account Created! for $email");
 
         //Sentry::login($user, false);
         return $this->view->render('login', 'index');
