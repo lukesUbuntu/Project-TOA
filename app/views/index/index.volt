@@ -10,21 +10,6 @@
                         </li>
                     </ul>
 
-                    <!--
-                    <ul class="nav nav-tabs-right">
-                        <li>
-                            <h4 id="scoreTabs">
-                                Score: XXXX <?php // echo ""; ?>
-                            </h4>
-                        </li>
-                        <li>
-                            <h4 id="scoreTabs">
-                                Feathers: XXX <?php // echo "$totalFeathersEarned"; ?>
-                            </h4>
-                        </li>
-                    </ul>
-                    -->
-
                     <div class="tab-content">
                         <div class="tab-pane active" id="panel-417568">
 
@@ -48,7 +33,7 @@
                                         </dd>
                                     </dl>
                                     <div class="text">
-                                        <button class="btn btn-success"><a href="/games/{{ game.path() }}">Play Now</a></button>
+                                <a href="/games/{{ game.path() }}"><span class="btn btn-success">Play Now</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -87,6 +72,4 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+</div>

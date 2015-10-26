@@ -9,7 +9,7 @@
     var login_tab = '<?php echo $login_tab; ?>';
 </script>
 <div id="head">
-    <?php echo $this->tag->image("images/loginTitle.jpg");?>
+    <?php echo $this->tag->image(array("images/loginTitle.jpg", "class" => "img-responsive", "id" => "loginBanner"));?>
 </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -30,7 +30,7 @@
                         <div class="col-lg-12">
                             <?php echo $this->tag->form(array("login/check$getRequest", "autocomplete" => "off", "id" => "login-form", "style" => "display:none")) ?>
                             <div class="form-group">
-                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Username or Email Address" required autofocus value="">
+                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email or Username" required autofocus value="">
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password" tabindex="2" class="form-control" required autofocus placeholder="Password">
