@@ -141,7 +141,7 @@ $di->set('isAdmin', function () {
  */
 $di->set('flash', function() {
     return new \Phalcon\Flash\Session(array(
-        'error' => 'alert alert-error',
+        'error' => 'alert alert-warning',
         'success' => 'alert alert-success',
         'notice' => 'alert alert-info',
     ));

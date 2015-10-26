@@ -42,6 +42,12 @@ class Game extends \Phalcon\Mvc\Model
     public $prefix;
 
     /**
+     *
+     * @var string
+     */
+    public $logo;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -78,7 +84,8 @@ class Game extends \Phalcon\Mvc\Model
             'name' => 'name', 
             'description' => 'description', 
             'start_file' => 'start_file', 
-            'author' => 'author', 
+            'author' => 'author',
+            'logo'  =>  'logo',
             'prefix' => 'prefix',
             'created_at' => 'created_at',
             'updated_at' => 'updated_at'
@@ -95,6 +102,7 @@ class Game extends \Phalcon\Mvc\Model
         $this->name = $gameData->name;
         $this->prefix = $gameData->prefix;
         $this->description = $gameData->description;
+        $this->logo = $gameData->logo;
         $this->start_file = $gameData->start_file;
     }
     /**

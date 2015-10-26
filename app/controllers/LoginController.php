@@ -247,7 +247,7 @@ class LoginController extends \Phalcon\Mvc\Controller
 
         // Authenticate the user and log them in
         $this->view->login_tab = "login_form";
-        $this->flash->error("Account Created! for $email");
+        $this->flash->success("Account Created! for $email");
 
         //Sentry::login($user, false);
         return $this->view->render('login', 'index');
