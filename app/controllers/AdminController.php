@@ -74,15 +74,11 @@ class AdminController extends ControllerBase
         $this->passAdmin();
         //render the list of current words in system
         $WordsList = \Words::find();
+        $this->addDataTables();
 
         $this->assets
-            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
-            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
             ->addJs('js/admin/words.js');
-
-        $this->view->partial('admin/words/listWords', array('WordsList' => $WordsList));
-
-
+        $this->view->setVar('WordsList',$WordsList);
 
     }
     public function ConfigAction(){
@@ -116,10 +112,9 @@ class AdminController extends ControllerBase
 
         //render the list of current words in system
 
-
+        ///js/vendor/datatables/jquery.dataTables.js
+        $this->addDataTables();
         $this->assets
-            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
-            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
             ->addJs('js/admin/users.js');
         //app/views/admin/users
         //$this->view->render('admin/users', array('Users' => $allUsers));
@@ -131,10 +126,9 @@ class AdminController extends ControllerBase
         $this->passAdmin();
         //Get all the users
         $games = Game::find();
+        $this->addDataTables();
 
         $this->assets
-            ->addJs('/cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js')
-            ->addJs('/cdn.datatables.net/1.10.8/js/dataTables.bootstrap.min.js')
             ->addJs('js/admin/users.js');
 
         $this->view->setVar("Games", $games);

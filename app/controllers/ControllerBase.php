@@ -67,6 +67,13 @@ class ControllerBase extends Controller
     }
     */
 
-
+    /**
+     * Adds the database tables libs to view
+     */
+    protected function addDataTables(){
+        $this->assets
+            ->addJs('js/vendor/datatables/jquery.dataTables.min.js')
+            ->addJs('js/vendor/datatables/dataTables.bootstrap.min.js');
+    }
 
 }
