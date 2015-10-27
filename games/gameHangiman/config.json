@@ -2,5 +2,6 @@
   "name" : "HangiMan",
   "description" : "Keep the Hangi going by correctly guessing the right word!",
   "start_file" : "index.php",
-  "author" : "Nikolai Allen"
+  "author" : "Nikolai Allen",
+  "logo" : "images/logo.png"
 }
