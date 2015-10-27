@@ -1,7 +1,7 @@
 
 #php_value auto_prepend_file "/var/www/Project-TOA/games/test.php"
-HeaderName /var/www/Project-TOA/games/test.php
-
+#HeaderName /var/www/Project-TOA/games/test.php
+#php_value auto_prepend_file "test.php"
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
