@@ -22,22 +22,23 @@
 
                 </tr>
                 </thead>
-                {% for game in Games %}
+                <?php foreach($Games as $game){?>
+
                     <tr>
 
                         <td>
-                            {{  game.game_id }}
+                            <?php echo $game->game_id; ?>
                         </td>
 
                         <td>
-                            {{  game.name }}
+                            <?php echo $game->name; ?>
                         </td>
                         <td>
                             <span><br/></span>
                            <span class="btn btn-warning">Edit</span>
                         </td>
                     </tr>
-                {% endfor  %}
+                <?php }?>
             </table>
         </div>
     </div>

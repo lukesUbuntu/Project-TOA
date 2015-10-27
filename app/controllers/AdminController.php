@@ -126,6 +126,33 @@ class AdminController extends ControllerBase
 
         return $this->Api()->response("Missing word data", false);
     }
+    /**
+     * Delete a words Object
+     */
+    public function wordsDeleteAction(){
+        //grab word object we ar eupdating from
+        $word = $this->Request()->getPost("word", null, false);
+
+
+        if ($word != false){
+            //we have a valid post to process lets move to object
+            $word = (object)$word;
+
+            $theWordRecord = \Words::findfirst("index = '$word->index'");
+
+            //we have record lets update
+            if ($theWordRecord && count($theWordRecord) > 0) {
+                $theWordRecord->delete();
+                $this->Api()->response("Updated record");
+            }
+            else
+                return $this->Api()->response("Failed. incorrect index", false);
+
+
+        }
+
+        return $this->Api()->response("Missing word data", false);
+    }
     public function ConfigAction(){
 
         return "Sorry not enabled";

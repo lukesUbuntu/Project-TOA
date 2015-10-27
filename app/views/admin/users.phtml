@@ -24,30 +24,48 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                {% for user in Users %}
+                <?php foreach($Users as $user){?>
                     <tr>
 
                         <td>
-                            {{  user.id }}
+                            <?php echo $user->id; ?>
                         </td>
 
                         <td>
-                            {{  user.username }}
+                            <?php echo $user->username; ?>
                         </td>
                         <td>
-                            {{  user.email }}
+                            <?php echo $user->email; ?>
                         </td>
                         <td>
-                            {% if user.admin == "true" %}
-                                [x]
-                            {% endif  %}
+                            <?php
+                                if($user->admin == "true")
+                                    echo "Admin";
+
+                            ?>
+
+
                         </td>
                         <td>
                             <span><br/></span>
-                           <span class="btn btn-warning">Edit</span>
+                           <span class="btn btn-info">Edit</span>
+
+                            <?php
+                            if($user->admin == "true"){
+                                ?>
+                                <span class="btn btn-warning">Remove Admin</span>
+                            <?php
+                            }else{
+                                ?>
+                                <span class="btn btn-default">Make Admin</span>
+                            <?php
+                            }
+
+
+                            ?>
                         </td>
                     </tr>
-                {% endfor  %}
+                <?php }?>
             </table>
         </div>
     </div>
