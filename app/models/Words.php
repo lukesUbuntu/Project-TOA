@@ -83,6 +83,17 @@ class Words extends \Phalcon\Mvc\Model
         return $this->toArray();
     }
 
+    /**
+     * @param $word | Updates the word record
+     */
+    public function wordUpdate($word){
+        $this->mri_word = $word->mri_word;
+        $this->eng_word = $word->eng_word;
+        $this->img_src = $word->img_src;
+        $this->word_desc = $word->word_desc;
+        $this->audio_src = $word->audio_src;
+    }
+
 
 
 }

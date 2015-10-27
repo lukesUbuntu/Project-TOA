@@ -7,6 +7,10 @@ error_reporting(-1);
 
 class AdminController extends ControllerBase
 {
+    private $_api = null;
+
+    private $_request = null;
+
     public function initialize(){
         $this->view->show_navigation = true;
     }
@@ -20,6 +24,8 @@ class AdminController extends ControllerBase
         $this->view->setVar("User", $User);   //checks login and pass's admins details
         $this->view->setVar("Admin",$this->isAdmin);
         $this->view->show_navigation = true;
+        //load our global admins.js
+        $this->assets->addJs('js/admin/admin.js');
 
     }
     public function indexAction()
@@ -72,7 +78,8 @@ class AdminController extends ControllerBase
      */
     public function wordsAction(){
         $this->passAdmin();
-        //render the list of current words in system
+        //render the list of current words in syste
+
         $WordsList = \Words::find();
         $this->addDataTables();
 
@@ -80,6 +87,44 @@ class AdminController extends ControllerBase
             ->addJs('js/admin/words.js');
         $this->view->setVar('WordsList',$WordsList);
 
+    }
+
+    /**
+     * Update a words Object
+     */
+    public function wordsUpdateAction(){
+        //grab word object we ar eupdating from
+        $word = $this->Request()->getPost("word", null, false);
+        /*
+         * Array
+            (
+                [index] => 21
+                [mri_word] => ra
+                [eng_word] => sun
+                [img_src] =>
+                [word_desc] =>
+                [audio_src] =>
+            )
+         */
+        if ($word != false){
+            //we have a valid post to process lets move to object
+            $word = (object)$word;
+
+           $theWordRecord = \Words::findfirst("index = '$word->index'");
+
+            //we have record lets update
+            if ($theWordRecord && count($theWordRecord) > 0) {
+                $theWordRecord->wordUpdate($word);
+                $theWordRecord->save();
+                $this->Api()->response("Updated record");
+            }
+                else
+                    return $this->Api()->response("Failed. incorrect index", false);
+
+
+        }
+
+        return $this->Api()->response("Missing word data", false);
     }
     public function ConfigAction(){
 
@@ -190,6 +235,29 @@ class AdminController extends ControllerBase
             return $matches[1];
         }
         return false;
+    }
+
+    /**
+     * Sending out our API Json Calls
+     * @return \Games\Api\Api|null
+     */
+    protected function Api()
+    {
+        if ($this->_api == null)
+            $this->_api = new Games\Api\Api();
+
+        return $this->_api;
+    }
+
+    /**
+     * @return null|\Phalcon\Http\Request
+     */
+    protected function Request()
+    {
+        if ($this->_request == null)
+            $this->_request = new Phalcon\Http\Request();
+
+        return $this->_request;
     }
 
 }

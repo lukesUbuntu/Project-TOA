@@ -36,6 +36,17 @@ class ApiController extends ControllerBase
     }
 
     /**
+     * @return null|\Phalcon\Http\Request
+     */
+    protected function Request()
+    {
+        if ($this->_request == null)
+            $this->_request = new Phalcon\Http\Request();
+
+        return $this->_request;
+    }
+
+    /**
      * @api {get} /user Return the current user
      * @apiName userAction
      *
@@ -271,13 +282,7 @@ class ApiController extends ControllerBase
         }
     }
 
-    protected function Request()
-    {
-        if ($this->_request == null)
-            $this->_request = new Phalcon\Http\Request();
 
-        return $this->_request;
-    }
 
     /**
      * @api {get} /getFeathers Returns the current users feather count

@@ -1,17 +1,38 @@
 
 <div align="center">
     <h1>List Words</h1>
+
 </div>
 <script>
     //wordlist gets applied in js/public/admin/words.js
-    var $WordsList = JSON.parse('<?php echo json_encode($WordsList->toArray()); ?>');
+    var $WordsList = {
+    _list: JSON.parse('<?php echo json_encode($WordsList->toArray()); ?>'),  //list of our words from dbase
+        sort: function(index) {   //returns word object based on index
+            var theList = this._list;
+            this._list = [];//clear list lets resort into index
+            //sort list
+            for (i = 0; i < theList.length; i++)
+                this._list[theList[i].index] = theList[i]
+
+        },
+        get: function(index){
+            return this._list[index];
+        }
+    };
+    $WordsList.sort();
+    /**
+     * #getWordData
+     * @Returns the word entry from the $WordsList based on index
+     */
+
 </script>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3">
-            <span class="btn btn-success">Add</span>
-        </div>
+
         <div class="col-lg-8">
+            <div class="">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editWord" data-action="add">Add New</button>
+            </div>
             <table id="wordLists" class="display" cellspacing="0" class="globalDataTable" >
                 <thead>
                 <tr>
@@ -28,28 +49,28 @@
 
                     <tr>
 
-                        <td align="">
-                            <?php echo $word->mri_word; ?>
+                        <td >
+                           <span class="mri_word"><?php echo $word->mri_word; ?></span>
                         </td>
-                        <td align="">
-                            <?php echo $word->eng_word; ?>
+                        <td >
+                           <span class="eng_word"> <?php echo $word->eng_word; ?></span>
                         </td>
-                        <td align="">
-                            <?php echo $word->word_desc; ?>
+                        <td>
+                            <span class="word_desc"> <?php echo (strlen($word->word_desc) > 29) ?  substr($word->word_desc, 0, 30).'....' : $word->word_desc; ?></span>
                         </td>
                         <td align="">
                             <ul>
                                 <li>
-                                    Audio
+                                    <a class="audio_src" href="<?php echo $word->audio_src; ?>" target="_blank">Audio</a>
                                 </li>
-                                <li>
-                                    Image
+                                <li >
+                                    <a class="img_src" href="<?php echo $word->img_src; ?>" target="_blank">Image</a>
                                 </li>
                             </ul>
                         </td>
                         <td align="right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-record_id ='<?php echo $word->index;?>' data-target="#editWord">Edit</button>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#delete">Delete</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-record_id ='<?php echo $word->index;?>' data-target="#editWord" data-action="edit">Edit</button>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-record_id ='<?php echo $word->index;?>' data-target="#delete" data-action="delete">Delete</button>
                         </td>
                     </tr>
                 <?php } ?>
@@ -89,6 +110,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete">
     <div class="modal-dialog" role="document">
