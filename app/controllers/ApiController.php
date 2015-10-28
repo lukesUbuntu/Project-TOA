@@ -120,8 +120,8 @@ class ApiController extends ControllerBase
      * @apiSuccess {Int}      index  index of item
      * @apiSuccess {String}   mri_word  maori word
      * @apiSuccess {String}   eng_word  english translation of word
-     * @apiSuccess {String}   img_src   image src tag of word
-     * @apiSuccess {String}   audio_src audio src tag of word
+     * @apiSuccess {String}   img_src1   image1 src tag of word
+     * @apiSuccess {String}   img_src2  image2 src tag of word
      * @apiSuccess {String}   desc      description of word
      *
      *

@@ -86,9 +86,9 @@ class WordsController extends ControllerBase
             $this->tag->setDefault("index", $word->index);
             $this->tag->setDefault("mri_word", $word->mri_word);
             $this->tag->setDefault("eng_word", $word->eng_word);
-            $this->tag->setDefault("img_src", $word->img_src);
+            $this->tag->setDefault("img_src1", $word->img_src1);
             $this->tag->setDefault("desc", $word->desc);
-            $this->tag->setDefault("audio_src", $word->audio_src);
+            $this->tag->setDefault("img_src2", $word->img_src2);
 
         }
     }
@@ -111,9 +111,9 @@ class WordsController extends ControllerBase
 
         $word->mri_word = $this->request->getPost("mri_word");
         $word->eng_word = $this->request->getPost("eng_word");
-        $word->img_src = $this->request->getPost("img_src");
+        $word->img_src1 = $this->request->getPost("img_src1");
         $word->desc = $this->request->getPost("desc");
-        $word->audio_src = $this->request->getPost("audio_src");
+        $word->img_src2 = $this->request->getPost("img_src2");
 
 
 
@@ -165,9 +165,9 @@ class WordsController extends ControllerBase
 
         $word->mri_word = $this->request->getPost("mri_word");
         $word->eng_word = $this->request->getPost("eng_word");
-        $word->img_src = $this->request->getPost("img_src");
+        $word->img_src1 = $this->request->getPost("img_src1");
         $word->desc = $this->request->getPost("desc");
-        $word->audio_src = $this->request->getPost("audio_src");
+        $word->img_src2 = $this->request->getPost("img_src2");
 
 
         if (!$word->save()) {

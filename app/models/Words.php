@@ -25,7 +25,7 @@ class Words extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $img_src;
+    public $img_src1;
 
     /**
      *
@@ -37,7 +37,7 @@ class Words extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $audio_src;
+    public $img_src2;
 
     /**
      * Returns table name mapped in the model.
@@ -89,9 +89,9 @@ class Words extends \Phalcon\Mvc\Model
     public function wordUpdate($word){
         $this->mri_word = $word->mri_word;
         $this->eng_word = $word->eng_word;
-        $this->img_src = $word->img_src;
+        $this->img_src1 = $word->img_src1;
         $this->word_desc = $word->word_desc;
-        $this->audio_src = $word->audio_src;
+        $this->img_src2 = $word->img_src2;
     }
 
 

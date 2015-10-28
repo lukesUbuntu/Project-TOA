@@ -81,7 +81,9 @@ class AdminController extends ControllerBase
         //render the list of current words in syste
 
         $WordsList = \Words::find();
+        //attach our other libarys
         $this->addDataTables();
+        $this->addUpload();
 
         $this->assets
             ->addJs('js/admin/words.js');
@@ -101,9 +103,9 @@ class AdminController extends ControllerBase
                 [index] => 21
                 [mri_word] => ra
                 [eng_word] => sun
-                [img_src] =>
+                [img_src1] =>
                 [word_desc] =>
-                [audio_src] =>
+                [img_src2] =>
             )
          */
         if ($word != false){

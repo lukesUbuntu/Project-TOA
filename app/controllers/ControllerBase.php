@@ -75,5 +75,14 @@ class ControllerBase extends Controller
             ->addJs('js/vendor/datatables/jquery.dataTables.min.js')
             ->addJs('js/vendor/datatables/dataTables.bootstrap.min.js');
     }
+    /**
+     * Adds the FileUpload assets
+     */
+    protected function addUpload(){
+        $this->assets
+            ->addJs('js/vendor/uploader/js/vendor/jquery.ui.widget.js')
+            ->addJs('js/vendor/uploader/js/jquery.iframe-transport.js')
+            ->addJs('js/vendor/uploader/js/jquery.fileupload.js');
+    }
 
 }

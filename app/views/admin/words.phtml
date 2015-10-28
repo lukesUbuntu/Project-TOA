@@ -61,10 +61,10 @@
                         <td align="">
                             <ul>
                                 <li>
-                                    <a class="audio_src" href="<?php echo $word->audio_src; ?>" target="_blank">Audio</a>
+                                    <a class="audio_src" href="<?php echo $word->img_src1; ?>" target="_blank">Image1</a>
                                 </li>
                                 <li >
-                                    <a class="img_src" href="<?php echo $word->img_src; ?>" target="_blank">Image</a>
+                                    <a class="img_src1" href="<?php echo $word->img_src2; ?>" target="_blank">Image2</a>
                                 </li>
                             </ul>
                         </td>
@@ -101,6 +101,15 @@
                 <div class="form-group">
                     <label for="word_desc">Description:</label>
                     <textarea id="word_desc" class="form-control entry" placeholder=""></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="img_src">Image:</label>
+                    <form id="img_src" method="post" action="upload.php" enctype="multipart/form-data">
+                        <input type="file" name="uploadctl" multiple />
+                        <ul id="fileList">
+                            <!-- The file list will be shown here -->
+                        </ul>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
