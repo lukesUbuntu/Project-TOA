@@ -128,6 +128,30 @@ class AdminController extends ControllerBase
 
         return $this->Api()->response("Missing word data", false);
     }
+
+    /**
+     * Upload a image Object
+     */
+    public function uploadWordImageAction()
+    {
+        //grab word object we ar eupdating from
+        $index = $this->Request()->getPost("index", null, false);
+
+        if ($index == false)
+            return $this->Api()->response("Missing index data", false);
+
+        $theWordRecord = \Words::findfirst("index = '$index'");
+
+        //we have record lets update
+        if ($theWordRecord && count($theWordRecord) > 0) {
+            //lets check the file
+            print_r($_POST);
+            print_r($_FILES);exit;
+        }
+        return $this->Api()->response("Missing word data or incorrect index", false);
+
+
+    }
     /**
      * Delete a words Object
      */

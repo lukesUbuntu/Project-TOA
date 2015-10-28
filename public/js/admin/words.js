@@ -86,7 +86,8 @@ $(document).ready(function(){
             $('#mri_word',deleteModal).text(editDetails.mri_word);
         }
 
-
+        //lets update the fileForm of the record index we are using
+        $("#img_src #index").val(editDetails.index);
 
     }
 
@@ -98,25 +99,25 @@ $(document).ready(function(){
 
 });
 $(function () {
-
-    $('#img_src1').fileupload({
+    var ul = $("#fileList");
+    $('.img_src_upload').fileupload({
 
         // This function is called when a file is added to the queue
         add: function (e, data) {
             //This area will contain file list and progress information.
             var tpl = $('<li class="working">'+
-                '<input type="text" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
-                '<p></p><span></span></li>' );
+                '<span class="fileupload" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
+                '% <span class="fileName"></span></li>' );
 
             // Append the file name and file size
-            tpl.find('p').text(data.files[0].name)
-                .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+            tpl.find('.fileName').text(data.files[0].name)
+                .append('<i> ' + formatFileSize(data.files[0].size) + ' </i>');
 
             // Add the HTML to the UL element
             data.context = tpl.appendTo(ul);
 
             // Initialize the knob plugin. This part can be ignored, if you are showing progress in some other way.
-            tpl.find('input').knob();
+            //tpl.find('input').knob();
 
             // Listen for clicks on the cancel icon
             tpl.find('span').click(function(){
@@ -138,14 +139,15 @@ $(function () {
 
             // Update the hidden input field and trigger a change
             // so that the jQuery knob plugin knows to update the dial
-            data.context.find('input').val(progress).change();
+            data.context.find('.fileupload').text(progress).change();
 
             if(progress == 100){
                 data.context.removeClass('working');
+                $(this).remove();
             }
         }
     });
-//Helper function for calculation of progress
+    //Helper function for calculation of progress
     function formatFileSize(bytes) {
         if (typeof bytes !== 'number') {
             return '';

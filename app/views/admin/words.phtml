@@ -61,10 +61,10 @@
                         <td align="">
                             <ul>
                                 <li>
-                                    <a class="audio_src" href="<?php echo $word->img_src1; ?>" target="_blank">Image1</a>
+                                    <a class="img_src1" href="<?php echo $word->img_src1; ?>" target="_blank">Image1</a>
                                 </li>
                                 <li >
-                                    <a class="img_src1" href="<?php echo $word->img_src2; ?>" target="_blank">Image2</a>
+                                    <a class="img_src2" href="<?php echo $word->img_src2; ?>" target="_blank">Image2</a>
                                 </li>
                             </ul>
                         </td>
@@ -104,8 +104,10 @@
                 </div>
                 <div class="form-group">
                     <label for="img_src">Image:</label>
-                    <form id="img_src" method="post" action="upload.php" enctype="multipart/form-data">
-                        <input type="file" name="uploadctl" multiple />
+                    <form id="img_src" method="post" action="uploadWordImage" enctype="multipart/form-data">
+                        <input type="hidden" id="index" name="index" />
+                        <input type="file" name="img_src_1" class="img_src_upload" />
+                        <input type="file" name="img_src_2" class="img_src_upload"/>
                         <ul id="fileList">
                             <!-- The file list will be shown here -->
                         </ul>
