@@ -89,10 +89,24 @@ class Words extends \Phalcon\Mvc\Model
     public function wordUpdate($word){
         $this->mri_word = $word->mri_word;
         $this->eng_word = $word->eng_word;
-        $this->img_src1 = $word->img_src1;
         $this->word_desc = $word->word_desc;
-        $this->img_src2 = $word->img_src2;
+        //$this->img_src1 = $this->cleanLink($word->img_src1);
+        //$this->img_src2 = $this->cleanLink($word->img_src2);
     }
+
+    private function cleanLink($link){
+
+        if (strlen($link) > 4){
+            if (strpos($link, 'http') === 0) {
+                return $link;
+            }
+            return 'http://'.$link;
+        }
+
+        return "";
+    }
+
+
 
 
 

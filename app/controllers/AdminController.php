@@ -163,19 +163,27 @@ class AdminController extends ControllerBase
 
                 //Print the real file names and their sizes
                 $fileName = $index.'_'.$file->getKey().'_.'.$file->getExtension();
+                $url = 'http://'.$this->Request()->getServerName().'/public/assets/imgs/'.$fileName;
 
+                //save results
                 if ($file->getKey() == 'img_src1')
-                    $theWordRecord->img_src1 = 'http://'.$this->Request()->getServerName().'/public/assets/imgs/'.$fileName;
+                    $theWordRecord->img_src1 = $url;
 
                 if ($file->getKey() == 'img_src2')
-                    $theWordRecord->img_src2 = 'http://'.$this->Request()->getServerName().'/public/assets/imgs/'.$fileName;
+                    $theWordRecord->img_src2 = $url;
 
-
+                //move file
                 $assetsFolder = __DIR__ . '/../../public/assets/imgs/';
+                //send back response
+                $response['tag'] = $file->getKey();
+                $response['url'] = $url;
+                $response['message'] = 'updated';
 
                 if ($file->moveTo($assetsFolder.$fileName)){
                     $theWordRecord->save();
-                    return $this->Api()->response("Updated successfully");
+                    return $this->Api()->response($response);
+                }else{
+                    $this->Api()->response("Failed to move file please check CHMOD", false);
                 }
 
 

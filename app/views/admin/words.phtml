@@ -103,11 +103,13 @@
                     <textarea id="word_desc" class="form-control entry" placeholder=""></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="img_src">Image:</label>
+                    <label for="img_src">Images:</label>
                     <form id="img_src" method="post" action="uploadWordImage" enctype="multipart/form-data">
+                        <img id="img_src1" src="" width="180px;" height="180"/>
                         <input type="hidden" id="index" name="index" />
                         <input type="file" name="img_src1" class="img_src_upload" />
-                        <input type="file" name="img_src2" class="img_src_upload"/>
+                        <img id="img_src2" src="" width="180px;" height="180"/>
+                        <input type="file"  name="img_src2" class="img_src_upload"/>
                         <ul id="fileList">
                             <!-- The file list will be shown here -->
                         </ul>
