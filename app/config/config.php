@@ -19,6 +19,7 @@ return new \Phalcon\Config(array(
         'cacheDir'       => __DIR__ . '/../../app/cache/',
         'vendor'         => __DIR__ . '/../../vendor/',
         'gameFolder'     => __DIR__ . '/../../games/',
+        'assetFolder'    => __DIR__ . '/../../public/',
         'gameWebRoot' => '/games',
         'baseUri'        => '/',
     )

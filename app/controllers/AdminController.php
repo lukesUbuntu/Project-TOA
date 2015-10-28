@@ -131,26 +131,59 @@ class AdminController extends ControllerBase
 
     /**
      * Upload a image Object
+     * https://docs.phalconphp.com/en/latest/api/Phalcon_Http_Request_File.html
+     * Make sure the folder/assets folder is 755 - 777 this requires ReadWrite access
      */
     public function uploadWordImageAction()
     {
-        //grab word object we ar eupdating from
-        $index = $this->Request()->getPost("index", null, false);
 
-        if ($index == false)
-            return $this->Api()->response("Missing index data", false);
 
-        $theWordRecord = \Words::findfirst("index = '$index'");
+        $validImageExtension = array('jpg','jpeg','png','gif','bmp','');
 
-        //we have record lets update
-        if ($theWordRecord && count($theWordRecord) > 0) {
-            //lets check the file
-            print_r($_POST);
-            print_r($_FILES);exit;
+        //Check if the user has uploaded files
+        if ($this->Request()->hasFiles() == true) {
+            //get the file [0] will be file 0 index
+            $file = $this->Request()->getUploadedFiles()[0];
+
+            //grab word object we ar eupdating from
+            $index = $this->Request()->getPost("index", null, false);
+
+            if ($index == false)
+                return $this->Api()->response("Missing index data", false);
+
+            $theWordRecord = \Words::findfirst("index = '$index'");
+
+            //we have record lets update
+            if ($theWordRecord && count($theWordRecord) > 0) {
+
+                //lets check the file extension is okay
+                if (!in_array(strtolower($file->getExtension()),$validImageExtension))
+                    return $this->Api()->response("Invalid image format", false);
+
+
+                //Print the real file names and their sizes
+                $fileName = $index.'_'.$file->getKey().'_.'.$file->getExtension();
+
+                if ($file->getKey() == 'img_src1')
+                    $theWordRecord->img_src1 = 'http://'.$this->Request()->getServerName().'/public/assets/imgs/'.$fileName;
+
+                if ($file->getKey() == 'img_src2')
+                    $theWordRecord->img_src2 = 'http://'.$this->Request()->getServerName().'/public/assets/imgs/'.$fileName;
+
+
+                $assetsFolder = __DIR__ . '/../../public/assets/imgs/';
+
+                if ($file->moveTo($assetsFolder.$fileName)){
+                    $theWordRecord->save();
+                    return $this->Api()->response("Updated successfully");
+                }
+
+
+            }
+            return $this->Api()->response("Missing word data or incorrect index", false);
         }
-        return $this->Api()->response("Missing word data or incorrect index", false);
 
-
+        return $this->Api()->response("Missing file attachment data", false);
     }
     /**
      * Delete a words Object
@@ -209,13 +242,11 @@ class AdminController extends ControllerBase
 
 
         //render the list of current words in system
-
         ///js/vendor/datatables/jquery.dataTables.js
         $this->addDataTables();
         $this->assets
             ->addJs('js/admin/users.js');
-        //app/views/admin/users
-        //$this->view->render('admin/users', array('Users' => $allUsers));
+        //pass our users to view
         $this->view->setVar("Users", $allUsers);
         return $this->view->render('admin', 'users');
 

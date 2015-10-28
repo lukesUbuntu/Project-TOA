@@ -50,25 +50,11 @@ class ControllerBase extends Controller
         $this->view->setVar("User", $user);
 
     }
-    /*
-    protected function isAdmin(){
 
-        $userId = Sentry::getUser()->id;
-
-        //aget the user from sentry to check against admin group
-        $user = Sentry::findUserByID($userId);
-
-        //get admin group and check if user is an admin
-        $admin = Sentry::findGroupByName('Administrator');
-
-        return $user->inGroup($admin);
-
-
-    }
-    */
 
     /**
      * Adds the database tables libs to view
+     * https://docs.phalconphp.com/en/latest/reference/assets.html
      */
     protected function addDataTables(){
         $this->assets
