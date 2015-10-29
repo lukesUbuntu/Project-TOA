@@ -25,21 +25,27 @@ include('getUserInfo.php');
     <div data-role="page" id="WonGame">
         <h1>Hangi Successful!</h1>
         <div id="wordGuessed">
-            <h2>You guessed it! The word was <?php echo $wordBeingGuessedString; ?></h2>
+            <h3>You guessed it! The word was <?php echo $wordBeingGuessedString; ?></h3>
+            <h4>
+                Which means: '<?php echo $englishWord;?>'
+                <br><br>
+                Description: <?php echo $wordDescription;?>
+                <br><br>
+            </h4>
         </div>
 
         <div id=PointsEarned">
-             <h4>
+             <h5>
 				Round Completed: <?php echo $roundNumber; ?>
-				<br><br>
+				<br>
                  Feathers: <?php echo $totalFeathersEarned; ?>
-                 <br><br>
+                 <br>
                  Score: <?php echo $gameScore; ?>
-                 <br><br>
-             </h4>
+                 <br>
+             </h5>
         </div>
 
-    <button id="ButtonNewRound" data-role="button" class="btn" >Next Round</button>
+    <button id="ButtonNewRound" data-role="button" class="btn">Next Round</button>
     </div>
 </body>
 

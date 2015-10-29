@@ -99,8 +99,8 @@ include('checkGameStatus.php')
 
     var hangiAnimateDestroyAndReplaceFoodBasket = new Image();
     var hangiAnimateNewFoodBasket = new Image();
-    hangiAnimateDestroyAndReplaceFoodBasket.src = "images/hangiPlaceholder.gif";
-    hangiAnimateNewFoodBasket.src = "images/hangiPlaceholderNew.gif";
+    hangiAnimateDestroyAndReplaceFoodBasket.src = "images/hangiReplace.gif";
+    hangiAnimateNewFoodBasket.src = "images/hangiNew.gif";
 
 
     $( document).ready(function(){

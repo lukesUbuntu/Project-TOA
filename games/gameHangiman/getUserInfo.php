@@ -50,5 +50,9 @@ $wordBeingGuessedString = $row[7];
 
 $gameProgress = $row[8];
 $wordToDisplay = $row[9];
+
+$wordDescription = $row[10];
+$englishWord = $row[11];
+
 mysqli_close($con);
 ?>

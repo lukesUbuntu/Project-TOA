@@ -8,7 +8,12 @@
 include('getUserInfo.php');
 
 $roundNumber++;
-$wordBeingGuessed = getWordFromDatabase();
+
+$wordData = getWordDataFromDatabase();
+$wordBeingGuessed = $wordData->mri_word;
+$englishWord = $wordData->eng_word;
+$wordDescription = $wordData->word_desc;
+
 $incorrectGuesses = 7;
 $lettersGuessed = "- ";
 $gameProgress = "running";
@@ -22,21 +27,22 @@ if (mysqli_connect_errno())
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 $con -> set_charset("utf8");
-$sql = "UPDATE in_progress SET  `livesRemaining` = $livesRemaining, `totalFeathersEarned` = $totalFeathersEarned, `roundNumber` = $roundNumber, `incorrectGuesses` = $incorrectGuesses, `lettersGuessed` = '$lettersGuessed', `wordBeingGuessed` = '$wordBeingGuessed', `gameProgress` = '$gameProgress', `wordToDisplay` = '$wordSpacesString' WHERE `userID` = $id";
+$sql = "UPDATE in_progress SET  `livesRemaining` = $livesRemaining, `totalFeathersEarned` = $totalFeathersEarned, `roundNumber` = $roundNumber, `incorrectGuesses` = $incorrectGuesses, `lettersGuessed` = '$lettersGuessed', `wordBeingGuessed` = '$wordBeingGuessed', `gameProgress` = '$gameProgress', `wordToDisplay` = '$wordSpacesString', `wordDescription` = '$wordDescription', `englishWord` = '$englishWord' WHERE `userID` = $id";
 
 mysqli_query($con,$sql);
 mysqli_close($con);
 
 header ("Location: game.php");
 
-function getWordFromDatabase(){
+function getWordDataFromDatabase(){
     $json = file_get_contents('http://toa-dev.devlab.ac.nz/api/words');
     $objWords = json_decode($json);
     $wordArray = $objWords->data;
 
-    $word=$wordArray[array_rand($wordArray)]->mri_word;
+    $wordData=$wordArray[array_rand($wordArray)];
 
-    return $word;
+    return $wordData;
+
 }
 
 function createBlankWordString($wordBeingGuessed){

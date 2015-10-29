@@ -56,7 +56,6 @@ if($gameProgress == 'running'){
             $gameScore += 15;
         }else{
             $incorrectGuesses--;
-			$gameScore -= 10;
         }
     }
     //Writes word plus missing letters to display on client screen
