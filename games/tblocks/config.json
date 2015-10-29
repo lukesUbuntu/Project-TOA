@@ -1,6 +1,6 @@
 {
   "name": "TBlocks",
-  "description": "Tblocks match up images to the correct words. A combination of random te-reo words and english words, levels get faster and words get harder play now!",
+  "description": "Match up images to the correct words as fast as possible...<br/>A combination of random te reo words and english words, levels get faster and words get harder <strong>play now!</strong>",
   "start_file" : "index.html",
   "logo" : "images/title_image.png",
   "author" : "Luke Hardiman"

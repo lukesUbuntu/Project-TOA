@@ -9,15 +9,13 @@
 
 
 
-//Globals
+//Globals Variables
 var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, CurrentScore, AllScores;
 var level = 0;
 
-
 //Handles images matching with words just an array
-//This is just to build a game , below would actually come from a ajax call
-var words = [];//['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
-var images = [];//['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
+var words = [];
+var images = [];
 var game = [];
 
 
@@ -59,9 +57,6 @@ function getImageData(callback){
 
 
 
-
-
-console.log("app.js loaded");
 //gameModule used between scripts app.js loaded first point
 var gameModule = {
     debug: false,   //logout more console and skip some pages for testing
@@ -242,135 +237,6 @@ var dropImage = {
 };
 
 
-
-
-
-
-
-/**
- * On Splash Screen Load
- */
-$(document).on('pageinit','#splash',function(){
-
-    //just splash screen while int.
-    //if (!gameModule.debug)
-
-    splashScreen();
-    getAllScores();//async get all scores for our game
-    getCurrentScore(function(){
-        //lets get our images for the game
-        getImageData(function(){
-            for (var i = 0; i < words.length; i++){
-
-                var match = {
-                    image_block  : {
-                        src : images[i]
-                    },
-                    word_block  :  {
-                        text : words[i]
-                    }
-                };
-                game.push(match);
-            }
-
-            console.log("game",game);
-        });
-    });//async call get current score
-
-
-
-
-    gameModule.screen.height = $(window).height();   // returns height of browser viewport
-    gameModule.screen.width = $(window).width();
-
-    $('body').on('click', '#play_game', function() {
-        $.mobile.changePage('start_game.html', {
-            transition : "slide"
-        });
-        return false;
-    });
-
-    $('body').on('click', '#exitGame', function() {
-         window.location.href = "../";
-
-        $.mobile.changePage('start_game.html', {
-            transition : "slide"
-        });
-        return false;
-    });
-});
-
-
-
-
-/**
- * On start_game load
- */
-$(document).on('pageinit','#start_game',function(){
-    //update our score board dashe board
-    updateCurrentScores();
-
-    //for name sake if we don't have our gameModule object throw us out.
-    if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
-
-
-    //adjust height of our game screen block div
-     game_grid           =  $("#game_grid");
-     image_block_grid    =  $('#image_block_grid');
-     word_block_grid     = $('#word_block_grid');
-     word_blocks         =  $('#word_blocks');
-     image_block         =  $("#image_block");   //clone this element
-
-    //startup
-
-    //lets render our game_grid
-    game_grid.css({
-        'height': gameModule.renderHeight(80) + 'px',
-        'width': '100%',
-        'border': '1px'
-    });
-
-    //lets redner our image block grid container
-    image_block_grid.css({
-        'width': gameModule.renderWidth(40) + 'px',
-        'height': gameModule.renderHeight(80) + 'px',
-        'border': '1px'
-
-    });
-    //lets render our word block grid container
-    word_block_grid.css({
-        'width': gameModule.renderWidth(40) + 'px',
-        'height': gameModule.renderHeight(80) + 'px'
-        //'border': '1px'
-    });
-
-
-    //lets render our image word block
-    word_blocks.css({
-        'width': '100px',
-        'height':'50px',
-        'border': '1px',
-        'margin':'10px 5px 15px 25px'
-    });
-
-
-    //setup our image_block image
-    image_block.css({
-        'height':'100px',
-        'width': gameModule.scaleWidth(80,game_grid) + 'px',
-        'border': '1px',
-        'position': 'absolute'
-    });
-
-
-    console.log("app.js finished game setup");
-
-    createWords();
-    //lets drop an image div down
-    dropImage.drop();
-//    dropImage.drop();
-});
-
 /**
  * Adds the words into the word grid from a game array
  */
@@ -544,24 +410,7 @@ function addFeather(){
     });
 };
 
-$(document).on('pageinit','#start_page',function(){
-    console.log("startPage Loaded");
-    var template = $('#score_entry');
-    var container = $("#score_board");
-	console.log("CurrentScore -> ",CurrentScore);
 
-    updateCurrentScores()
-
-    $.each(AllScores,function(index,gameUser){
-        var tmp = $('#score_entry').clone();
-        $('.username',tmp).text(gameUser.username);
-        $('.score',tmp).text(gameUser.score);
-        tmp.removeClass('hidden');
-
-        $("#score_board").append(tmp);
-    });
-    //render scoreboard
-});
 
 /**
  * Renders the CurrentScore into the spans on current page
@@ -578,3 +427,146 @@ function updateCurrentScores(){
     $('.experience_points').text(CurrentScore.user_details.experience);
     $('.level').text(level);
 }
+
+/****** Below we are binding to our html elements***************/
+
+/**
+ * On start_game load
+ */
+$(document).on('pageinit','#start_game',function(){
+    //update our score board dashe board
+    updateCurrentScores();
+
+    //for name sake if we don't have our gameModule object throw us out.
+    if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
+
+
+    //adjust height of our game screen block div
+    game_grid           =  $("#game_grid");
+    image_block_grid    =  $('#image_block_grid');
+    word_block_grid     = $('#word_block_grid');
+    word_blocks         =  $('#word_blocks');
+    image_block         =  $("#image_block");   //clone this element
+
+    //startup
+
+    //lets render our game_grid
+    game_grid.css({
+        'height': gameModule.renderHeight(80) + 'px',
+        'width': '100%',
+        'border': '1px'
+    });
+
+    //lets redner our image block grid container
+    image_block_grid.css({
+        'width': gameModule.renderWidth(40) + 'px',
+        'height': gameModule.renderHeight(80) + 'px',
+        'border': '1px'
+
+    });
+    //lets render our word block grid container
+    word_block_grid.css({
+        'width': gameModule.renderWidth(40) + 'px',
+        'height': gameModule.renderHeight(80) + 'px'
+        //'border': '1px'
+    });
+
+
+    //lets render our image word block
+    word_blocks.css({
+        'width': '100px',
+        'height':'50px',
+        'border': '1px',
+        'margin':'10px 5px 15px 25px'
+    });
+
+
+    //setup our image_block image
+    image_block.css({
+        'height':'100px',
+        'width': gameModule.scaleWidth(80,game_grid) + 'px',
+        'border': '1px',
+        'position': 'absolute'
+    });
+
+
+    console.log("app.js finished game setup");
+
+    createWords();
+    //lets drop an image div down
+    dropImage.drop();
+//    dropImage.drop();
+});
+
+
+$(document).on('pageinit','#start_page',function(){
+    console.log("startPage Loaded");
+    var template = $('#score_entry');
+    var container = $("#score_board");
+    console.log("CurrentScore -> ",CurrentScore);
+
+    updateCurrentScores()
+
+    $.each(AllScores,function(index,gameUser){
+        var tmp = $('#score_entry').clone();
+        $('.username',tmp).text(gameUser.username);
+        $('.score',tmp).text(gameUser.score);
+        tmp.removeClass('hidden');
+
+        $("#score_board").append(tmp);
+    });
+    //render scoreboard
+});
+
+/**
+ * On Splash Screen Load
+ */
+$(document).on('pageinit','#splash',function(){
+
+    //just splash screen while int.
+    //if (!gameModule.debug)
+    //async calls get all scores for our game
+    splashScreen();
+    getAllScores();
+
+    //callback functions required to run in order
+    getCurrentScore(function(){
+        //lets get our images for the game
+        getImageData(function(){
+            for (var i = 0; i < words.length; i++){
+
+                var match = {
+                    image_block  : {
+                        src : images[i]
+                    },
+                    word_block  :  {
+                        text : words[i]
+                    }
+                };
+                game.push(match);
+            }
+
+            console.log("game",game);
+        });
+    });//async call get current score
+
+    gameModule.screen.height = $(window).height();   // returns height of browser viewport
+    gameModule.screen.width = $(window).width();
+
+    $('body').on('click', '#play_game', function() {
+        $.mobile.changePage('start_game.html', {
+            transition : "slide"
+        });
+        return false;
+    });
+
+    $('body').on('click', '#exitGame', function() {
+        window.location.href = "../";
+
+        $.mobile.changePage('start_game.html', {
+            transition : "slide"
+        });
+        return false;
+    });
+});
+console.log("app.js loaded");
