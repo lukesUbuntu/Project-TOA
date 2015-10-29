@@ -60,12 +60,30 @@
                         </td>
                         <td align="">
                             <ul>
-                                <li>
-                                    <a class="img_src1" href="<?php echo $word->img_src1; ?>" target="_blank">Image1</a>
-                                </li>
-                                <li >
-                                    <a class="img_src2" href="<?php echo $word->img_src2; ?>" target="_blank">Image2</a>
-                                </li>
+                                <?php
+                                    $img_src1 = trim($word->img_src1);
+                                    $img_src2 = trim($word->img_src2);
+                                    //check if there is img_sr1
+                                    if (!empty($img_src1)){
+                                       ?>
+
+                                        <li>
+                                            <a class="img_src1" href="<?php echo $img_src1; ?>" target="_blank">Image1</a>
+                                        </li>
+                                        <?php
+                                    }
+                                //check if there is img_sr2
+                                if (!empty($img_src2)){
+                                    ?>
+
+                                    <li >
+                                        <a class="img_src2" href="<?php echo $img_src2 ?>" target="_blank">Image2</a>
+                                    </li>
+
+                                    <?php
+                                }
+                                ?>
+
                             </ul>
                         </td>
                         <td align="right">
