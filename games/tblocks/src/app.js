@@ -7,8 +7,6 @@
 
 
 
-
-
 //Globals Variables
 var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, CurrentScore, AllScores;
 var level = 0;
@@ -24,13 +22,14 @@ var game = [];
  * @param data for our game
  */
 function getImageData(callback){
-        console.log("CurrentScore",CurrentScore)
+    level = 3;
 
-    if (typeof CurrentScore.game_score == "string"){
+    if (typeof CurrentScore != "undefined" && typeof CurrentScore.game_score == "string"){
         level =  (parseInt(CurrentScore.game_score) > 100)? 1 : level;
         level =  (parseInt(CurrentScore.game_score) > 200)? 2 : level;
         level =  (parseInt(CurrentScore.game_score) > 350)? 3 : level;
         level =  (parseInt(CurrentScore.game_score) > 400)? 4 : level;
+        level =  (parseInt(CurrentScore.game_score) > 500)? 4 : level;
     }
 
     $.getJSON('/api/words?img_src1&limit=5',function(response){
@@ -40,7 +39,7 @@ function getImageData(callback){
             console.log("response.data",response.data);
             $.each(response.data,function(index,data){
                 //push either a eng_word or mri_word word
-                words.push(index >= level ?  data.eng_word : data.mri_word);
+                words.push(index >= 3 ?  data.eng_word : data.mri_word);
                 images.push(data.img_src1);
             });
              if (typeof callback == "function")
@@ -71,13 +70,13 @@ var gameModule = {
         this.setScore()
     },
     renderHeight : function(pert){  //render a % of document height
-        return (typeof pert != "undefined") ? this.screen.height * pert / 100 : this.screen.height;
+        return (typeof pert != "undefined") ? this.screen.height * pert / 90 : this.screen.height;
     },
     renderWidth : function(pert){
-        return (typeof pert != "undefined") ? this.screen.width * pert / 100 : this.screen.width;
+        return (typeof pert != "undefined") ? this.screen.width * pert / 90 : this.screen.width;
     },
     scaleWidth : function(pert,element){//render a % of element with
-        return (typeof pert != "undefined") ? $(element).width() * pert / 100 :  $(element).width();
+        return (typeof pert != "undefined") ? $(element).width() * pert / 90 :  $(element).width();
     },
     isElement : function($element){ //checks if we have a valid jquery Object & element exists
         return (typeof $element != "undefined" && $element instanceof jQuery && $element.length);
@@ -351,15 +350,17 @@ function refreshPage() {
 function getCurrentScore(callback) {
     $.getJSON('/api/usersGames',function(response){
         console.log("getCurrentScore response",response.data)
+
+
         if (response.success == true){
 
             CurrentScore = response.data;
-
+        }
             if (typeof callback == "function")
                 callback(response.data);
 
             //return response.data.game_score;
-        }
+
 
     })
 };
@@ -419,7 +420,10 @@ function updateCurrentScores(){
     //users current score for our game CurrentScore.game_score
     //users feathers CurrentScore.users_details.feathers_earned
 
-    if (typeof CurrentScore.game_score != "string") return;
+    if (typeof CurrentScore == "undefined" || typeof CurrentScore.game_score == "undefined") {
+        console.log("CurrentScore First time player")
+        return false;
+    }
     $('.current_score').text(CurrentScore.game_score);
     //make sure the user_details object has come to
     if (typeof CurrentScore.user_details != "object") return;
@@ -567,6 +571,19 @@ $(document).on('pageinit','#splash',function(){
             transition : "slide"
         });
         return false;
+    });
+
+    //check all ajax responses to see if user is logged in
+    $( document ).ajaxSuccess(function( event, xhr, settings ) {
+                try{
+
+                    var d = JSON.parse(xhr.responseText);
+                    if (d.data == "no user logged in"){
+                        console.log("logged out");
+                        window.location.href = "../";
+                    }
+
+                }catch(e){}
     });
 });
 console.log("app.js loaded");
