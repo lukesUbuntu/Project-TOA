@@ -24,7 +24,13 @@ class IndexController extends ControllerBase
         $games = \Game::find();//get our games
 
         //scores
-        $ScoreBoard = UsersHasGame::find(array("limit" => 5));
+        $ScoreBoard = UsersHasGame::find(array(
+                "limit" => 10,
+                'order' => 'game_score DESC ',
+               // 'group' => 'game_game_id'
+
+            )
+        );
 
 
 

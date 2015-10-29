@@ -118,6 +118,9 @@ var gameModule = {
             console.log("response",response)
             if (response.success == true){
                 console.log("response.data",response.data);
+                $(".game_feather").text('& 1 feather!');
+
+                addFeather();
             }
         });
     }
@@ -512,6 +515,20 @@ function saveScore(score){
         }
     });
 }
+/**
+ * Adds a feather to users account
+ * @param score
+ */
+function addFeather(){
+    //saveGameData?game_score=454545&prefix=tblocks
+    $.getJSON('/api/addFeather',function(response){
+        console.log("response",response)
+        if (response.success == true){
+            console.log("response.data",response.data);
+        }
+    });
+};
+
 $(document).on('pageinit','#start_page',function(){
     console.log("startPage Loaded");
     var template = $('#score_entry');

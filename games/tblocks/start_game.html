@@ -16,6 +16,7 @@
     <div data-role="header" data-theme="a">
         <h1>T Blocks</h1>
         <a id="exitGame" data-role="button">Exit Game</a>
+        <h4>Current Score : <span class="current_score">0</span> Feathers<span class="feathers_earned">0</span></h4>
     </div>
     <div data-role="content">
         <div class="ui-block-a">
@@ -33,7 +34,7 @@
         </div>
         <div id="game_over" class="ui-grid-b ui-corner-all ui-shadow" style="display:none;padding: 1em;">
             <h1>Game Over!!
-                You Scored <span class="game_score">0</span></h1>
+                You Scored <span class="game_score">0</span><span class="game_feather">0</span></h1>
             <button onclick="refreshPage()" id="play_again">Play Again!</button>
         </div>
     </div>

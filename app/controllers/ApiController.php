@@ -517,7 +517,7 @@ class ApiController extends ControllerBase
 
 
             // Get all games with scores
-            $gamesData = \UsersHasGame::find();
+            $gamesData = \UsersHasGame::find(array( 'order' => 'game_score DESC '));
 
             //store game users scores
             $gameScores = array();
@@ -583,8 +583,9 @@ class ApiController extends ControllerBase
 
             // Get the current active/logged in users game
             $users_games = \UsersHasGame::findFirst(array('users_id' => Sentry::getUser()->id));
-            //add expierance to user
+            //add Experience to user
             $this->addExperience();
+
             //we have valid user
             if (count($users_games) <= 0)
                 return $this->Api()->response("no game data found for user", false);
@@ -608,21 +609,19 @@ class ApiController extends ControllerBase
 
                 $theGame = \UsersHasGame::findfirst("users_id  = '$users_id' AND game_game_id = '$game_id'");
 
-
-
-                //$user->addExperience();
-
+                //if user hasnt played this game lets get it added to the table
                 if (!is_object($theGame) || count($theGame) <= 0){
                     $theGame = new \UsersHasGame;
                     //push any changes
                     $theGame->game_game_id = $game->game_id;
-                    $theGame->game_score = $game_score;
                     $theGame->users_id = Sentry::getUser()->id;
                     //return $this->Api()->response("Updated game data, new score");
                 }
-                print_r($theGame->game_score);exit;
+
+
+                //print_r($theGame->game_score);exit;
                 //only update if new score is bigger
-                if ($game_score > $theGame->game_score){
+                if ($game_score >= $theGame->game_score){
                     $theGame->game_score = $game_score;
                     $theGame->save();
 
@@ -708,7 +707,11 @@ class ApiController extends ControllerBase
 
 
         // Get all games with scores
-        $gamesData = \UsersHasGame::find("game_game_id = '$game_id' ");
+        $gamesData = \UsersHasGame::find(
+            array("game_game_id = '$game_id' ",
+                 'order' => 'game_score DESC '
+                )
+        );
 
         //store game users scores
         $gameScores= $gamesData[0]->gameDetailsBrief();
