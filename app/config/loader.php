@@ -1,4 +1,7 @@
 <?php
+/*
+ * @loader created by Luke Hardiman github.com/lukesUbuntu
+ */
 $loader = new \Phalcon\Loader();
 
 /**
@@ -24,9 +27,8 @@ $loader->registerDirs(
 )->register();
 
 
-//Sentry module is located from https://cartalyst.com/manual/sentry/2.1
-
-//register sentry namespace
+//Sentry module is located from https://cartalyst.com/manual/sentry/2.1 please read docs or contact Luke
+//register our autoLoaders from composer
 require_once($config->application->vendor.'autoload.php');
 
 // Create a new Database connection

@@ -13,11 +13,13 @@ class LoginController extends \Phalcon\Mvc\Controller
      * @return mixed
      */
     public function initialize(){
+
         //don't show navbar
         $this->view->show_navigation = false;
         //set our redirect URL if defined
         $redirectTo = $this->Request()->getQuery("url", null, false);
         $this->url = $redirectTo != false ? $redirectTo : 'index';
+
 
         //pass on any getRequest to the post url
         $this->getRequest = str_replace('/login', '', $this->Request()->getURI());
@@ -36,6 +38,7 @@ class LoginController extends \Phalcon\Mvc\Controller
 
             return $this->response->redirect($this->url);
         }
+
     }
 
     protected function Request()
@@ -253,6 +256,37 @@ class LoginController extends \Phalcon\Mvc\Controller
         return $this->view->render('login', 'index');
 
     }
+    /**
+     * Forgot Password a user into system
+     Did not complete due to mail relay not enabled for toa.devlab
+    public function forgotPasswordAction()
+    {
+        $mail = new PHPMailer;
+
+        //Set who the message is to be sent from
+        $mail->setFrom('admin@toa.devlab.ac.nz', 'Toa');
+        //Set an alternative reply-to address
+        $mail->addReplyTo('noreply@toa.devlab.ac.nz', 'Toa');
+        //Set who the message is to be sent to
+        $mail->addAddress('luken@hardiman.co.nz');
+        //Set the subject line
+        $mail->Subject = 'PHPMailer mail() test';
+        //Read an HTML message body from an external file, convert referenced images to embedded,
+        //convert HTML into a basic plain-text alternative body
+       // $mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
+        //Replace the plain text body with one created manually
+        $mail->Body = "Test";
+        $mail->AltBody = 'This is a plain-text message body';
+        //Attach an image file
+        //$mail->addAttachment('images/phpmailer_mini.png');
+        //send the message, check for errors
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+            echo "Message sent!";
+        }
+    }
+     **/
 
 }
 

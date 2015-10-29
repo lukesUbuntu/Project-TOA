@@ -9,8 +9,6 @@
 
 
 
-
-
 //Globals
 var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, CurrentScore, AllScores;
 
@@ -48,10 +46,6 @@ function getImageData(callback){
     });
 }
 
-console.log("words",words)
-console.log("images",images)
-images = [];
-words = [];
 
 
 getImageData(function(){
@@ -70,14 +64,6 @@ getImageData(function(){
 
     console.log("game",game);
 });
-
-
-//throw Error("Testing");
-
-
-
-
-
 
 
 
@@ -289,7 +275,14 @@ $(document).on('pageinit','#splash',function(){
         return false;
     });
 
+    $('body').on('click', '#exitGame', function() {
+         window.location.href = "../";
 
+        $.mobile.changePage('start_game.html', {
+            transition : "slide"
+        });
+        return false;
+    });
 });
 
 

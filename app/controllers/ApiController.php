@@ -612,7 +612,7 @@ class ApiController extends ControllerBase
 
                 //$user->addExperience();
 
-                if (count($theGame) <= 0){
+                if (!is_object($theGame) || count($theGame) <= 0){
                     $theGame = new \UsersHasGame;
                     //push any changes
                     $theGame->game_game_id = $game->game_id;
@@ -620,7 +620,7 @@ class ApiController extends ControllerBase
                     $theGame->users_id = Sentry::getUser()->id;
                     //return $this->Api()->response("Updated game data, new score");
                 }
-
+                print_r($theGame->game_score);exit;
                 //only update if new score is bigger
                 if ($game_score > $theGame->game_score){
                     $theGame->game_score = $game_score;

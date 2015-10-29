@@ -104,7 +104,7 @@ $(function () {
     var ul = $("#fileList");
     $('.img_src_upload').fileupload({
 
-        // This function is called when a file is added to the queue
+        // This function is called when a file is added to the queue ignore below i was trying to do some fancy uploading but ran out of time.
         add: function (e, data) {
             //This area will contain file list and progress information. ignore below was trying to do fancy but will skip github.com/lukesubuntu
             /*

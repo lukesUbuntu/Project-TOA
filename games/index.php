@@ -1,3 +1,3 @@
 <?php
-exit;
+header("Location: http://toa.devlab.ac.nz/");
 ?>
