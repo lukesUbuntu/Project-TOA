@@ -11,7 +11,7 @@
 
 //Globals
 var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, CurrentScore, AllScores;
-
+var level = 0;
 
 
 //Handles images matching with words just an array
@@ -26,7 +26,15 @@ var game = [];
  * @param data for our game
  */
 function getImageData(callback){
-    //saveGameData?game_score=454545&prefix=tblocks
+        console.log("CurrentScore",CurrentScore)
+
+    if (typeof CurrentScore.game_score == "string"){
+        level =  (parseInt(CurrentScore.game_score) > 100)? 1 : level;
+        level =  (parseInt(CurrentScore.game_score) > 200)? 2 : level;
+        level =  (parseInt(CurrentScore.game_score) > 350)? 3 : level;
+        level =  (parseInt(CurrentScore.game_score) > 400)? 4 : level;
+    }
+
     $.getJSON('/api/words?img_src1&limit=5',function(response){
 
         if (response.success == true){
@@ -34,7 +42,7 @@ function getImageData(callback){
             console.log("response.data",response.data);
             $.each(response.data,function(index,data){
                 //push either a eng_word or mri_word word
-                words.push(index > 2 ? data.mri_word : data.eng_word);
+                words.push(index >= level ?  data.eng_word : data.mri_word);
                 images.push(data.img_src1);
             });
              if (typeof callback == "function")
@@ -248,26 +256,29 @@ $(document).on('pageinit','#splash',function(){
     //if (!gameModule.debug)
 
     splashScreen();
-    getCurrentScore();//async call get current score
     getAllScores();//async get all scores for our game
+    getCurrentScore(function(){
+        //lets get our images for the game
+        getImageData(function(){
+            for (var i = 0; i < words.length; i++){
 
-    //lets get our images for the game
-    getImageData(function(){
-        for (var i = 0; i < words.length; i++){
+                var match = {
+                    image_block  : {
+                        src : images[i]
+                    },
+                    word_block  :  {
+                        text : words[i]
+                    }
+                };
+                game.push(match);
+            }
 
-            var match = {
-                image_block  : {
-                    src : images[i]
-                },
-                word_block  :  {
-                    text : words[i]
-                }
-            };
-            game.push(match);
-        }
+            console.log("game",game);
+        });
+    });//async call get current score
 
-        console.log("game",game);
-    });
+
+
 
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
     gameModule.screen.width = $(window).width();
@@ -565,4 +576,5 @@ function updateCurrentScores(){
     if (typeof CurrentScore.user_details != "object") return;
     $('.feathers_earned').text(CurrentScore.user_details.feathers_earned);
     $('.experience_points').text(CurrentScore.user_details.experience);
+    $('.level').text(level);
 }
