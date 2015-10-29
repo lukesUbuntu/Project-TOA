@@ -22,8 +22,8 @@ var words = [];//['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
 var images = [];//['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
 var game = [];
 
-var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
-var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
+//var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
+//var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
 /**
  * Gets the images for our game that we are going to use
  * @param data for our game

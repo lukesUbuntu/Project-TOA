@@ -191,7 +191,8 @@ class ApiController extends ControllerBase
         if ($limit == false){
             $wordsData = \Words::find(
                 array(
-                    $query
+                    $query,
+                    'order' => 'RAND()'
                 )
             );
         }
@@ -199,7 +200,8 @@ class ApiController extends ControllerBase
             $wordsData = \Words::find(
                 array(
                     $query,
-                    'limit' => $limit
+                    'limit' => $limit,
+                    'order' => 'RAND()'
                 )
             );
         }
