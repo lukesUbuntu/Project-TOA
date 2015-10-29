@@ -88,6 +88,8 @@ $(document).ready(function(){
 
         //lets update the fileForm of the record index we are using
         $("#img_src #index").val(editDetails.index);
+        $("#img_src #img_src1").attr('src',editDetails.img_src1);
+        $("#img_src #img_src2").attr('src',editDetails.img_src2);
 
     }
 
@@ -104,7 +106,8 @@ $(function () {
 
         // This function is called when a file is added to the queue
         add: function (e, data) {
-            //This area will contain file list and progress information.
+            //This area will contain file list and progress information. ignore below was trying to do fancy but will skip github.com/lukesubuntu
+            /*
             var tpl = $('<li class="working">'+
                 '<span class="fileupload" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
                 '% <span class="fileName"></span></li>' );
@@ -113,11 +116,12 @@ $(function () {
             tpl.find('.fileName').text(data.files[0].name)
                 .append('<i> ' + formatFileSize(data.files[0].size) + ' </i>');
 
+
+
             // Add the HTML to the UL element
             data.context = tpl.appendTo(ul);
 
-            // Initialize the knob plugin. This part can be ignored, if you are showing progress in some other way.
-            //tpl.find('input').knob();
+
 
             // Listen for clicks on the cancel icon
             tpl.find('span').click(function(){
@@ -128,23 +132,32 @@ $(function () {
                     tpl.remove();
                 });
             });
-
+            */
             // Automatically upload the file once it is added to the queue
             var jqXHR = data.submit();
         },
         progress: function(e, data){
 
-            // Calculate the completion percentage of the upload
-            var progress = parseInt(data.loaded / data.total * 100, 10);
+            //// Calculate the completion percentage of the upload
+            //var progress = parseInt(data.loaded / data.total * 100, 10);
+            //
+            //// Update the hidden input field and trigger a change
+            //// so that the jQuery knob plugin knows to update the dial
+            //data.context.find('.fileupload').text(progress).change();
+            //
+            //if(progress == 100){
+            //    data.context.removeClass('working');
+            //   // $(this).remove();
+            //}
+        },
+        done: function (e, data) {
+            var response = data.result.data;
+            if (typeof response.tag  == "string")
+                $("#img_src #"+ response.tag).attr('src',response.url);
+            else
+                console.log("failed",response);
+            //
 
-            // Update the hidden input field and trigger a change
-            // so that the jQuery knob plugin knows to update the dial
-            data.context.find('.fileupload').text(progress).change();
-
-            if(progress == 100){
-                data.context.removeClass('working');
-                $(this).remove();
-            }
         }
     });
     //Helper function for calculation of progress
