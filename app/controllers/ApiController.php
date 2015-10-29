@@ -143,29 +143,35 @@ class ApiController extends ControllerBase
     {
         //basic query call
         $url = str_replace('/api/words','',$this->Request()->getURI());
+        $url = str_replace("?", "", $url);
         //"&word_desc&eng_word&limit=10&&random";
 
         //specify in_array security what calls above can be made
+        $acceptableFlags = array('mri_word', 'eng_word', 'img_src1','img_src2', 'word_desc', 'audio_src', 'limit');
 
-        $acceptableFlags = array('mri_word', 'eng_word', 'img_src', 'word_desc', 'audio_src', 'limit');
-        foreach($acceptableFlags as $acceptableFlag){
 
-        }
+
 
         //parse to our search array
         $searchFlag = array();
         $flags = array();
-
+        $limit = false;
         //parse it
         parse_str($url,$searchFlag);
 
-        //any manual flag not for search goes here
+        //check if its a valid flag
+        foreach($searchFlag as $flag => $value){
+            if (!in_array($flag,$acceptableFlags)) return $this->Api()->response("Invalid Flag `$flag``",false);
+        }
+
+
+
         //kill limit if passed
         if (isset($searchFlag['limit'])){
             //word limit
+            $limit = $searchFlag['limit'];
             unset($searchFlag['limit']);
         }
-
         if (isset($searchFlag['random'])){
             //randomise wordlise
             unset($searchFlag['random']);
@@ -181,9 +187,24 @@ class ApiController extends ControllerBase
         //check ? at 1st point of scring then remove
         $query = str_replace('?','',$query);
 
-        $wordsData = \Words::find(
-            array($query)
-        );
+        //check if we have a limit on return
+        if ($limit == false){
+            $wordsData = \Words::find(
+                array(
+                    $query
+                )
+            );
+        }
+        else{
+            $wordsData = \Words::find(
+                array(
+                    $query,
+                    'limit' => $limit
+                )
+            );
+        }
+
+
         return $this->Api()->response($wordsData->toArray(), true);
     }
 

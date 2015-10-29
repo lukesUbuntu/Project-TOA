@@ -1,18 +1,12 @@
 /**
  * Created by Luke Hardiman on 27/08/2015.
- * 
+ * https://github.com/lukesUbuntu
  */
 
 "use strict";
 
 
 
-//testing
-//get score
-
-
-//setScore();
-//throw Error("Testing");
 
 
 
@@ -24,26 +18,66 @@ var game_grid, image_block_grid, word_block_grid, word_blocks, image_block, Curr
 
 //Handles images matching with words just an array
 //This is just to build a game , below would actually come from a ajax call
-var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
-var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
-
+var words = [];//['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
+var images = [];//['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
 var game = [];
 
+var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
+var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
+/**
+ * Gets the images for our game that we are going to use
+ * @param data for our game
+ */
+function getImageData(callback){
+    //saveGameData?game_score=454545&prefix=tblocks
+    $.getJSON('/api/words?img_src1&limit=5',function(response){
 
-for (var i = 0; i < words.length; i++){
+        if (response.success == true){
+            //loop all images to the images array and match the images same index
+            console.log("response.data",response.data);
+            $.each(response.data,function(index,data){
+                words.push(data.eng_word);
+                images.push(data.img_src1);
+            });
+             if (typeof callback == "function")
+                 callback();
 
-    var match = {
-        image_block  : {
-            src : images[i]
-        },
-        word_block  :  {
-            text : words[i]
+        }else{
+            throw Error("failed getImageData can not run game");
         }
-    };
-    game.push(match);
+    });
 }
 
-console.log("game",game);
+console.log("words",words)
+console.log("images",images)
+images = [];
+words = [];
+
+
+getImageData(function(){
+    for (var i = 0; i < words.length; i++){
+
+        var match = {
+            image_block  : {
+                src : images[i]
+            },
+            word_block  :  {
+                text : words[i]
+            }
+        };
+        game.push(match);
+    }
+
+    console.log("game",game);
+});
+
+
+//throw Error("Testing");
+
+
+
+
+
 
 
 
