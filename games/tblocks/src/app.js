@@ -20,8 +20,7 @@ var words = [];//['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
 var images = [];//['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
 var game = [];
 
-//var words = ['Rock', 'Paper', 'Scissor',"Marae","Kiwi"];
-//var images = ['images/rock.png', 'images/paper.png', 'images/sissors.png',"images/marae.png","images/kiwi.jpg"];
+
 /**
  * Gets the images for our game that we are going to use
  * @param data for our game
@@ -34,7 +33,8 @@ function getImageData(callback){
             //loop all images to the images array and match the images same index
             console.log("response.data",response.data);
             $.each(response.data,function(index,data){
-                words.push(data.eng_word);
+                //push either a eng_word or mri_word word
+                words.push(index > 2 ? data.mri_word : data.eng_word);
                 images.push(data.img_src1);
             });
              if (typeof callback == "function")
@@ -48,22 +48,7 @@ function getImageData(callback){
 
 
 
-getImageData(function(){
-    for (var i = 0; i < words.length; i++){
 
-        var match = {
-            image_block  : {
-                src : images[i]
-            },
-            word_block  :  {
-                text : words[i]
-            }
-        };
-        game.push(match);
-    }
-
-    console.log("game",game);
-});
 
 
 
@@ -108,8 +93,10 @@ var gameModule = {
         //finished the game
         $("#game_grid").hide();
         $("#game_over").show();
+        $("#show_score").hide();
         //update game with score
         this.saveScore();
+
     },
     saveScore : function(){
         //save score
@@ -118,7 +105,7 @@ var gameModule = {
             console.log("response",response)
             if (response.success == true){
                 console.log("response.data",response.data);
-                $(".game_feather").text('& 1 feather!');
+                $(".game_feather").text(' you earned 1 feather!');
 
                 addFeather();
             }
@@ -261,12 +248,26 @@ $(document).on('pageinit','#splash',function(){
     //if (!gameModule.debug)
 
     splashScreen();
-
-    //
     getCurrentScore();//async call get current score
     getAllScores();//async get all scores for our game
 
-    //lets passheight to our gamemodule
+    //lets get our images for the game
+    getImageData(function(){
+        for (var i = 0; i < words.length; i++){
+
+            var match = {
+                image_block  : {
+                    src : images[i]
+                },
+                word_block  :  {
+                    text : words[i]
+                }
+            };
+            game.push(match);
+        }
+
+        console.log("game",game);
+    });
 
     gameModule.screen.height = $(window).height();   // returns height of browser viewport
     gameModule.screen.width = $(window).width();
@@ -295,6 +296,9 @@ $(document).on('pageinit','#splash',function(){
  * On start_game load
  */
 $(document).on('pageinit','#start_game',function(){
+    //update our score board dashe board
+    updateCurrentScores();
+
     //for name sake if we don't have our gameModule object throw us out.
     if (typeof gameModule == "undefined") throw new Error("gameModule not loaded in scope....");
 
@@ -533,7 +537,9 @@ $(document).on('pageinit','#start_page',function(){
     console.log("startPage Loaded");
     var template = $('#score_entry');
     var container = $("#score_board");
-	console.log("AllScores -> ",AllScores);
+	console.log("CurrentScore -> ",CurrentScore);
+
+    updateCurrentScores()
 
     $.each(AllScores,function(index,gameUser){
         var tmp = $('#score_entry').clone();
@@ -545,3 +551,18 @@ $(document).on('pageinit','#start_page',function(){
     });
     //render scoreboard
 });
+
+/**
+ * Renders the CurrentScore into the spans on current page
+ */
+function updateCurrentScores(){
+    //users current score for our game CurrentScore.game_score
+    //users feathers CurrentScore.users_details.feathers_earned
+
+    if (typeof CurrentScore.game_score != "string") return;
+    $('.current_score').text(CurrentScore.game_score);
+    //make sure the user_details object has come to
+    if (typeof CurrentScore.user_details != "object") return;
+    $('.feathers_earned').text(CurrentScore.user_details.feathers_earned);
+    $('.experience_points').text(CurrentScore.user_details.experience);
+}
