@@ -334,10 +334,12 @@ class AdminController extends ControllerBase
                 $theAdmin->removeGroup($admin);
             }
             $gamesData = \UsersHasGame::find(array( 'users_id' => $user->id));
-            //
+
             if (is_object($gamesData) && count($gamesData) > 0){
-                foreach($gamesData as $game)
-                    $game->delete();
+                foreach($gamesData as $game){
+                    if ($game->users_id == $user->id)$game->delete();
+                }
+
             }
 
 
