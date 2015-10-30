@@ -20,7 +20,7 @@
                     <th width="10%">UserID</th>
                     <th width="30%">Username</th>
                     <th>email</th>
-                    <th>Attachments</th>
+                    <th width="92px"></th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -35,33 +35,28 @@
                             <?php echo $user->username; ?>
                         </td>
                         <td>
-                            <?php echo $user->email; ?>
+                            <?php echo trim($user->email); ?>
                         </td>
                         <td>
                             <?php
                                 if($user->admin == "true")
-                                    echo "Admin";
-
+                                    echo '<span style="font-size:10px;color:orangered"><strong>Admin</strong></span>';
                             ?>
-
-
                         </td>
-                        <td>
+                        <td >
                             <span><br/></span>
-                           <span class="btn btn-info">Edit</span>
+                            <span id="delete" data-index= '<?php echo $user->id; ?>' class="btn btn-info adminAction">Delete</span>
 
                             <?php
                             if($user->admin == "true"){
                                 ?>
-                                <span class="btn btn-warning">Remove Admin</span>
+                                <span id="removeAdmin" data-index= '<?php echo $user->id; ?>' class="btn btn-warning adminAction">Remove Admin</span>
                             <?php
                             }else{
                                 ?>
-                                <span class="btn btn-default">Make Admin</span>
+                                <span id="makeAdmin" data-index= '<?php echo $user->id; ?>' class="btn btn-default adminAction">Make Admin</span>
                             <?php
                             }
-
-
                             ?>
                         </td>
                     </tr>

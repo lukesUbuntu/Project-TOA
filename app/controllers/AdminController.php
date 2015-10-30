@@ -257,9 +257,6 @@ class AdminController extends ControllerBase
             $allUsers[] = $thisUser;
         }
 
-
-
-
         //render the list of current words in system
         ///js/vendor/datatables/jquery.dataTables.js
         $this->addDataTables();
@@ -281,6 +278,70 @@ class AdminController extends ControllerBase
 
         $this->view->setVar("Games", $games);
         return $this->view->render('admin', 'games');
+
+    }
+
+    /**
+     * Remove admin account from admin permsions
+     */
+    public function usersAdminAction(){
+        $user_index = $this->Request()->getPost("index", null, false);
+        $action = $this->Request()->getPost("action", null, false);
+
+
+        if ($user_index == false || $action == false)return $this->Api()->response("Missing invalid Index or Action", false);
+
+        $user = Users::findFirst($user_index);
+        //check user is auser
+        if (!is_object($user))return $this->Api()->response("Invalid User details", false);
+
+        //get admin group for adding or removing
+        $admin = Sentry::findGroupByName('Administrator');
+
+        //remove admin
+        if ($action == 'removeAdmin'){
+            //lets remove admin permision
+            //aget the user from sentry to check against admin group
+            $theAdmin = Sentry::findUserByID($user->id);
+
+            // Check if the user is in the administrator group
+            if ($theAdmin->inGroup($admin)) {
+                $theAdmin->removeGroup($admin);
+                return $this->Api()->response("Success user removed as admin");
+            }
+            return $this->Api()->response("User not in group", false);
+        }
+
+        //make admin
+        if ($action == 'makeAdmin'){
+            //lets remove admin permision
+            //aget the user from sentry to check against admin group
+            $theAdmin = Sentry::findUserByID($user->id);
+
+            // Check if the user is in the administrator group
+            if (!$theAdmin->inGroup($admin)) {
+                $theAdmin->addGroup($admin);
+                return $this->Api()->response("Success user is now admin");
+            }
+            return $this->Api()->response("User is already admin", false);
+        }
+
+        //delete user from system
+        if ($action == 'delete'){
+            //remove admin group if in.
+            $theAdmin = Sentry::findUserByID($user->id);
+            if ($theAdmin->inGroup($admin)) {
+                $theAdmin->removeGroup($admin);
+            }
+            $gamesData = \UsersHasGame::find(array( 'users_id' => $user->id));
+            //
+            if (is_object($gamesData) && count($gamesData) > 0)
+                $gamesData->delete();
+
+            $user->delete();
+            //$gamesData->save();
+            return $this->Api()->response("Success user removed as admin");
+        }
 
     }
     /**
