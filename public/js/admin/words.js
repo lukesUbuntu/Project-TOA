@@ -36,26 +36,69 @@ $(document).ready(function(){
     //save our entry details and update server
     $('#save',editWordModal).click(function(e){
 
-        //grab all the input fields from our modal
-        var entry = $('.entry',editWordModal);
+        var entry = $('.entry');
+        //var editDetails = [];
+        if (action == "add")
+            editDetails = {};
 
         //lets update editDetails object with new entry details
         $.each(entry,function(key, value){
-            editDetails[$(value).attr('id')] = $(value).val()
+            var thisEntry  = $(value);
+
+            try{
+                editDetails[thisEntry.attr('id')] = thisEntry.val();
+            }catch(e){
+                console.log("attr",thisEntry.attr('id'));
+                //console.log("value",thisEntry.val());
+            }
+
         });
 
-        console.log("editDetails",editDetails);
 
-        //lets post to server and update
-        $.post( "wordsUpdate",{word : editDetails}, function( data ) {
+        if (action == "add"){
+            console.log("editDetails ->",editDetails)
             //didn't complete so we are just reloading page :(
-            window.location.href = "words";
+            $.ajax({
+                type: "POST",
+                url: "wordsAdd",
+                data: {
+                    'word' : editDetails
+                },
+                cache: false,
+                success: function(){
+                    $(editWordModal).modal('toggle');
+                    window.location.href = "words";
+                }
+            });
+
+
+            return e.preventDefault();
+        }
+
+        //grab all the input fields from our modal
+
+        $.ajax({
+            type: "POST",
+            url: "wordsUpdate",
+            data: {
+                'word' : editDetails
+            },
+            cache: false,
+            success: function(){
+                $(editWordModal).modal('toggle');
+            }
+        });
+        /*
+        //lets post to server and update
+        $.post( "wordsUpdate",{ 'word' : editDetails}, function( data ) {
+            //didn't complete so we are just reloading page :(
+            //window.location.href = "words";
             //clear all inputs so fresh input fields
             $.each(editDetails,function(key, value){
                 $('#' + key,editWordModal).val('');
             });
             $(editWordModal).modal('toggle');
-        });
+        });*/
         return e.preventDefault();
     });
 
@@ -71,6 +114,11 @@ $(document).ready(function(){
     function parseWordData(e){
         action = $(e.relatedTarget).data('action');
 
+
+
+
+
+        //lets update the fileForm of the record index we are using
         //check we are not adding
         if (action != "add"){
             editDetails = $WordsList.get($(e.relatedTarget).data('record_id'));
@@ -80,16 +128,19 @@ $(document).ready(function(){
                 $('#' + key,editWordModal).val(value);
             });
             console.log('editDetails',editDetails)
-        }
 
+            $("#img_src #index").val(editDetails.index);
+            $("#img_src #img_src1").attr('src',editDetails.img_src1);
+            $("#img_src #img_src2").attr('src',editDetails.img_src2);
+            $("#img_src").show();
+        }
         if (action == "delete"){
+            console.log("editDetails",editDetails)
             $('#mri_word',deleteModal).text(editDetails.mri_word);
         }
+        if (action == "add")
+            $("#img_src").hide();
 
-        //lets update the fileForm of the record index we are using
-        $("#img_src #index").val(editDetails.index);
-        $("#img_src #img_src1").attr('src',editDetails.img_src1);
-        $("#img_src #img_src2").attr('src',editDetails.img_src2);
 
     }
 

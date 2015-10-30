@@ -85,7 +85,11 @@ body {
     background-color: #262626;
 
 }
-
+#adminBar{
+    background-color: #4d0013;
+    height:40px;
+    padding-top: 3px;
+}
 /*styling for the users gamer icon*/
 .img-circle {
     width :60px;

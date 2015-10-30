@@ -29,8 +29,7 @@
                 <strong class="caret"></strong>
 
             </button>
-            <a class="navbar-brand" href="#">
-
+            <a class="navbar-brand" href="/">
                 <?php echo $this->tag->image(array("images/ngati-toa.gif", "id" => "logo" )); ?>
             </a>
         </div>
@@ -47,20 +46,14 @@
                         <?php echo $this->tag->image(array("images/profileImages/profile02.jpg", "class" => "img-circle"));?>
                     </a>
                     <ul class="dropdown-menu hidden-xs">
-                        <?php if($this->isAdmin == true){
-                            echo "<li><a href='/admin'>Administrative Settings</a></li>";
-                        } ?>
-                        <li><a href="#">Account Settings</a></li>
+
                         <li><a href="/Index/logout">Sign out</a></li>
                     </ul>
                 </li>
                 <span id="mobileHeaderOptions" class=" nav navbar-nav navbar-right hidden-lg hidden-md hidden-sm">
                     <li><h3><?php echo $User->username?></h3></li>
-                        <?php if($this->isAdmin == true){
-                            echo "<li><a href='/admin'>Administrative Settings</a></li>";
-                        } ?>
+
                     </li>
-                    <li><a href="#">Account Settings</a></li>
                     <li><a href="/Index/logout">Sign out</a></li>
                 </span>
             </ul>
@@ -89,6 +82,25 @@
                 <br>
             </div>
         </div>
+        <?php if($this->isAdmin == true){?>
+            <div id="adminBar">
+                <!-- USER PROFILE BLOCK -->
+                <div class="col-sm-8 col-lg-8">
+                    <a href="/admin/games">
+                        <span class="btn btn-info">Edit Games</span>
+                    </a>
+
+                    <a href="/admin/users">
+                        <span class="btn btn-info">Edit Users</span>
+                    </a>
+
+                    <a href="/admin/words">
+                        <span class="btn btn-info">Edit Words</span>
+                    </a>
+                </div>
+            </div><!-- /row -->
+
+        <?php } ?>
     </nav>
     <?php } ?>
     <div class="container-fluid">

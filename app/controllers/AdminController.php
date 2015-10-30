@@ -90,13 +90,24 @@ class AdminController extends ControllerBase
         $this->view->setVar('WordsList',$WordsList);
 
     }
+    /**
+     * Update a words Object
+     */
+    public function wordsAddAction(){
+        $word = $this->Request()->getPost("word", null, false);
 
+        $theWord = new \Words;
+        $theWord->wordUpdate((object)$word);
+        $theWord->save();
+        return $this->Api()->response("updated");
+    }
     /**
      * Update a words Object
      */
     public function wordsUpdateAction(){
         //grab word object we ar eupdating from
         $word = $this->Request()->getPost("word", null, false);
+
         /*
          * Array
             (
@@ -351,6 +362,8 @@ class AdminController extends ControllerBase
 
         return $this->_request;
     }
+
+
 
 }
 

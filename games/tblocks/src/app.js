@@ -374,13 +374,11 @@ function getAllScores(callback) {
             console.log("getAllScores response.data", response);
             AllScores =  typeof response.data.scores == "object" ? response.data.scores : response.data
 
-            if (typeof callback == "function")
-                callback(AllScores);
-
-
                 //AllScores = response.data.scores;
             //return response.data.game_score;
         }
+        if (typeof callback == "function")
+            callback(AllScores);
 
     })
 };

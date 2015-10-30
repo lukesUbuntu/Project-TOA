@@ -1,4 +1,9 @@
 <?php
+/*
+ * Similar to processInput, this file takes the word from database, finds a letter in the word that hasn't already been guessed, then adds the guess.
+ * After this, it then removes 5 feathers from the database
+ */
+
 header ("Content-Type:text/xml");
 include 'noMacron.php';
 include 'getUserInfo.php';

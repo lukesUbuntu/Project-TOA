@@ -71,12 +71,14 @@ function addScore($gameScore){
         }
     });
 }
-function getCurrentScore(){
+function getCurrentScore(callback){
+    var score = 0;
     $.ajax({
         type: "POST",
         url: "/api/usersGames" + $gameScore,
         dataType: "jsonp",
         success: function(response){
+            score = response.data
             console.log( response);
         },
         failure: function (response) {

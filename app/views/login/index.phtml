@@ -8,9 +8,17 @@
     //these varibles are set in the app/controllers/LoginController.php
     var login_tab = '<?php echo $login_tab; ?>';
 </script>
-<div id="head">
-    <?php echo $this->tag->image(array("images/loginTitle.jpg", "class" => "img-responsive", "id" => "loginBanner"));?>
-</div>
+<head>
+    <?php echo $this->tag->stylesheetLink("css/login.css"); ?>
+</head>
+<nav class="navbar navbar-default", style="background-color: #892618;">
+    <div class="container-fluid">
+
+            <a class="navbar-brand"> <?php echo $this->tag->image(array("images/ngati-toa.gif", "class" => "img", "style" => "max-height: 100%; padding-left: 20%;"));?></a>
+
+    </div>
+</nav>
+
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-login">

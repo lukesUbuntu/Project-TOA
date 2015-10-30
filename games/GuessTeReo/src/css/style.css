@@ -1,98 +1,147 @@
-.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
-    background-color: #1b1b1b;
+/*CSS that is applied to all of the interface files*/
+
+/*Index, instructions, winDialog, loseDialog CSS*/
+#indexTitle {
+	text-align: center;
+	font-size: 32pt;
 }
 
-#usersScores, h4 {
-    display:inline-block;
-    font-family: sans-serif;
-    color: #f6f6f6;
-    padding-left: 180pt;
-    padding-right: 180pt;
+#buttonStart, #buttonExit, #buttonInstruct, #buttonNewRound {
+	height: 80pt;
 }
 
-.ui-bar-a, .ui-bar-inherit {
-    padding-bottom: 30px;
+#dialogContainer {
+	text-align: center;
+}
+
+#dialogTitle{
+	text-align: center;
+}
+
+
+#gameInfo {
+	padding-bottom: 2pt;
+	max-width: 100%;
+	text-align: center;
+}
+
+/*------------------------------------------------------------------------------------*/
+/*Game CSS*/
+#game {
+	background-image: url("background-img.jpg"); !important;
+}
+
+#imageLocation {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	max-height: 100%;
+	position: relative;
+}
+
+@media all and (min-width: 300px) {
+	.keyboardKey{ margin-left: 4pt; font-size: 12pt; }
+	#header, #WordToGuess, #instruct, #Feathers, #Score{ font-size: 12pt; }
+	#GameOptions { font-size: 10pt;}
+	#dialogTitle { font-size: 18pt;}
+	#imageLocation { width: 200px; height: 200px;}
+}
+
+@media all and (min-width: 400px) {
+	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 16pt; }
+	#header, #WordToGuess, #instruct, #Feathers, #Score { font-size: 16pt; }
+	#GameOptions { font-size: 14pt;}
+	#dialogTitle { font-size: 22pt;}
+	#imageLocation { width: 400px; height: 250px;}
+}
+
+@media all and (min-width: 700px) {
+	#imageLocation { width: 700px; height: 300px;}
+}
+
+@media all and (min-width: 700px) {
+	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 20pt;}
+	#header, #WordToGuess, #instruct, #Feathers, #Score { font-size: 20pt; }
+	#GameOptions { font-size: 18pt;}
+	#dialogTitle { font-size: 28pt;}
+	#imageLocation { width: 800px; height: 350px;}
+}
+
+body {
+	margin: 0;
+	height: 100%;
+}
+
+#game {
+	position: relative !important;
 }
 
 .ui-bar-a, .ui-page-theme-a .ui-bar-inherit {
-    background-color: slategray;
+	background-color: slategray;
+	border-color: black;
+	text-shadow: none;
+	font-size: 20pt;
+	margin-bottom: 20pt;
 }
 
-div.img {
-    margin: 3px;
-    height: auto;
-    width: auto;
-    text-align: center;
+#WonGame {
+	text-align: center;
 }
 
-div.img img {
-    max-width: 100%;
-    min-width: 70px;
-    min-height: 100px;
-    height: auto;
+html {
+	height: 100%;
+	margin: 0;
 }
 
-div.img a:hover img {
-    border: 1px solid #000000;
-    -webkit-transform: scale(3.3,2.5);
+#InfoBar {
+	vertical-align: middle;
 }
 
-div, p {
-    padding-top: 7pt;
-    text-align: center;
-    font-size: 16px;
+#GameOptions {
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	height: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 100%;
 }
 
-#guessWord .ui-input-text {
-    width: 60%;
-    display: inline;
+#WordToGuess {
+	white-space: pre-wrap;
+	font-weight: bold;
+	text-align: center;
+	width:100%;
+	font-family: sans-serif;
+	vertical-align:middle;
+	display:table;
+	margin-top: 15pt;
+	margin-bottom: 15pt;
+	color: white;
 }
 
-#keyboardContainer {
-    display: inline;
-    width: 600px;
-    text-align: center;
-}
-#write {
-    display:inline-block;
-    text-align: center;
-    font-size: 12pt;
-    width: 160pt;
-    background: #fff;
-    border: 1px solid #f9f9f9;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+#keyboard {
+	overflow: hidden;
+	font-size: 30pt;
+	display: table;
+	width: 100%;
+	vertical-align: middle;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-#keyboardContainer .accept,
-#keyboardContainer .delete,
-#keyboardContainer .space,
-#keyboardContainer .hint{
-    display:inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
-    height: auto;
-    width: 80pt;
+.keyboardRow {
+	position: relative;
+	text-align: center;
+	overflow: hidden;
+	display: table-row;
+	width: 100%;
+	vertical-align: middle;
 }
-
-#keyboard button:hover {
-    position: relative;
-    top: 1px;
-    left: 1px;
-    border-color: #e5e5e5;
-    cursor: pointer;
-    -moz-box-shadow: 0px 0px 4px 1px grey;
-    -webkit-box-shadow: 0px 0px 4px 1px grey;
-    box-shadow: 0px 0px 4px 1px  grey;
+.keyboardKey {
+	background-color: lightgrey;
+	display:inline-block;
+	border:1px solid grey;
+	width: 20px;
 }
-
-th.header {
-    cursor: pointer;
-    font-weight: bold;
-    background-repeat: no-repeat;
-    background-position: center left;
-    padding-left: 20px;
-    border-right: 1px solid #dad9c7;
-    margin-left: -1px;
-}
-

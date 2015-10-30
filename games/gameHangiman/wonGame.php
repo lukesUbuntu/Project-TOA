@@ -6,7 +6,9 @@
  * Time: 11:05 PM
  */
 
-//MUST CHANGE GAMEPROGRESS WHEN USER CLICKS MENU BUTTON
+/*
+ * Win game screen, updates user global score when a new round begins
+ */
 include('checkGameStatus.php');
 include('getUserInfo.php');
 ?>
@@ -17,6 +19,7 @@ include('getUserInfo.php');
        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="models/APICalls.js"></script>
 
        <title>Hangiman</title>
     </head>
@@ -40,7 +43,7 @@ include('getUserInfo.php');
 				<br>
                  Feathers: <?php echo $totalFeathersEarned; ?>
                  <br>
-                 Score: <?php echo $gameScore; ?>
+                 Score: <div id="Score"></div>
                  <br>
              </h5>
         </div>
@@ -50,7 +53,14 @@ include('getUserInfo.php');
 </body>
 
 <script>
+    var gameScore = <?php echo $gameScore; ?>;
+
+    $( document).ready(function(){
+        $("#Score").text("Score: " + gameScore);
+    })
+
     $("#ButtonNewRound").click(function(){
+        addScore(gameScore);
         window.location.href='startNewRound.php';
     });
 </script>
