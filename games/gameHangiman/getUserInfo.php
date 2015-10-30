@@ -5,6 +5,13 @@
  * Date: 21/09/2015
  * Time: 3:25 PM
  */
+
+/*
+ *
+ * Gets the user data from the database for any page that needs the data.
+ * If the user doesn't have a database record in the case of a new user, 'addUserInDatabase' will be called beforehand
+ *
+ */
 if (session_id() == "")
     session_start();
 $id = $_SESSION['user_id'];

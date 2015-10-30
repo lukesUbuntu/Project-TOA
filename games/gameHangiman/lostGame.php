@@ -7,6 +7,12 @@
  */
 //MUST CHANGE GAMEPROGRESS WHEN USER CLICKS MENU BUTTON
 //include('checkGameStatus.php');
+
+/*
+ * Displays when there are no rounds left. Fires score upload and game status on page load so user doesn't have to see game over screen on rage quit
+ *
+ */
+
 include('getUserInfo.php');
 include_once('checkGameStatus.php');
 ?>

@@ -5,6 +5,10 @@
  * Date: 23/09/2015
  * Time: 12:38 PM
  */
+
+/*
+ * Clears the game in progress from the database, and starts a new round when called
+ */
 include('getUserInfo.php');
 
 $roundNumber++;

@@ -1,4 +1,12 @@
 <?php
+/*
+ *
+ * This file is called every time the user enters a guess from the keyboard.
+ * It takes the letter entered via jQuery, checks against the word being guessed in the database, and returns the string with underlines
+ *
+ */
+
+
 include 'noMacron.php';
 include 'getUserInfo.php';
 $objMacron = new noMacron();
@@ -9,23 +17,6 @@ if (mysqli_connect_errno())
 {
  //echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-//check Login, get ID
-/*$id = $_POST["id"];
-
-$con -> set_charset("utf8");
-$sql = "SELECT * FROM in_progress WHERE userID = $id";
-
-if ($result=mysqli_query($con,$sql)){
- $row = mysqli_fetch_row($result);
-    $gameScore = $row[1];
-    $livesRemaining = $row[2];
-    $totalFeathersEarned = $row[3];
-    $roundNumber = $row[4];
-    $incorrectGuesses = $row[5];
-    $lettersGuessedArray = preg_split('//u',$row[6], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
-    $wordBeingGuessed = preg_split('//u',$row[7], -1, PREG_SPLIT_NO_EMPTY); //ensures Maori characters are properly encoded within string
-    $gameProgress = $row[8];
-}*/
 
 $inputLetter = $_POST["letter"];
 

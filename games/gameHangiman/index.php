@@ -22,8 +22,6 @@ include('getUserInfo.php');
 <div data-role="page" id="WonGame">
     <h1>Hangi-Man</h1>
     <button id="ButtonStartGame" data-role="button" class="btn" >Start Game</button>
-    <button id="ButtonInstructions" data-role="button" class="btn" >Instructions</button>
-    <button id="ButtonHighScores" data-role="button" class="btn" >High Scores</button>
 	<button id="ButtonExitGame" data-role="button" class="btn" >Quit Game</button>
 </div>
 
@@ -33,12 +31,6 @@ include('getUserInfo.php');
 <script>
     $("#ButtonStartGame").click(function(){
         window.location.href='startNewRound.php';
-    });
-    $("#ButtonInstructions").click(function(){
-        alert("To be implemented");
-    });
-    $("#ButtonHighScores").click(function(){
-        alert("To be implemented");
     });
 	$("#ButtonExitGame").click(function(){
         window.location.href='/';

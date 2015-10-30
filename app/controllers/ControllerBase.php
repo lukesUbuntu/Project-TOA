@@ -38,7 +38,7 @@ class ControllerBase extends Controller
             //Module
             // User is not logged in, or is not activated
             $this->view->disable();
-            header('Location: login?url=' . $redirectTo);
+            header('Location: /login?url=' . $redirectTo);
             die();
         }
         //show nav

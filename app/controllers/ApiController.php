@@ -21,7 +21,9 @@ class ApiController extends ControllerBase
      */
     public function indexAction()
     {
-        return $this->Api()->response("Incorrect API call",false);
+        $this->view->show_navigation = false;
+        $this->view->enable();
+        //return $this->Api()->response("Incorrect API call",false);
     }
 
     /**

@@ -1,5 +1,8 @@
 body {
-    padding-top: 90px;
+
+}
+.navbar-default{
+    background-default: #892618;
 }
 .panel-login {
     border-color: #ccc;

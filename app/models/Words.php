@@ -89,7 +89,7 @@ class Words extends \Phalcon\Mvc\Model
     public function wordUpdate($word){
         $this->mri_word = $word->mri_word;
         $this->eng_word = $word->eng_word;
-        $this->word_desc = $word->word_desc;
+        $this->word_desc = $this->escapeJsonString($word->word_desc);
         //$this->img_src1 = $this->cleanLink($word->img_src1);
         //$this->img_src2 = $this->cleanLink($word->img_src2);
     }
@@ -104,6 +104,17 @@ class Words extends \Phalcon\Mvc\Model
         }
 
         return "";
+    }
+
+     /**
+     * @param $value
+     * @return mixed
+     */
+    private function escapeJsonString($value) { # list from www.json.org: (\b backspace, \f formfeed)
+        $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
+        $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
+        $result = str_replace($escapers, $replacements, $value);
+        return $result;
     }
 
 

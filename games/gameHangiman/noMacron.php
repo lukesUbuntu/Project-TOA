@@ -5,6 +5,9 @@
  * User: 21300082
  * Date: 17/09/2015
  * Time: 1:48 PM
+ *
+ * This class contains the function used to translate the word in the database into a series of basic characters to
+ * compare with the user input
  */
  class noMacron
 {

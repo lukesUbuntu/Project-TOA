@@ -259,6 +259,7 @@ class LoginController extends \Phalcon\Mvc\Controller
     /**
      * Forgot Password a user into system
      Did not complete due to mail relay not enabled for toa.devlab
+     * *
     public function forgotPasswordAction()
     {
         $mail = new PHPMailer;
@@ -268,7 +269,7 @@ class LoginController extends \Phalcon\Mvc\Controller
         //Set an alternative reply-to address
         $mail->addReplyTo('noreply@toa.devlab.ac.nz', 'Toa');
         //Set who the message is to be sent to
-        $mail->addAddress('luken@hardiman.co.nz');
+        $mail->addAddress('mycathudson@gmail.com');
         //Set the subject line
         $mail->Subject = 'PHPMailer mail() test';
         //Read an HTML message body from an external file, convert referenced images to embedded,
@@ -286,7 +287,8 @@ class LoginController extends \Phalcon\Mvc\Controller
             echo "Message sent!";
         }
     }
-     **/
+     * */
+
 
 }
 
