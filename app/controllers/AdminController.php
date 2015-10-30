@@ -335,8 +335,11 @@ class AdminController extends ControllerBase
             }
             $gamesData = \UsersHasGame::find(array( 'users_id' => $user->id));
             //
-            if (is_object($gamesData) && count($gamesData) > 0)
-                $gamesData->delete();
+            if (is_object($gamesData) && count($gamesData) > 0){
+                foreach($gamesData as $game)
+                    $game->delete();
+            }
+
 
             $user->delete();
             //$gamesData->save();
