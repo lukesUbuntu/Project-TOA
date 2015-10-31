@@ -13,7 +13,7 @@
         <div class="col-lg-4">
         </div>
         <div class="col-lg-4">
-            <table id="usersLists">
+            <table id="gamesList">
                 <thead>
                 <tr>
                     <th width="30%">Game ID</th>
@@ -34,13 +34,25 @@
                         </td>
                         <td>
                             <span><br/></span>
-                           <span class="btn btn-warning">Edit</span>
+                            <?php
+                                if ($game->isEnabled()) {
+                                    ?>
+                                            <span data-index="<?php echo $game->game_id; ?>" data-action="disable" class="enableDisable btn btn-warning">Disable</span>
+                                    <?php
+                                }else{
+                                        ?>
+                                            <span data-index="<?php echo $game->game_id; ?>" data-action="enable" class="enableDisable btn btn-success">Enable</span>
+                                        <?php
+                                    }
+
+                            ?>
+
                         </td>
                     </tr>
                 <?php }?>
             </table>
             <br>
-            <span class="btn btn-success" style="float:right;width:100px;">Add</span>
+
         </div>
         <div class="col-lg-4">
         </div>

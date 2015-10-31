@@ -14,37 +14,38 @@
                         <div class="tab-pane active" id="panel-417568">
                             <?php
                             foreach($Games as $game ){
-                            ?>
+                                if ($game->isEnabled()){
+                                ?>
+                                    <div class="row" id="gameRowTop">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 
-                            <div class="row" id="gameRowTop">
-                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                            <img alt="" src="/games/<?php echo $game->logo()?>" class="img-thumbnail pull-right">
+                                        </div>
+                                        <div class="col-lg-0 col-md-0 col-sm-0 col-xs-0">
 
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                    <img alt="" src="/games/<?php echo $game->logo()?>" class="img-thumbnail pull-right">
-                                </div>
-                                <div class="col-lg-0 col-md-0 col-sm-0 col-xs-0">
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-7 col-xs-6">
+                                            <dl>
+                                                <dt>
+                                                <h4>
+                                                    <span><?php echo $game->name ?></span>
+                                                </h4></dt>
+                                                <dd>
+                                                    <?php echo $game->description ?>
+                                                </dd>
+                                            </dl>
+                                            <div class="text">
+                                        <a href="/games/<?php echo $game->path()?>" ><span class="btn btn-success">Play Now</span></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-0 col-xs-1">
 
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-7 col-xs-6">
-                                    <dl>
-                                        <dt>
-                                        <h4>
-                                            <span><?php echo $game->name ?></span>
-                                        </h4></dt>
-                                        <dd>
-                                            <?php echo $game->description ?>
-                                        </dd>
-                                    </dl>
-                                    <div class="text">
-                                <a href="/games/<?php echo $game->path()?>" ><span class="btn btn-success">Play Now</span></a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-0 col-xs-1">
-
-                                </div>
-                            </div>
-                            <?php
+                                    <?php
+                                }
                             }
                             ?>
 

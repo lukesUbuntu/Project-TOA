@@ -1,5 +1,5 @@
 <head>
-    <meta name="viewport" charset="UTF-8"
+    <meta name="viewport" charset="utf-8"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href = "src/css/style.css" rel = "stylesheet">
     <link rel="icon" type="image/jpg" href="src/img/guessTeReoLogo.jpg" sizes="96x96">

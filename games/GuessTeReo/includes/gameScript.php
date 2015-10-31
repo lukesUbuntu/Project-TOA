@@ -20,19 +20,19 @@
         $(".currentImage").attr('src',currentImage);
         updateGameScreen();
     });
-/*
+
     $("#buttonHint").click(function () {
         getFeathers(function (response) {
-            if (response < 5) {
-                alert("You need 5 feathers to use a hint.");
+            if (response < 2) {
+                alert("You need 2 feathers to use a hint.");
             } else {
-                if (confirm("You will have " + (response - 5) + " feathers left. Are you sure?")) {
+                if (confirm("Are you sure?")) {
                     processHint();
                 }
             }
         })
     });
-*/
+
     $(".keyboardKey").click(function () {
         var $keyLetter = $(this).text();
         $.ajax({
@@ -45,6 +45,7 @@
                 "letter": $keyLetter
             },
             dataType: "jsonp",
+
             success: function (response) {
                 if (response.success == true) {
                     gameScore = response.gameScore;
@@ -70,9 +71,9 @@
     //if
     //window.location.href = 'wonDialog.php';
     //});
-    /*
+
     function processHint() {
-        removeFeathers(5);
+        removeFeathers(2);
         $.ajax({
             type: "POST",
             cache: false,
@@ -85,7 +86,6 @@
                 if (response.success == true) {
                     gameScore = response.gameScore;
                     livesRemaining = response.livesRemaining;
-                    totalFeathersEarned = response.totalFeathersEarned;
                     lettersGuessed = response.lettersGuessed;
                     wordToDisplay = response.wordToDisplay;
                     currentPage = response.currentPage;
@@ -97,7 +97,7 @@
                 alert("Failed to process hint");
             }
         });
-    }*/
+    }
     function updateGameScreen() {
         if (lettersGuessed.length > 0) {
             for (var i = 0; i < lettersGuessed.length; i++) {

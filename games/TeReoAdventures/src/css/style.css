@@ -1,0 +1,8 @@
+#indexTitle {
+    text-align: center;
+    padding-bottom: 20pt;
+}
+
+#buttonStart, #buttonInstruct, #buttonExit {
+    height: 80pt;
+}

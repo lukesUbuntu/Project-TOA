@@ -274,10 +274,39 @@ class AdminController extends ControllerBase
         $this->addDataTables();
 
         $this->assets
-            ->addJs('js/admin/users.js');
+            ->addJs('js/admin/games.js');
 
         $this->view->setVar("Games", $games);
         return $this->view->render('admin', 'games');
+
+    }
+
+    /**
+     * Enable disable games for admin
+     */
+    public function adminGamesAction(){
+        $index = $this->Request()->getPost("index", null, false);
+        $action = $this->Request()->getPost("action", null, false);
+
+        if ($index == false || $action == false)return $this->Api()->response("Missing invalid Index or Action", false);
+
+        //get the game
+        $theGame = Game::findFirst($index);
+        if (!is_object($theGame))return $this->Api()->response("Invalid Game details", false);
+
+        if ($action == 'disable'){
+            $theGame->enabled = 0;
+            $theGame->save();
+            $this->Api()->response("Updated disabled");
+        }
+
+        if ($action == 'enable'){
+            $theGame->enabled = 1;
+            $theGame->save();
+            $this->Api()->response("Updated enabled");
+        }
+
+        $this->Api()->response("Invalid Game Action", false);
 
     }
 

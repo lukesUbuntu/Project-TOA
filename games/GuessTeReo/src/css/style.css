@@ -18,7 +18,6 @@
 	text-align: center;
 }
 
-
 #gameInfo {
 	padding-bottom: 2pt;
 	max-width: 100%;
@@ -40,32 +39,55 @@
 	position: relative;
 }
 
-@media all and (min-width: 300px) {
-	.keyboardKey{ margin-left: 4pt; font-size: 12pt; }
-	#header, #WordToGuess, #instruct, #Feathers, #Score{ font-size: 12pt; }
-	#GameOptions { font-size: 10pt;}
+@media all and (min-width: 280px) {
+	.keyboardKey{ margin-left: 4pt; font-size: 14pt; width: 28px; height: 28pt; }
+	#header, #WordToGuess, #instruct, #Feathers, #Score{ font-size: 14pt; }
+	#GameOptions { font-size: 8pt;}
 	#dialogTitle { font-size: 18pt;}
-	#imageLocation { width: 200px; height: 200px;}
+
+	#buttonQuit, #buttonHint { font-size: 6pt; width: 34pt; }
+	#imageLocation { width: 320px; height: 150px;}
 }
 
-@media all and (min-width: 400px) {
-	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 16pt; }
+@media all and (min-width: 300px) {
+	.keyboardKey{ margin-left: 4pt; font-size: 14pt; width: 28px; height: 34pt; }
+	#header, #WordToGuess, #instruct, #Feathers, #Score{ font-size: 14pt; }
+	#GameOptions { font-size: 8pt;}
+	#dialogTitle { font-size: 18pt;}
+	#buttonQuit, #buttonHint { font-size: 8pt; width: 34pt; }
+	#imageLocation { width: 350px; height: 180px;}
+}
+
+@media all and (min-width: 450px) {
+	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 23pt;
+		width: 18px; height: 38pt;}
 	#header, #WordToGuess, #instruct, #Feathers, #Score { font-size: 16pt; }
-	#GameOptions { font-size: 14pt;}
+	#GameOptions { font-size: 12pt;}
 	#dialogTitle { font-size: 22pt;}
-	#imageLocation { width: 400px; height: 250px;}
+	#buttonQuit, #buttonHint { font-size: 11pt; width: 45pt; }
+	#imageLocation { width: 400px; height: 320px;}
+}
+
+@media all and (min-width: 650px) {
+	#imageLocation { width: 500px; height: 300px;}
+}
+
+@media all and (min-width: 650px) {
+	#imageLocation { width: 600px; height: 360px;}
 }
 
 @media all and (min-width: 700px) {
-	#imageLocation { width: 700px; height: 300px;}
-}
-
-@media all and (min-width: 700px) {
-	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 20pt;}
+	.keyboardKey{ padding-left: 2%; padding-right: 2%; margin-left: 4pt; margin-bottom: 4pt; font-size: 24pt;
+		width: 20px; height: 30pt;}
 	#header, #WordToGuess, #instruct, #Feathers, #Score { font-size: 20pt; }
-	#GameOptions { font-size: 18pt;}
+	#GameOptions { font-size: 16pt;}
 	#dialogTitle { font-size: 28pt;}
-	#imageLocation { width: 800px; height: 350px;}
+	#buttonQuit, #buttonHint { font-size: 16pt; width: 70pt; }
+	#imageLocation { width: 650px; height: 330px;}
+}
+
+@media all and (min-width: 900px) {
+	#imageLocation { width: 700px; height: 420px;}
 }
 
 body {
@@ -85,10 +107,6 @@ body {
 	margin-bottom: 20pt;
 }
 
-#WonGame {
-	text-align: center;
-}
-
 html {
 	height: 100%;
 	margin: 0;
@@ -102,7 +120,6 @@ html {
 	overflow: hidden;
 	position: relative;
 	text-align: center;
-	height: 35px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	width: 100%;
@@ -119,6 +136,13 @@ html {
 	margin-top: 15pt;
 	margin-bottom: 15pt;
 	color: white;
+}
+
+#buttonQuit, #buttonHint {
+	background-color: lightgrey;
+	display:inline-block;
+	border:1px solid grey;
+	margin-left: 5pt;
 }
 
 #keyboard {
@@ -143,5 +167,4 @@ html {
 	background-color: lightgrey;
 	display:inline-block;
 	border:1px solid grey;
-	width: 20px;
 }

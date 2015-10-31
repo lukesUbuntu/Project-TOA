@@ -48,6 +48,12 @@ class Game extends \Phalcon\Mvc\Model
     public $logo;
 
     /**
+     *
+     * @var boolean
+     */
+    public $enabled;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -88,7 +94,8 @@ class Game extends \Phalcon\Mvc\Model
             'logo'  =>  'logo',
             'prefix' => 'prefix',
             'created_at' => 'created_at',
-            'updated_at' => 'updated_at'
+            'updated_at' => 'updated_at',
+            'enabled' => 'enabled'
         );
     }
 
@@ -134,6 +141,10 @@ class Game extends \Phalcon\Mvc\Model
             'name' => $this->name,
             'prefix' => $this->prefix
         );
+    }
+
+    public function isEnabled(){
+        return ($this->enabled);
     }
 
 

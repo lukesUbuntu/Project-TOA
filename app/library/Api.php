@@ -13,6 +13,7 @@ class Api
 {
     private $cache = null;      //memcache
     public function __construct(){
+        /*
         // Cache data for 5 mins
         $frontCache = new \Phalcon\Cache\Frontend\Data(array(
             "lifetime" => 300
@@ -22,7 +23,7 @@ class Api
             'host' => 'localhost',
             'port' => 11211,
             'persistent' => false
-        ));
+        ));*/
     }
 
     /**

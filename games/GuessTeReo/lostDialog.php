@@ -24,7 +24,7 @@ require_once 'getUser.php';
     </div>
 
     <button id="buttonNewRound" data-role="button" class="btn">Play Again</button>
-    <button id="buttonQuit" data-role="button" class="btn">Go back to Main Menu</button>
+    <button id="buttonQuit1" data-role="button" class="btn">Go back to Main Menu</button>
 </div>
 </body>
 
@@ -32,7 +32,7 @@ require_once 'getUser.php';
     $("#buttonNewRound").click(function () {
         window.location.href = 'processNewRound.php';
     });
-    $("#buttonQuit").click(function () {
+    $("#buttonQuit1").click(function () {
         window.location.href = 'index.php';
     });
 </script>

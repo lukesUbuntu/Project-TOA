@@ -12,7 +12,7 @@ if (mysqli_connect_errno())
     //echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$gameScore += 5;
+$gameScore += 2;
 
 //create list of letters in word that aren't guessed, select random letter from list
 $listOfApplicableHints = array();
